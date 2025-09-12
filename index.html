@@ -6,321 +6,113 @@
   <title>Shivam Sharma | Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Smooth scroll */
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-black text-gray-200">
 
   <!-- Header / Navbar -->
-  <header class="bg-white shadow sticky top-0 z-50">
+  <header class="bg-black shadow sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Shivam Sharma</h1>
+      <h1 class="text-2xl font-bold text-white">Shivam Sharma</h1>
       <nav class="space-x-6">
-        <a href="#about" class="hover:text-blue-600">About</a>
-        <a href="#skills" class="hover:text-blue-600">Skills</a>
-        <a href="#projects" class="hover:text-blue-600">Projects</a>
-        <a href="#research" class="hover:text-blue-600">Research</a>
-        <a href="#experience" class="hover:text-blue-600">Experience</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
+        <a href="#about" class="hover:text-blue-400 text-gray-300">About</a>
+        <a href="#skills" class="hover:text-blue-400 text-gray-300">Skills</a>
+        <a href="#projects" class="hover:text-blue-400 text-gray-300">Projects</a>
+        <a href="#research" class="hover:text-blue-400 text-gray-300">Research</a>
+        <a href="#experience" class="hover:text-blue-400 text-gray-300">Experience</a>
+        <a href="#contact" class="hover:text-blue-400 text-gray-300">Contact</a>
       </nav>
     </div>
   </header>
 
-
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-32 relative overflow-hidden">
+  <section class="bg-black text-white py-32 relative overflow-hidden">
     <div class="container mx-auto px-6 text-center relative z-10">
       <h2 class="text-5xl font-bold mb-4">Hi, I'm Shivam 👋</h2>
       
       <!-- Typing Titles -->
-      <p class="text-2xl mb-6">
+      <p class="text-2xl mb-6 text-gray-300">
         <span id="typed-text"></span>
       </p>
 
       <!-- Degree & Education -->
-      <p class="text-lg mb-2">🎓 MS in Robotics & Autonomous Systems (AI) at Arizona State University</p>
-      <p class="text-lg mb-8">🎓 B.Tech in Artificial Intelligence from Amity University, Noida</p>
+      <p class="text-lg mb-2 text-gray-300">🎓 MS in Robotics & Autonomous Systems (AI) at Arizona State University</p>
+      <p class="text-lg mb-8 text-gray-300">🎓 B.Tech in Artificial Intelligence from Amity University, Noida</p>
 
       <a href="ASU_Resume_Template_Shivam.pdf" target="_blank" 
-      class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-gray-100 transition transform hover:scale-105">
+      class="inline-block bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
       Download Resume
       </a>
     </div>
-
-    <!-- Optional Background Particles -->
     <canvas id="particles" class="absolute top-0 left-0 w-full h-full"></canvas>
   </section>
 
-
-
   <!-- About Me Section -->
   <section id="about" class="py-16 container mx-auto px-6">
-    <h3 class="text-3xl font-semibold mb-8">About Me</h3>
-    <p class="text-lg leading-relaxed" data-aos="fade-up">
-      I am passionate about Artificial Intelligence, Machine Learning, and Robotics. I’ve worked on gesture-based 
-      interaction systems, AutoML frameworks, and IoT-powered research. Currently pursuing my MS in Robotics & 
-      Autonomous Systems (AI) at ASU.
+    <h3 class="text-3xl font-semibold mb-8 text-white">About Me</h3>
+    <p class="text-lg leading-relaxed text-gray-300" data-aos="fade-up">
+      I am a passionate AI Engineer and researcher with hands-on experience in <strong>machine learning, deep learning, computer vision, and natural language processing</strong>. 
+      My work spans across building gesture-controlled IoT systems, AutoML frameworks, and AI-driven emotion detection systems.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-300 mt-4" data-aos="fade-up">
+      Currently, I am pursuing my <strong>MS in Robotics & Autonomous Systems (AI)</strong> at Arizona State University, where my focus lies on 
+      developing scalable AI systems for autonomous platforms. I hold a <strong>B.Tech in Artificial Intelligence</strong> from Amity University, Noida.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-300 mt-4" data-aos="fade-up">
+      I have professional experience as an <strong>AI Engineer Intern at HCL Technologies</strong> and as a <strong>Data Science Intern at NullClass Technologies</strong>, 
+      where I worked on large-scale ML systems, computer vision pipelines, and AI-powered solutions with measurable impact.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-300 mt-4" data-aos="fade-up">
+      My goal is to contribute to <strong>next-generation AI and robotics solutions</strong> that enhance human–machine interaction, improve accessibility, 
+      and enable intelligent autonomous decision-making in real-world environments.
     </p>
   </section>
 
   <!-- Skills Section -->
-  <section id="skills" class="py-16 bg-gray-100">
+  <section id="skills" class="py-16 bg-gray-900">
     <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-semibold mb-8">Skills</h3>
+      <h3 class="text-3xl font-semibold mb-8 text-white">Skills</h3>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <!-- AI / ML -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">🤖 Artificial Intelligence & Machine Learning</h4>
-          <p class="text-gray-700 text-sm">Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning.</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">🤖 Artificial Intelligence & Machine Learning</h4>
+          <p class="text-gray-400 text-sm">Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning.</p>
         </div>
 
-        <!-- Computer Vision -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">👁️ Computer Vision</h4>
-          <p class="text-gray-700 text-sm">OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, image classification, emotion detection, face analysis.</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">👁️ Computer Vision</h4>
+          <p class="text-gray-400 text-sm">OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, emotion detection, face recognition, object tracking.</p>
         </div>
 
-        <!-- NLP -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">💬 Natural Language Processing</h4>
-          <p class="text-gray-700 text-sm">NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, hybrid recommender systems.</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">💬 Natural Language Processing</h4>
+          <p class="text-gray-400 text-sm">NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, recommender systems.</p>
         </div>
 
-        <!-- Programming -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">💻 Programming & Databases</h4>
-          <p class="text-gray-700 text-sm">Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras.</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">💻 Programming & Databases</h4>
+          <p class="text-gray-400 text-sm">Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras.</p>
         </div>
 
-        <!-- Tools & Frameworks -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">⚙️ Tools & Frameworks</h4>
-          <p class="text-gray-700 text-sm">Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, Chroma, LangChain, Google Palm API.</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">⚙️ Tools & Frameworks</h4>
+          <p class="text-gray-400 text-sm">Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google Palm API.</p>
         </div>
 
-        <!-- Certifications -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="font-bold text-lg mb-2">📜 Certifications</h4>
-          <p class="text-gray-700 text-sm">Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn).</p>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="font-bold text-lg mb-2 text-white">📜 Certifications</h4>
+          <p class="text-gray-400 text-sm">Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn).</p>
         </div>
 
       </div>
     </div>
-  </section>
-
-
-        <!-- Projects -->
-  <section id="projects" class="py-16 bg-gray-100">
-    <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-semibold mb-10">Projects</h3>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        <!-- AutoML -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🤖 AutoML Framework</h4>
-          <p>A scalable end-to-end AutoML pipeline with automated model selection, hyperparameter tuning, and evaluation.</p>
-          <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- Gesture Controlled IoT -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🖐 Gesture-Controlled IoT</h4>
-          <p>Real-time gesture recognition interface using Mediapipe + OpenCV with Arduino for IoT device control.</p>
-          <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- Female Voice Emotion Detection -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🎙 Female English Voice Emotion Detection System</h4>
-          <p>Fine-tuned deep learning system for <strong>real-time female English voice emotion recognition</strong>.</p>
-          <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- Animal Emotion Detection -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🐾 Animal Emotion Classifier</h4>
-          <p>AI-powered MobileNetV2 image classifier to detect and classify 9 animal emotion classes with Tkinter popups.</p>
-          <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- Vehicle Sleep Detection -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🚗 AI-Based Vehicle Sleep Detection & Age Prediction</h4>
-          <p>Deep learning + CV system detecting drowsiness & predicting age using VGG16 CNNs + OpenCV + Tkinter GUI.</p>
-          <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- CineReco -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">🎬 CineReco: Hybrid Movie Recommendation System</h4>
-          <p>AI-powered movie recommender using Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.</p>
-          <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-        <!-- AtliQ SQL Assistant -->
-        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold mb-2">📊 AtliQ T-Shirts: LLM-Powered SQL Assistant</h4>
-          <p>LangChain + Google Palm-powered tool that converts natural language into SQL queries for MySQL insights.</p>
-          <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-blue-600 hover:underline mt-2 inline-flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-    <!-- Research & Publications -->
-  <section id="research" class="py-16 container mx-auto px-6">
-    <h3 class="text-3xl font-semibold mb-6">Research & Publications</h3>
-    <div class="space-y-8">
-
-      <!-- Paper 1 -->
-      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2">Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction</h4>
-        <p class="text-gray-700 leading-relaxed mb-4">
-          This paper introduced a <strong>virtual hardware simulation layer</strong> for AI-powered hand gesture systems, 
-          enabling seamless IoT integration without physical hardware during prototyping. 
-          The gesture recognition pipeline (Mediapipe + OpenCV) achieved <strong>93% accuracy</strong> across five gestures. 
-          Results showed that <em>virtual hardware reduces prototyping cost and time</em>, advancing accessibility for 
-          AI-driven IoT solutions in education and smart homes.
-        </p>
-        <a href="https://ieeexplore.ieee.org/document/10939210" target="_blank" 
-           class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-medium shadow hover:bg-blue-700 transition">
-          📄 View Paper
-        </a>
-      </div>
-
-      <!-- Paper 2 -->
-      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2">Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT</h4>
-        <p class="text-gray-700 leading-relaxed mb-4">
-          This research proposed a <strong>hybrid gesture + IoT framework</strong> where users perform hand movements 
-          to trigger <em>virtual calculations</em> and smart device control. 
-          Using CNN-based gesture recognition, the system achieved <strong>~75ms latency</strong> in real-time. 
-          A smart-home case study demonstrated its practicality for lights, fans, and appliances. 
-          The paper highlights how <strong>gesture-driven IoT</strong> can enable inclusive technology for 
-          <em>users with physical disabilities</em>.
-        </p>
-        <a href="https://doi.org/10.1109/ICIMA64861.2025.11074109" target="_blank" 
-           class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-medium shadow hover:bg-blue-700 transition">
-          📄 View Paper
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-
-    <!-- Experience -->
-  <section id="experience" class="py-16 bg-gray-100">
-    <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-semibold mb-6">Experience</h3>
-      <div class="space-y-6">
-        
-        <!-- HCL -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold">AI Engineer Intern – HCL Technologies</h4>
-          <ul class="list-disc list-inside mt-2 space-y-2 text-gray-700">
-            <li>Developed supervised ML models (Random Forest, Gradient Boosting) to predict customer churn on a dataset of 500K+ records.</li>
-            <li>Performed extensive feature engineering (behavioral, transactional, and demographic data), boosting AUC by 25% over baseline models.</li>
-            <li>Implemented hyperparameter tuning with GridSearchCV in Python, optimizing performance across multiple datasets.</li>
-            <li>Worked with Pandas, NumPy, scikit-learn, and Jupyter for pipeline development and evaluation.</li>
-            <li>Containerized models using Docker and built scalable deployment-ready pipelines.</li>
-          </ul>
-        </div>
-        
-        <!-- NullClass -->
-        <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
-          <h4 class="text-xl font-bold">Data Science Intern – NullClass Technologies</h4>
-          <ul class="list-disc list-inside mt-2 space-y-2 text-gray-700">
-            <li>Built a Multi-Attribute Face Classifier GUI (using VGG16 & MobileNetV2) to detect age, nationality, emotion, and dress code with 95% accuracy.</li>
-            <li>Developed deep learning pipelines for emotion detection from human faces, female voices, and animal images (achieved 91–94% accuracy).</li>
-            <li>Created an AI-powered vehicle sleep detection & age prediction system using CNNs + OpenCV, reaching 95% real-time accuracy in driver monitoring.</li>
-            <li>Designed Python + Tkinter based GUI applications for user-friendly interaction with deployed models.</li>
-          </ul>
-        </div>
-        
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Contact -->
-  <section id="contact" class="py-16 container mx-auto px-6 text-center">
-    <h3 class="text-3xl font-semibold mb-6">Get in Touch</h3>
-    <p class="mb-4">📩 Email: 
-      <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-600 hover:underline">sharmashivam15112003@gmail.com</a>
-    </p>
-    <p class="mb-6">🔗 LinkedIn: 
-      <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-600 hover:underline" target="_blank">Shivam Sharma</a>
-    </p>
-
-    <form id="contact-form" class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-4">
-      <input type="text" name="name" placeholder="Your Name" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-      <input type="email" name="email" placeholder="Your Email" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-      <textarea name="message" placeholder="Your Message" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
-      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
-      <p id="form-status" class="mt-2 font-semibold"></p>
-    </form>
-
-    <script>
-      const form = document.getElementById('contact-form');
-      const status = document.getElementById('form-status');
-
-      form.addEventListener('submit', function(event) {
-        event.preventDefault(); // prevent redirect
-
-        const formData = new FormData(form);
-
-        fetch('https://formspree.io/f/mvgbyqwq', {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        })
-        .then(response => {
-          if (response.ok) {
-            status.textContent = "✅ Thank you! Your message has been sent.";
-            status.classList.remove("text-red-600");
-            status.classList.add("text-green-600");
-            form.reset();
-          } else {
-            response.json().then(() => {
-              status.textContent = "❌ Oops! Something went wrong. Please try again.";
-              status.classList.remove("text-green-600");
-              status.classList.add("text-red-600");
-            })
-          }
-        })
-        .catch(() => {
-          status.textContent = "❌ Oops! Something went wrong. Please try again.";
-          status.classList.remove("text-green-600");
-          status.classList.add("text-red-600");
-        });
-      });
-    </script>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-300 py-6 text-center">
+  <footer class="bg-black text-gray-400 py-6 text-center border-t border-gray-800">
     <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
   </footer>
 
@@ -342,10 +134,8 @@
   <!-- AOS Animate on Scroll -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
+    AOS.init({ duration: 1000, once: true });
   </script>
+
 </body>
 </html>
