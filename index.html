@@ -133,25 +133,27 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="py-16 container mx-auto px-6 text-center">
-    <h3 class="text-3xl font-semibold mb-6">Get in Touch</h3>
-    <p class="mb-4">📩 Email: 
-      <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-600 hover:underline">
-        sharmashivam15112003@gmail.com
-      </a>
-    </p>
-    <p class="mb-6">🔗 LinkedIn: 
-      <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-600 hover:underline" target="_blank">
-        Shivam Sharma
-      </a>
-    </p>
-    <form class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-4">
-      <input type="text" placeholder="Your Name" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-      <input type="email" placeholder="Your Email" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-      <textarea placeholder="Your Message" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
-      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
-    </form>
-  </section>
+<section id="contact" class="py-16 container mx-auto px-6 text-center">
+  <h3 class="text-3xl font-semibold mb-6">Get in Touch</h3>
+  <p class="mb-4">📩 Email: 
+    <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-600 hover:underline">
+      sharmashivam15112003@gmail.com
+    </a>
+  </p>
+  <p class="mb-6">🔗 LinkedIn: 
+    <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-600 hover:underline" target="_blank">
+      Shivam Sharma
+    </a>
+  </p>
+
+  <!-- Form using Formspree -->
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-4">
+    <input type="text" name="name" placeholder="Your Name" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+    <input type="email" name="email" placeholder="Your Email" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+    <textarea name="message" placeholder="Your Message" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
+  </form>
+</section>
 
   <!-- Footer -->
   <footer class="bg-gray-800 text-gray-300 py-6 text-center">
