@@ -45,17 +45,23 @@
   <span id="typed-text"></span>
 </p>
 
+<p class="text-xl max-w-3xl mx-auto mb-8">
+  <span id="typed-text"></span>
+</p>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
   var typed = new Typed('#typed-text', {
     strings: [
       "AI Engineer",
       "Researcher",
       "Robotics Enthusiast",
-      "MS Robotics & Autonomous Systems (AI)"
+      "MS Robotics",
+      "Autonomous Systems (AI)"
     ],
-    typeSpeed: 50,      // slow typing for readability
-    backSpeed: 25,      // slow backspace
-    backDelay: 4000,    // 4 sec pause after typing full string
+    typeSpeed: 50,       // type slowly
+    backSpeed: 25,       // erase slowly
+    backDelay: 4000,     // keep each phrase visible for 4 seconds
     startDelay: 500,
     loop: true,
     showCursor: true,
