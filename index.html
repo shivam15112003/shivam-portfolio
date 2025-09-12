@@ -42,12 +42,16 @@
   </section>
 
   <script>
-    var typed = new Typed('#typed-text', {
-      strings: ["AI Engineer", "Researcher", "Robotics Enthusiast", "MS in Robotics & Autonomous Systems (AI)"],
-      typeSpeed: 60,
-      backSpeed: 40,
-      loop: true
-    });
+  var typed = new Typed('#typed-text', {
+    strings: ["AI Engineer", "Researcher", "Robotics Enthusiast", "MS Robotics & Autonomous Systems (AI)"],
+    typeSpeed: 50,        // slower typing speed
+    backSpeed: 25,        // slower backspace speed
+    backDelay: 2000,      // wait 2 seconds before erasing
+    startDelay: 500,      // small delay before typing starts
+    loop: true,
+    showCursor: true,
+    cursorChar: '|'
+  });
   </script>
 
   <!-- About -->
