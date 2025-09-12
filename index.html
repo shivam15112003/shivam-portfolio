@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shivam Sharma | Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/typed.js@2.0.12"></script>
-  <link rel="icon" href="https://img.icons8.com/ios-filled/50/000000/robot-2.png"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 transition-colors duration-300">
+<body class="bg-gray-50 text-gray-800">
 
-  <!-- Header -->
+  <!-- Header / Navbar -->
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold">Shivam Sharma</h1>
@@ -25,121 +30,109 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
-    <div class="container mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold mb-4">Hi, I'm Shivam 👋</h2>
+  <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-32 relative overflow-hidden">
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h2 class="text-5xl font-bold mb-4">Hi, I'm Shivam 👋</h2>
       
       <!-- Typing Titles -->
-      <p class="text-xl mb-4">
+      <p class="text-2xl mb-6">
         <span id="typed-text"></span>
       </p>
-  
+
       <!-- Degree & Education -->
-      <p class="text-lg mb-2">
-        🎓 MS in Robotics & Autonomous Systems (AI) at Arizona State University
-      </p>
-      <p class="text-lg">
-        🎓 B.Tech in Artificial Intelligence from Amity University, Noida
-      </p>
+      <p class="text-lg mb-2">🎓 MS in Robotics & Autonomous Systems (AI) at Arizona State University</p>
+      <p class="text-lg">🎓 B.Tech in Artificial Intelligence from Amity University, Noida</p>
+
+      <!-- Resume Button -->
+      <a href="resume.pdf" target="_blank" class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">Download Resume</a>
     </div>
+
+    <!-- Optional Background Particles -->
+    <canvas id="particles" class="absolute top-0 left-0 w-full h-full"></canvas>
   </section>
-  
-  <!-- Typed.js Script -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script>
-    var typed = new Typed('#typed-text', {
-      strings: [
-        "AI Engineer",
-        "Researcher",
-        "Robotics Enthusiast"
-      ],
-      typeSpeed: 50,       // slow typing
-      backSpeed: 25,       // slow erasing
-      backDelay: 3000,     // keep each phrase visible for 3 seconds
-      startDelay: 500,
-      loop: true,
-      showCursor: true,
-      cursorChar: '|'
-    });
-  </script>
-  
 
-
-  <!-- About -->
+  <!-- About Me -->
   <section id="about" class="py-16 container mx-auto px-6">
-    <h3 class="text-3xl font-semibold mb-6">About Me</h3>
-    <p class="text-lg leading-relaxed max-w-3xl mx-auto">
-      I am passionate about Artificial Intelligence, Machine Learning, and Robotics. I’ve worked on gesture-based interaction systems, AutoML frameworks, and IoT-powered research. Currently pursuing my MS in Robotics and Autonomous Systems (AI) at Arizona State University.
+    <h3 class="text-3xl font-semibold mb-8">About Me</h3>
+    <p class="text-lg leading-relaxed mb-6" data-aos="fade-up">
+      I am passionate about Artificial Intelligence, Machine Learning, and Robotics. I’ve worked on gesture-based interaction systems, AutoML frameworks, and IoT-powered research. Currently pursuing my MS in Robotics & Autonomous Systems (AI) at ASU.
     </p>
+
+    <!-- Skills -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="font-bold mb-2">Artificial Intelligence</h4>
+        <div class="w-full bg-gray-200 h-2 rounded-full">
+          <div class="bg-blue-600 h-2 rounded-full w-4/5"></div>
+        </div>
+      </div>
+      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="font-bold mb-2">Machine Learning</h4>
+        <div class="w-full bg-gray-200 h-2 rounded-full">
+          <div class="bg-blue-600 h-2 rounded-full w-4/5"></div>
+        </div>
+      </div>
+      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="font-bold mb-2">Robotics</h4>
+        <div class="w-full bg-gray-200 h-2 rounded-full">
+          <div class="bg-blue-600 h-2 rounded-full w-3/4"></div>
+        </div>
+      </div>
+      <div data-aos="fade-up" class="bg-white p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="font-bold mb-2">IoT</h4>
+        <div class="w-full bg-gray-200 h-2 rounded-full">
+          <div class="bg-blue-600 h-2 rounded-full w-3/4"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Projects -->
   <section id="projects" class="py-16 bg-gray-100">
     <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-semibold mb-10 text-center">Projects</h3>
+      <h3 class="text-3xl font-semibold mb-10">Projects</h3>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
           <h4 class="text-xl font-bold mb-2">AutoML Framework</h4>
-          <p class="mb-2">A complete end-to-end automated ML pipeline with model selection, hyperparameter tuning, and deployment readiness.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">ML</span>
-            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">Optuna</span>
-          </div>
+          <p>A complete end-to-end automated ML pipeline with model selection, hyperparameter tuning, and deployment readiness.</p>
         </div>
-        <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
           <h4 class="text-xl font-bold mb-2">Gesture-Controlled IoT</h4>
-          <p class="mb-2">Controlled lights and devices using hand gestures with Python & Arduino integration.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">IoT</span>
-            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">Arduino</span>
-          </div>
+          <p>Controlled lights and devices using hand gestures with Python & Arduino integration.</p>
         </div>
-        <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div data-aos="fade-up" class="bg-white rounded-2xl shadow p-6 hover:scale-105 transition transform">
           <h4 class="text-xl font-bold mb-2">Animal Emotion Detection</h4>
-          <p class="mb-2">Deep learning pipeline using transfer learning (VGG16, MobileNetV2) to detect animal emotions from images.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Python</span>
-            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">Deep Learning</span>
-            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">DL Models</span>
-          </div>
+          <p>Deep learning pipeline using transfer learning (VGG16, MobileNetV2) to detect animal emotions from images.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Research -->
+  <!-- Research & Publications -->
   <section id="research" class="py-16 container mx-auto px-6">
-    <h3 class="text-3xl font-semibold mb-6 text-center">Research & Publications</h3>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition duration-300">
-        <h4 class="text-xl font-bold mb-2">Handcrafted AI</h4>
-        <p class="mb-2">Designing Virtual Hardware for Hand Gesture-Based Interaction.</p>
-        <a href="https://ieeexplore.ieee.org/document/10939210" target="_blank" class="text-blue-600 hover:underline">IEEE Xplore (ICPCT 2025)</a>
-      </div>
-      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition duration-300">
-        <h4 class="text-xl font-bold mb-2">Smart Interaction</h4>
-        <p class="mb-2">Combining Special Gestures, Virtual Calculations, and IoT.</p>
-        <a href="https://doi.org/10.1109/ICIMA64861.2025.11074109" target="_blank" class="text-blue-600 hover:underline">IEEE Xplore (ICETET-SIP 25)</a>
-      </div>
-    </div>
+    <h3 class="text-3xl font-semibold mb-6">Research & Publications</h3>
+    <ul class="list-disc list-inside space-y-4">
+      <li>
+        <strong>Handcrafted AI:</strong> Designing Virtual Hardware for Hand Gesture-Based Interaction – 
+        <em><a href="https://ieeexplore.ieee.org/document/10939210" target="_blank" class="text-blue-600 hover:underline">Published in IEEE Xplore (ICPCT 2025)</a></em>.
+      </li>
+      <li>
+        <strong>Smart Interaction:</strong> Combining Special Gestures, Virtual Calculations, and IoT – 
+        <em><a href="https://doi.org/10.1109/ICIMA64861.2025.11074109" target="_blank" class="text-blue-600 hover:underline">Published in IEEE Xplore (ICETET-SIP 25)</a></em>.
+      </li>
+    </ul>
   </section>
 
-  <!-- Experience Timeline -->
+  <!-- Experience -->
   <section id="experience" class="py-16 bg-gray-100">
     <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-semibold mb-10 text-center">Experience</h3>
-      <div class="relative border-l-2 border-blue-600 ml-4">
-        <!-- Item 1 -->
-        <div class="mb-10 ml-6">
-          <span class="absolute -left-4 top-1 w-8 h-8 bg-blue-600 rounded-full"></span>
+      <h3 class="text-3xl font-semibold mb-6">Experience</h3>
+      <div class="space-y-6">
+        <div data-aos="fade-up">
           <h4 class="text-xl font-bold">AI Engineer – HCL Technologies</h4>
           <p>Worked on supervised/unsupervised ML, Optuna hyperparameter tuning, and Docker-based deployment pipelines.</p>
         </div>
-        <!-- Item 2 -->
-        <div class="mb-10 ml-6">
-          <span class="absolute -left-4 top-1 w-8 h-8 bg-blue-600 rounded-full"></span>
+        <div data-aos="fade-up">
           <h4 class="text-xl font-bold">Data Science Intern – NullClass Technologies</h4>
           <p>Developed ML/DL solutions in Python, focusing on gesture recognition and AI applications.</p>
         </div>
@@ -148,67 +141,87 @@
   </section>
 
   <!-- Contact -->
-<section id="contact" class="py-16 container mx-auto px-6 text-center">
-  <h3 class="text-3xl font-semibold mb-6">Get in Touch</h3>
-  <p class="mb-4">📩 Email: 
-    <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-600 hover:underline">
-      sharmashivam15112003@gmail.com
-    </a>
-  </p>
-  <p class="mb-6">🔗 LinkedIn: 
-    <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-600 hover:underline" target="_blank">
-      Shivam Sharma
-    </a>
-  </p>
+  <section id="contact" class="py-16 container mx-auto px-6 text-center">
+    <h3 class="text-3xl font-semibold mb-6">Get in Touch</h3>
+    <p class="mb-4">📩 Email: 
+      <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-600 hover:underline">sharmashivam15112003@gmail.com</a>
+    </p>
+    <p class="mb-6">🔗 LinkedIn: 
+      <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-600 hover:underline" target="_blank">Shivam Sharma</a>
+    </p>
 
-  <!-- Form using Formspree -->
-  <form id="contact-form" class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-4">
-    <input type="text" name="name" placeholder="Your Name" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-    <input type="email" name="email" placeholder="Your Email" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-    <textarea name="message" placeholder="Your Message" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
-    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
-    <p id="form-status" class="mt-2 font-semibold"></p>
-  </form>
+    <form id="contact-form" class="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-4">
+      <input type="text" name="name" placeholder="Your Name" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+      <input type="email" name="email" placeholder="Your Email" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+      <textarea name="message" placeholder="Your Message" required class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
+      <p id="form-status" class="mt-2 font-semibold"></p>
+    </form>
 
-  <script>
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
+    <script>
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault(); // prevent redirect
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent redirect
 
-      const formData = new FormData(form);
+        const formData = new FormData(form);
 
-      fetch('https://formspree.io/f/mvgbyqwq', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(response => {
-        if (response.ok) {
-          status.textContent = "✅ Thank you! Your message has been sent.";
-          status.classList.remove("text-red-600");
-          status.classList.add("text-green-600");
-          form.reset(); // clear the form
-        } else {
-          response.json().then(data => {
-            status.textContent = "❌ Oops! Something went wrong. Please try again.";
-            status.classList.remove("text-green-600");
-            status.classList.add("text-red-600");
-          })
-        }
-      })
-      .catch(() => {
-        status.textContent = "❌ Oops! Something went wrong. Please try again.";
-        status.classList.remove("text-green-600");
-        status.classList.add("text-red-600");
+        fetch('https://formspree.io/f/mvgbyqwq', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+          if (response.ok) {
+            status.textContent = "✅ Thank you! Your message has been sent.";
+            status.classList.remove("text-red-600");
+            status.classList.add("text-green-600");
+            form.reset();
+          } else {
+            response.json().then(() => {
+              status.textContent = "❌ Oops! Something went wrong. Please try again.";
+              status.classList.remove("text-green-600");
+              status.classList.add("text-red-600");
+            })
+          }
+        })
+        .catch(() => {
+          status.textContent = "❌ Oops! Something went wrong. Please try again.";
+          status.classList.remove("text-green-600");
+          status.classList.add("text-red-600");
+        });
       });
+    </script>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-6 text-center">
+    <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
+  </footer>
+
+  <!-- Typed.js Script -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    var typed = new Typed('#typed-text', {
+      strings: ["AI Engineer", "Researcher", "Robotics Enthusiast"],
+      typeSpeed: 50,
+      backSpeed: 25,
+      backDelay: 3000,
+      startDelay: 500,
+      loop: true,
+      showCursor: true,
+      cursorChar: '|'
     });
   </script>
-</section>
 
-<!-- Footer -->
-<footer class="bg-gray-800 text-gray-300 py-6 text-center">
-  <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
-</footer>
-
+  <!-- AOS Animate on Scroll -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
+</body>
+</html>
