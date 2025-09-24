@@ -14,17 +14,31 @@
 <body class="bg-black text-gray-100">
 
     <header class="bg-black shadow sticky top-0 z-50">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">Shivam Sharma</h1>
-      <nav class="space-x-6">
-        <a href="#about" class="hover:text-cyan-400 text-gray-200">About</a>
-        <a href="#skills" class="hover:text-cyan-400 text-gray-200">Skills</a>
-        <a href="#projects" class="hover:text-cyan-400 text-gray-200">Projects</a>
-        <a href="#research" class="hover:text-cyan-400 text-gray-200">Research</a>
-        <a href="#experience" class="hover:text-cyan-400 text-gray-200">Experience</a>
-        <a href="#contact" class="hover:text-cyan-400 text-gray-200">Contact</a>
-      </nav>
-    </div>
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-white">Shivam Sharma</h1>
+
+        <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+        <i class="fas fa-bars fa-lg"></i>
+        </button>
+
+        <nav id="desktop-menu" class="hidden md:flex space-x-6">
+        <a href="#about" class="hover:text-cyan-400 text-gray-200">About</a>
+        <a href="#skills" class="hover:text-cyan-400 text-gray-200">Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 text-gray-200">Projects</a>
+        <a href="#research" class="hover:text-cyan-400 text-gray-200">Research</a>
+        <a href="#experience" class="hover:text-cyan-400 text-gray-200">Experience</a>
+        <a href="#contact" class="hover:text-cyan-400 text-gray-200">Contact</a>
+        </nav>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
+        <a href="#about" class="block py-2 px-6 text-sm hover:bg-gray-800">About</a>
+        <a href="#skills" class="block py-2 px-6 text-sm hover:bg-gray-800">Skills</a>
+        <a href="#projects" class="block py-2 px-6 text-sm hover:bg-gray-800">Projects</a>
+        <a href="#research" class="block py-2 px-6 text-sm hover:bg-gray-800">Research</a>
+        <a href="#experience" class="block py-2 px-6 text-sm hover:bg-gray-800">Experience</a>
+        <a href="#contact" class="block py-2 px-6 text-sm hover:bg-gray-800">Contact</a>
+    </div>
   </header>
 
    <section class="bg-black text-white py-32 relative overflow-hidden">
@@ -145,127 +159,124 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
-// =========================================================================
-//  1. YOUR PORTFOLIO DATA
-//  Update your skills, projects, research, and experience here.
-// =========================================================================
-const portfolioData = {
-    skills: [
-        {
-            icon: "🤖",
-            title: "Artificial Intelligence & Machine Learning",
-            description: "Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning."
-        },
-        {
-            icon: "👁️",
-            title: "Computer Vision",
-            description: "OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, emotion detection, face recognition, object tracking."
-        },
-        {
-            icon: "💬",
-            title: "Natural Language Processing",
-            description: "NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, recommender systems."
-        },
-        {
-            icon: "💻",
-            title: "Programming & Databases",
-            description: "Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras."
-        },
-        {
-            icon: "⚙️",
-            title: "Tools & Frameworks",
-            description: "Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google Palm API."
-        },
-        {
-            icon: "📜",
-            title: "Certifications",
-            description: "Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn)."
-        }
-    ],
-    projects: [
-        {
-            icon: "🤖",
-            title: "AutoML Framework",
-            description: "A scalable end-to-end <strong class='text-yellow-400'>AutoML pipeline</strong> with automated model selection, <strong class='text-yellow-400'>hyperparameter tuning</strong> (Optuna, GridSearchCV), and evaluation.",
-            githubLink: "https://github.com/shivam15112003/AutoML-Universal-System.git"
-        },
-        {
-            icon: "🖐",
-            title: "Gesture-Controlled IoT",
-            description: "Real-time <strong class='text-yellow-400'>gesture recognition</strong> interface using Mediapipe + OpenCV with Arduino for IoT device control.",
-            githubLink: "https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git"
-        },
-        {
-            icon: "🎙",
-            title: "Female English Voice Emotion Detection",
-            description: "Fine-tuned deep learning system for <strong class='text-yellow-400'>real-time female English voice emotion recognition</strong> with Mel-Spectrograms + VGG16.",
-            githubLink: "https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git"
-        },
-        {
-            icon: "🐾",
-            title: "Animal Emotion Classifier",
-            description: "AI-powered <strong class='text-yellow-400'>MobileNetV2 image classifier</strong> to detect and classify 9 animal emotion classes with real-time Tkinter popups.",
-            githubLink: "https://github.com/shivam15112003/Animal-emotion-classifier.git"
-        },
-        {
-            icon: "🚗",
-            title: "AI-Based Vehicle Sleep Detection & Age Prediction",
-            description: "Deep learning + CV system detecting <strong class='text-yellow-400'>drowsiness & predicting age</strong> using VGG16 CNNs + OpenCV + Tkinter GUI.",
-            githubLink: "https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git"
-        },
-        {
-            icon: "🎬",
-            title: "CineReco: Hybrid Movie Recommendation",
-            description: "An AI-powered <strong class='text-yellow-400'>recommender system</strong> combining Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.",
-            githubLink: "https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git"
-        },
-        {
-            icon: "📊",
-            title: "AtliQ T-Shirts: LLM-Powered SQL Assistant",
-            description: "LangChain + Google Palm-powered tool that converts <strong class='text-yellow-400'>natural language into SQL queries</strong> for real-time MySQL insights.",
-            githubLink: "https://github.com/shivam15112003/LLM_Project.git"
-        }
-    ],
-    research: [
-        {
-            title: "Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction",
-            description: "Proposed a <strong class='text-yellow-400'>virtual hardware simulation layer</strong> for gesture-based AI systems, enabling IoT integration without physical devices. Achieved <strong class='text-yellow-400'>93% accuracy</strong> with Mediapipe + OpenCV pipelines across 5 gestures.",
-            paperLink: "https://ieeexplore.ieee.org/document/10939210"
-        },
-        {
-            title: "Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT",
-            description: "Developed a <strong class='text-yellow-400'>hybrid gesture + IoT framework</strong> where gestures trigger <em>virtual calculations</em> and control smart devices in real-time (~75ms latency). Demonstrated in <strong class='text-yellow-400'>smart-home control</strong> applications.",
-            paperLink: "https://doi.org/10.1109/ICIMA64861.2025.11074109"
-        }
-    ],
-    experience: [
-        {
-            title: "AI Engineer Intern – HCL Technologies",
-            bulletPoints: [
-                "Built ML models (<strong class='text-yellow-400'>Random Forest, Gradient Boosting</strong>) to predict customer churn on 500K+ records.",
-                "Improved AUC by 25% with advanced feature engineering (<strong class='text-yellow-400'>behavioral, transactional, demographic</strong>).",
-                "Optimized with <strong class='text-yellow-400'>GridSearchCV</strong> hyperparameter tuning using scikit-learn + NumPy.",
-                "Developed <strong class='text-yellow-400'>interactive dashboards</strong> for business intelligence reporting using Streamlit."
-            ]
-        },
-        {
-            title: "Data Science Intern – NullClass Technologies",
-            bulletPoints: [
-                "Created a Multi-Attribute Face Classifier GUI <strong class='text-yellow-400'>(VGG16 + MobileNetV2)</strong> with 95% accuracy.",
-                "Built <strong class='text-yellow-400'>DL pipelines for emotion detection</strong> (human face, female voice, animal images, 91–94% accuracy).",
-                "Developed <strong class='text-yellow-400'>AI-powered sleep detection & age prediction</strong> for driver monitoring (~95% accuracy).",
-                "Designed <strong class='text-yellow-400'>Tkinter-based GUIs</strong> for interactive model usage."
-            ]
-        }
-    ]
-};
-
-// =========================================================================
-//  2. DYNAMIC RENDERING LOGIC
-//  This code takes the data above and builds the HTML.
-// =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Render Skills
+    // =========================================================================
+    //  1. YOUR PORTFOLIO DATA
+    // =========================================================================
+    const portfolioData = {
+        skills: [
+            {
+                icon: "🤖",
+                title: "Artificial Intelligence & Machine Learning",
+                description: "Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning."
+            },
+            {
+                icon: "👁️",
+                title: "Computer Vision",
+                description: "OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, emotion detection, face recognition, object tracking."
+            },
+            {
+                icon: "💬",
+                title: "Natural Language Processing",
+                description: "NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, recommender systems."
+            },
+            {
+                icon: "💻",
+                title: "Programming & Databases",
+                description: "Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras."
+            },
+            {
+                icon: "⚙️",
+                title: "Tools & Frameworks",
+                description: "Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google Palm API."
+            },
+            {
+                icon: "📜",
+                title: "Certifications",
+                description: "Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn)."
+            }
+        ],
+        projects: [
+            {
+                icon: "🤖",
+                title: "AutoML Framework",
+                description: "A scalable end-to-end <strong class='text-yellow-400'>AutoML pipeline</strong> with automated model selection, <strong class='text-yellow-400'>hyperparameter tuning</strong> (Optuna, GridSearchCV), and evaluation.",
+                githubLink: "https://github.com/shivam15112003/AutoML-Universal-System.git"
+            },
+            {
+                icon: "🖐",
+                title: "Gesture-Controlled IoT",
+                description: "Real-time <strong class='text-yellow-400'>gesture recognition</strong> interface using Mediapipe + OpenCV with Arduino for IoT device control.",
+                githubLink: "https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git"
+            },
+            {
+                icon: "🎙",
+                title: "Female English Voice Emotion Detection",
+                description: "Fine-tuned deep learning system for <strong class='text-yellow-400'>real-time female English voice emotion recognition</strong> with Mel-Spectrograms + VGG16.",
+                githubLink: "https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git"
+            },
+            {
+                icon: "🐾",
+                title: "Animal Emotion Classifier",
+                description: "AI-powered <strong class='text-yellow-400'>MobileNetV2 image classifier</strong> to detect and classify 9 animal emotion classes with real-time Tkinter popups.",
+                githubLink: "https://github.com/shivam15112003/Animal-emotion-classifier.git"
+            },
+            {
+                icon: "🚗",
+                title: "AI-Based Vehicle Sleep Detection & Age Prediction",
+                description: "Deep learning + CV system detecting <strong class='text-yellow-400'>drowsiness & predicting age</strong> using VGG16 CNNs + OpenCV + Tkinter GUI.",
+                githubLink: "https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git"
+            },
+            {
+                icon: "🎬",
+                title: "CineReco: Hybrid Movie Recommendation",
+                description: "An AI-powered <strong class='text-yellow-400'>recommender system</strong> combining Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.",
+                githubLink: "https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git"
+            },
+            {
+                icon: "📊",
+                title: "AtliQ T-Shirts: LLM-Powered SQL Assistant",
+                description: "LangChain + Google Palm-powered tool that converts <strong class='text-yellow-400'>natural language into SQL queries</strong> for real-time MySQL insights.",
+                githubLink: "https://github.com/shivam15112003/LLM_Project.git"
+            }
+        ],
+        research: [
+            {
+                title: "Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction",
+                description: "Proposed a <strong class='text-yellow-400'>virtual hardware simulation layer</strong> for gesture-based AI systems, enabling IoT integration without physical devices. Achieved <strong class='text-yellow-400'>93% accuracy</strong> with Mediapipe + OpenCV pipelines across 5 gestures.",
+                paperLink: "https://ieeexplore.ieee.org/document/10939210"
+            },
+            {
+                title: "Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT",
+                description: "Developed a <strong class='text-yellow-400'>hybrid gesture + IoT framework</strong> where gestures trigger <em>virtual calculations</em> and control smart devices in real-time (~75ms latency). Demonstrated in <strong class='text-yellow-400'>smart-home control</strong> applications.",
+                paperLink: "https://doi.org/10.1109/ICIMA64861.2025.11074109"
+            }
+        ],
+        experience: [
+            {
+                title: "AI Engineer Intern – HCL Technologies",
+                bulletPoints: [
+                    "Built ML models (<strong class='text-yellow-400'>Random Forest, Gradient Boosting</strong>) to predict customer churn on 500K+ records.",
+                    "Improved AUC by 25% with advanced feature engineering (<strong class='text-yellow-400'>behavioral, transactional, demographic</strong>).",
+                    "Optimized with <strong class='text-yellow-400'>GridSearchCV</strong> hyperparameter tuning using scikit-learn + NumPy.",
+                    "Developed <strong class='text-yellow-400'>interactive dashboards</strong> for business intelligence reporting using Streamlit."
+                ]
+            },
+            {
+                title: "Data Science Intern – NullClass Technologies",
+                bulletPoints: [
+                    "Created a Multi-Attribute Face Classifier GUI <strong class='text-yellow-400'>(VGG16 + MobileNetV2)</strong> with 95% accuracy.",
+                    "Built <strong class='text-yellow-400'>DL pipelines for emotion detection</strong> (human face, female voice, animal images, 91–94% accuracy).",
+                    "Developed <strong class='text-yellow-400'>AI-powered sleep detection & age prediction</strong> for driver monitoring (~95% accuracy).",
+                    "Designed <strong class='text-yellow-400'>Tkinter-based GUIs</strong> for interactive model usage."
+                ]
+            }
+        ]
+    };
+
+    // =========================================================================
+    //  2. DYNAMIC RENDERING LOGIC
+    // =========================================================================
     const skillsGrid = document.getElementById('skills-grid');
     if(skillsGrid) {
         portfolioData.skills.forEach(skill => {
@@ -278,7 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Render Projects
     const projectsGrid = document.getElementById('projects-grid');
     if(projectsGrid) {
         portfolioData.projects.forEach(project => {
@@ -294,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Render Research
     const researchList = document.getElementById('research-list');
     if(researchList) {
         portfolioData.research.forEach(paper => {
@@ -310,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Render Experience
     const experienceList = document.getElementById('experience-list');
     if(experienceList) {
         portfolioData.experience.forEach(job => {
@@ -327,9 +335,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    //  3. ORIGINAL SCRIPTS INITIALIZATION
+    //  3. INITIALIZATION & EVENT LISTENERS
     // =========================================================================
     
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
+    for (let link of mobileMenuLinks) {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    }
+
     // AOS (Animate on Scroll)
     AOS.init({ duration: 1000 });
 
