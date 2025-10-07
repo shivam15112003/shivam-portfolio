@@ -1,26 +1,660 @@
-// Tiny offline cache
-const CACHE = 'shivam-portfolio-v1';
-const ASSETS = [
-  './', './index.html', './profile.jpeg', './ASU_Resume_Template_Shivam.pdf'
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Shivam Sharma | Portfolio</title>
 
-self.addEventListener('install', e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
-});
+  <!-- SEO / Social -->
+  <meta name="description" content="Shivam Sharma — AI Engineer & Researcher. ML, DL, Computer Vision, NLP, Robotics. Portfolio, projects, research & experience."/>
+  <meta property="og:title" content="Shivam Sharma | Portfolio"/>
+  <meta property="og:description" content="AI Engineer & Researcher — ML, DL, CV, NLP & Robotics projects, research & experience."/>
+  <meta property="og:image" content="profile.jpeg"/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#000000"/>
 
-self.addEventListener('activate', e=>{
-  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))) );
-  self.clients.claim();
-});
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-self.addEventListener('fetch', e=>{
-  const req = e.request;
-  if(req.method!=='GET') return;
-  e.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(res=>{
-      const copy = res.clone();
-      caches.open(CACHE).then(c=>c.put(req, copy));
-      return res;
-    }).catch(()=> caches.match('./')))
-  );
-});
+  <!-- AOS + Font Awesome + Typed + Confetti -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- PWA (optional, add manifest.webmanifest file provided below) -->
+  <link rel="manifest" href="manifest.webmanifest"/>
+
+  <style>
+    html{scroll-behavior:smooth}
+    body{--nav-h:72px}
+    section{scroll-margin-top:calc(var(--nav-h) + 12px)}
+    /* Glass + glow */
+    .glass{background:#0b0f1ad9;border:1px solid rgba(255,255,255,.08);backdrop-filter:saturate(140%) blur(10px);border-radius:16px}
+    .glow{box-shadow:0 20px 60px -15px rgba(34, 211, 238, 0.35)}
+    /* Progress bar */
+    #scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#22d3ee,#2563eb);z-index:60;transition:width .12s linear}
+    /* Floating controls */
+    .fab{position:fixed;right:1rem;bottom:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:60}
+    .fab .btn{background:rgba(17,24,39,.85);border:1px solid rgba(255,255,255,.08);padding:.6rem .8rem;border-radius:.75rem;color:#e5e7eb}
+    #backTop{display:none}
+    /* Command palette */
+    #cmdk{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);z-index:70}
+    #cmdk .card{width:min(720px,94vw)} #cmdk .row{display:flex;gap:.6rem;align-items:center;padding:.7rem .8rem}
+    #cmdk .list{max-height:54vh;overflow:auto}
+    #cmdk .item{padding:.6rem .8rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;border-radius:.4rem}
+    #cmdk .item[aria-selected="true"]{background:#0f1a2e}
+    /* Chips */
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.25rem 0 1rem}
+    .chip{border:1px solid rgba(255,255,255,.08);padding:.35rem .7rem;border-radius:9999px;background:rgba(255,255,255,.03)}
+    .chip[aria-selected="true"]{background:linear-gradient(90deg,#22d3ee,#2563eb);color:#0b0f1a;border-color:transparent}
+    /* Neon blobs */
+    .blob{position:absolute;pointer-events:none;filter:blur(40px);opacity:.6}
+    .blob.one{top:-140px;left:50%;width:1000px;height:1000px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(34,211,238,.18),transparent)}
+    .blob.two{bottom:-220px;left:-160px;width:720px;height:720px;background:radial-gradient(closest-side,rgba(168,85,247,.14),transparent)}
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){.glow,.blob{animation:none}}
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Shivam Sharma","jobTitle":"AI Engineer and Researcher","alumniOf":["Arizona State University","Amity University, Noida"],"image":"profile.jpeg","sameAs":["https://www.linkedin.com/in/shivam-sharma-333137202/"]}
+  </script>
+</head>
+<body class="bg-black text-gray-100 antialiased">
+
+  <!-- Progress -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ======= ORIGINAL CONTENT (UNMODIFIED TEXT/LINKS) ======= -->
+
+  <!-- Header / Navbar -->
+  <header class="bg-black shadow sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">Shivam Sharma</h1>
+      <nav class="space-x-6">
+        <a href="#about" class="hover:text-cyan-400 text-gray-200">About</a>
+        <a href="#skills" class="hover:text-cyan-400 text-gray-200">Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 text-gray-200">Projects</a>
+        <a href="#research" class="hover:text-cyan-400 text-gray-200">Research</a>
+        <a href="#experience" class="hover:text-cyan-400 text-gray-200">Experience</a>
+        <a href="#contact" class="hover:text-cyan-400 text-gray-200">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-black text-white py-32 relative overflow-hidden">
+    <div class="blob one" aria-hidden="true"></div>
+    <div class="blob two" aria-hidden="true"></div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <div class="mx-auto mb-5 w-32 h-32 rounded-full border-4 border-cyan-400 shadow-lg overflow-hidden flex items-center justify-center glow">
+        <img src="profile.jpeg" alt="Shivam Sharma Profile" class="w-full h-full object-cover">
+      </div>
+
+      <h2 class="text-5xl font-bold mb-4 text-white">Hi, I'm Shivam 👋</h2>
+
+      <p class="text-2xl mb-6 text-gray-100"><span id="typed-text"></span></p>
+
+      <p class="text-lg mb-2 text-gray-200">🎓 MS in <strong class="text-yellow-400">Robotics & Autonomous Systems (AI)</strong> at Arizona State University</p>
+      <p class="text-lg mb-8 text-gray-200">🎓 B.Tech in <strong class="text-yellow-400">Artificial Intelligence</strong> from Amity University, Noida</p>
+
+      <a href="ASU_Resume_Template_Shivam.pdf" target="_blank"
+         class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:scale-105 transition transform glow">
+        Download Resume
+      </a>
+    </div>
+
+    <canvas id="particles" class="absolute top-0 left-0 w-full h-full"></canvas>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-16 container mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-8 text-cyan-400">About Me</h3>
+    <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
+      I am a passionate <strong class="text-yellow-400">AI Engineer and Researcher</strong> with hands-on experience in <strong class="text-yellow-400">Machine Learning, Deep Learning, Computer Vision, and NLP</strong>. 
+      My work spans building gesture-controlled IoT systems, AutoML frameworks, and AI-driven emotion detection systems.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
+      Currently pursuing my <strong class="text-yellow-400">MS in Robotics & Autonomous Systems (AI)</strong> at Arizona State University, focusing on developing scalable AI systems for autonomous platforms. 
+      I hold a <strong class="text-yellow-400">B.Tech in Artificial Intelligence</strong> from Amity University, Noida.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
+      I have professional experience as an <strong class="text-yellow-400">AI Engineer Intern at HCL Technologies</strong> and a <strong class="text-yellow-400">Data Science Intern at NullClass Technologies</strong>, 
+      where I worked on large-scale ML systems, computer vision pipelines, and AI-powered solutions with measurable impact.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
+      My goal is to contribute to <strong class="text-yellow-400">next-generation AI and robotics solutions</strong> that enhance human–machine interaction, improve accessibility, 
+      and enable intelligent autonomous decision-making in real-world environments.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="py-16 bg-gray-900">
+    <div class="container mx-auto px-6">
+      <h3 class="text-3xl font-semibold mb-8 text-cyan-400">Skills</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">🤖 Artificial Intelligence & Machine Learning</h4><p class="text-gray-200 text-sm">Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning.</p></div>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">👁️ Computer Vision</h4><p class="text-gray-200 text-sm">OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, emotion detection, face recognition, object tracking.</p></div>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">💬 Natural Language Processing</h4><p class="text-gray-200 text-sm">NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, recommender systems.</p></div>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">💻 Programming & Databases</h4><p class="text-gray-200 text-sm">Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras.</p></div>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">⚙️ Tools & Frameworks</h4><p class="text-gray-200 text-sm">Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google Palm API.</p></div>
+        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform"><h4 class="font-bold text-lg mb-2 text-blue-400">📜 Certifications</h4><p class="text-gray-200 text-sm">Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-16 bg-black">
+    <div class="container mx-auto px-6">
+      <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Projects</h3>
+
+      <!-- NEW: Project tools (filters/search/sort) — non-destructive -->
+      <div class="chips" id="projChips" role="tablist" aria-label="Project filters">
+        <button class="chip" data-filter="All" role="tab" aria-selected="true">All</button>
+        <button class="chip" data-filter="ML" role="tab">ML</button>
+        <button class="chip" data-filter="CV" role="tab">CV</button>
+        <button class="chip" data-filter="NLP" role="tab">NLP</button>
+        <button class="chip" data-filter="Audio" role="tab">Audio</button>
+        <button class="chip" data-filter="LLM" role="tab">LLM</button>
+        <button class="chip" data-filter="IoT" role="tab">IoT</button>
+        <input id="projSearch" class="ml-2 bg-gray-900 border border-white/10 px-3 py-2 rounded-lg text-sm" type="search" placeholder="Search projects…"/>
+        <select id="projSort" class="bg-gray-900 border border-white/10 px-3 py-2 rounded-lg text-sm">
+          <option value="recent">Sort: Recent</option>
+          <option value="az">A → Z</option>
+          <option value="za">Z → A</option>
+        </select>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projGrid">
+
+        <!-- AutoML -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="AutoML Framework" data-cats="ML">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🤖 AutoML Framework</h4>
+          <p class="text-gray-200">
+            A scalable end-to-end <strong class="text-yellow-400">AutoML pipeline</strong> with automated model selection, <strong class="text-yellow-400">hyperparameter tuning</strong> (Optuna, GridSearchCV), and evaluation.
+          </p>
+          <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Gesture Controlled IoT -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="Gesture-Controlled IoT" data-cats="CV,IoT">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🖐 Gesture-Controlled IoT</h4>
+          <p class="text-gray-200">
+            Real-time <strong class="text-yellow-400">gesture recognition</strong> interface using Mediapipe + OpenCV with Arduino for IoT device control.
+          </p>
+          <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Female Voice Emotion Detection -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="Female English Voice Emotion Detection" data-cats="Audio,DL">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🎙 Female English Voice Emotion Detection</h4>
+          <p class="text-gray-200">
+            Fine-tuned deep learning system for <strong class="text-yellow-400">real-time female English voice emotion recognition</strong> with Mel-Spectrograms + VGG16.
+          </p>
+          <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Animal Emotion Detection -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="Animal Emotion Classifier" data-cats="CV">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🐾 Animal Emotion Classifier</h4>
+          <p class="text-gray-200">
+            AI-powered <strong class="text-yellow-400">MobileNetV2 image classifier</strong> to detect and classify 9 animal emotion classes with real-time Tkinter popups.
+          </p>
+          <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Vehicle Sleep Detection -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="AI-Based Vehicle Sleep Detection & Age Prediction" data-cats="CV,Safety">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🚗 AI-Based Vehicle Sleep Detection & Age Prediction</h4>
+          <p class="text-gray-200">
+            Deep learning + CV system detecting <strong class="text-yellow-400">drowsiness & predicting age</strong> using VGG16 CNNs + OpenCV + Tkinter GUI.
+          </p>
+          <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- CineReco -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="CineReco: Hybrid Movie Recommendation" data-cats="NLP,Recommender">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🎬 CineReco: Hybrid Movie Recommendation</h4>
+          <p class="text-gray-200">
+            An AI-powered <strong class="text-yellow-400">recommender system</strong> combining Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.
+          </p>
+          <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- AtliQ SQL Assistant (LLM) -->
+        <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="AtliQ T-Shirts: LLM-Powered SQL Assistant" data-cats="LLM,Data">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">📊 AtliQ T-Shirts: LLM-Powered SQL Assistant</h4>
+          <p class="text-gray-200">
+            LangChain + Google Palm-powered tool that converts <strong class="text-yellow-400">natural language into SQL queries</strong> for real-time MySQL insights.
+          </p>
+          <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research" class="py-16 container mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Research & Publications</h3>
+    <div class="space-y-8">
+      <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="text-xl font-bold mb-2 text-blue-400">Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction</h4>
+        <p class="text-gray-200 mb-4">Proposed a <strong class="text-yellow-400">virtual hardware simulation layer</strong> for gesture-based AI systems, enabling IoT integration without physical devices. Achieved <strong class="text-yellow-400">93% accuracy</strong> with Mediapipe + OpenCV pipelines across 5 gestures.</p>
+        <a href="https://ieeexplore.ieee.org/document/10939210" target="_blank" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-5 py-2 rounded-lg font-medium shadow hover:scale-105 transition">📄 View Paper</a>
+      </div>
+      <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <h4 class="text-xl font-bold mb-2 text-blue-400">Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT</h4>
+        <p class="text-gray-200 mb-4">Developed a <strong class="text-yellow-400">hybrid gesture + IoT framework</strong> where gestures trigger <em>virtual calculations</em> and control smart devices in real-time (~75ms latency). Demonstrated in <strong class="text-yellow-400">smart-home control</strong> applications.</p>
+        <a href="https://doi.org/10.1109/ICIMA64861.2025.11074109" target="_blank" class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-5 py-2 rounded-lg font-medium shadow hover:scale-105 transition">📄 View Paper</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="py-16 bg-black">
+    <div class="container mx-auto px-6">
+      <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Experience</h3>
+      <div class="space-y-6">
+        <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="text-xl font-bold text-blue-400">AI Engineer Intern – HCL Technologies</h4>
+          <ul class="list-disc list-inside mt-2 space-y-2 text-gray-200">
+            <li>Built ML models (<strong class="text-yellow-400">Random Forest, Gradient Boosting</strong>) to predict customer churn on 500K+ records.</li>
+            <li>Improved AUC by 25% with advanced feature engineering (<strong class="text-yellow-400">behavioral, transactional, demographic</strong>).</li>
+            <li>Optimized with <strong class="text-yellow-400">GridSearchCV</strong> hyperparameter tuning using scikit-learn + NumPy.</li>
+            <li>Developed <strong class="text-yellow-400">interactive dashboards</strong> for business intelligence reporting using Streamlit.</li>
+          </ul>
+        </div>
+        <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+          <h4 class="text-xl font-bold text-blue-400">Data Science Intern – NullClass Technologies</h4>
+          <ul class="list-disc list-inside mt-2 space-y-2 text-gray-200">
+            <li>Created a Multi-Attribute Face Classifier GUI <strong class="text-yellow-400">(VGG16 + MobileNetV2)</strong> with 95% accuracy.</li>
+            <li>Built <strong class="text-yellow-400">DL pipelines for emotion detection</strong> (human face, female voice, animal images, 91–94% accuracy).</li>
+            <li>Developed <strong class="text-yellow-400">AI-powered sleep detection & age prediction</strong> for driver monitoring (~95% accuracy).</li>
+            <li>Designed <strong class="text-yellow-400">Tkinter-based GUIs</strong> for interactive model usage.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 container mx-auto px-6 text-center">
+    <h3 class="text-3xl font-semibold mb-6 text-blue-400">Feel free to reach out for collaborations, research, or internships:</h3>
+    <p class="mb-4 text-gray-300">📩 Email: <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-400 hover:underline">sharmashivam15112003@gmail.com</a></p>
+    <p class="mb-6 text-gray-300">🔗 LinkedIn: <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-400 hover:underline" target="_blank">Shivam Sharma</a></p>
+    <form id="contact-form" class="max-w-lg mx-auto bg-gray-900 p-6 rounded-2xl shadow-lg space-y-4">
+      <input type="text" name="name" placeholder="Your Name" required class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+      <input type="email" name="email" placeholder="Your Email" required class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+      <textarea name="message" placeholder="Your Message" required class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Send Message</button>
+      <p id="form-status" class="mt-2 font-semibold"></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-gray-400 py-6 text-center border-t border-gray-800">
+    <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
+  </footer>
+
+  <!-- Floating quick actions -->
+  <div class="fixed left-3 bottom-3 z-50 flex gap-2 items-center bg-gray-900/80 border border-white/10 backdrop-blur px-2.5 py-2 rounded-full">
+    <span class="text-xs opacity-80 hidden sm:inline">Quick:</span>
+    <a href="ASU_Resume_Template_Shivam.pdf" target="_blank" class="text-gray-200 hover:text-cyan-300"><i class="fa-solid fa-file-arrow-down"></i><span class="hidden sm:inline"> Resume</span></a>
+    <a href="mailto:sharmashivam15112003@gmail.com" class="text-gray-200 hover:text-cyan-300"><i class="fa-regular fa-envelope"></i><span class="hidden sm:inline"> Email</span></a>
+    <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" target="_blank" class="text-gray-200 hover:text-cyan-300"><i class="fa-brands fa-linkedin"></i><span class="hidden sm:inline"> LinkedIn</span></a>
+  </div>
+
+  <!-- FABs -->
+  <div class="fab">
+    <button class="btn" id="sfxToggle" title="Toggle sound (off)"><i class="fa-solid fa-volume-xmark"></i></button>
+    <button class="btn" id="backTop" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+    <button class="btn" id="cmdOpen" title="Command palette (Ctrl/Cmd+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </div>
+
+  <!-- Command palette -->
+  <div id="cmdk" role="dialog" aria-modal="true">
+    <div class="card glass">
+      <div class="row border-b border-white/10">
+        <i class="fa-solid fa-magnifying-glass text-cyan-400"></i>
+        <input id="cmdInput" type="text" placeholder="Jump to section, filter projects, or run an action…" class="flex-1 bg-gray-900 border border-white/10 rounded-lg px-3 py-2 text-gray-100"/>
+        <button class="text-gray-300 hover:text-white" id="cmdClose" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="list" id="cmdList" role="listbox"></div>
+      <div class="px-3 py-2 text-xs text-gray-400">Tips: try “LLM”, “Contact”, “Resume”, “scroll top”.</div>
+    </div>
+  </div>
+
+  <!-- Resume preview modal -->
+  <div id="resumeModal" class="fixed inset-0 hidden items-center justify-center bg-black/60 backdrop-blur z-50" role="dialog" aria-modal="true" aria-label="Resume preview">
+    <div class="glass w-[min(1100px,96vw)] h-[min(85vh,900px)] overflow-hidden rounded-xl flex flex-col">
+      <div class="flex items-center justify-between p-3 border-b border-white/10">
+        <div class="flex items-center gap-2 text-gray-200"><i class="fa-regular fa-file-pdf text-cyan-400"></i> Resume Preview</div>
+        <div class="flex items-center gap-2">
+          <a href="ASU_Resume_Template_Shivam.pdf" target="_blank" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-sm"><i class="fa-solid fa-download mr-1"></i>Download</a>
+          <button id="resumeClose" class="border border-white/10 px-3 py-1 rounded-md text-gray-200 hover:bg-white/5 text-sm"><i class="fa-solid fa-xmark mr-1"></i>Close</button>
+        </div>
+      </div>
+      <iframe src="ASU_Resume_Template_Shivam.pdf#toolbar=0" class="w-full h-full bg-gray-900" title="Resume PDF"></iframe>
+    </div>
+  </div>
+
+  <!-- Stats + Notes (extra, optional) -->
+  <section class="py-14 container mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Live Code Stats</h3>
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <input id="ghUser" class="bg-gray-900 border border-white/10 px-3 py-2 rounded-lg text-sm" value="shivam15112003"/>
+      <button id="ghFetch" class="bg-cyan-600 text-black font-semibold px-3 py-2 rounded-lg hover:bg-cyan-500">Fetch</button>
+      <small id="ghWhen" class="text-gray-400"></small>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+      <div class="glass p-4 text-center"><div class="text-2xl font-extrabold" id="ghRepos">—</div><div class="text-gray-400 text-sm">Public Repos</div></div>
+      <div class="glass p-4 text-center"><div class="text-2xl font-extrabold" id="ghStars">—</div><div class="text-gray-400 text-sm">Stars</div></div>
+      <div class="glass p-4 text-center"><div class="text-2xl font-extrabold" id="ghFollowers">—</div><div class="text-gray-400 text-sm">Followers</div></div>
+      <div class="glass p-4 text-center"><div class="text-2xl font-extrabold" id="ghActive">—</div><div class="text-gray-400 text-sm">Last Activity (days)</div></div>
+    </div>
+    <div id="ghTop" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+  </section>
+
+  <section class="py-12 container mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-4 text-cyan-400">Notes (local)</h3>
+    <div class="flex gap-2 mb-3">
+      <button id="noteAdd" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg">New Note</button>
+      <button id="noteClear" class="bg-gray-800 border border-white/10 px-3 py-2 rounded-lg">Clear All</button>
+    </div>
+    <div id="notesWrap" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    <small class="text-gray-400">Saved only in your browser (localStorage).</small>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <script>
+  // ===== Utilities =====
+  const $= (s, c=document)=>c.querySelector(s);
+  const $$=(s, c=document)=>Array.from(c.querySelectorAll(s));
+
+  // ===== AOS & typed =====
+  window.addEventListener('load', ()=>{
+    if(window.AOS) AOS.init({duration:900, once:true, offset:80});
+    if(window.Typed){
+      new Typed('#typed-text', {
+        strings:["AI Engineer","Deep Learning Enthusiast","Computer Vision Developer","NLP Researcher","Robotics And Automation Engineer","Machine Learning Enthusiast"],
+        typeSpeed:70, backSpeed:50, loop:true
+      });
+    } else { const t=$('#typed-text'); if(t) t.textContent="AI Engineer"; }
+  });
+
+  // ===== Scroll progress & back to top =====
+  const progressEl = $('#scroll-progress');
+  const backTop   = $('#backTop');
+  function updProg(){
+    const h=document.documentElement, max=h.scrollHeight - innerHeight;
+    const pct = Math.min(100, Math.max(0, (scrollY/max)*100));
+    progressEl.style.width = pct + '%';
+    backTop.style.display = scrollY > innerHeight*0.6 ? 'inline-flex' : 'none';
+  }
+  updProg(); addEventListener('scroll', updProg, {passive:true}); addEventListener('resize', updProg);
+  backTop?.addEventListener('click', ()=> scrollTo({top:0,behavior:'smooth'}));
+
+  // ===== Particles background (efficient) =====
+  (function(){
+    const canvas = document.getElementById('particles'); if(!canvas) return;
+    const ctx = canvas.getContext('2d'); let w,h,dpr,parts=[],maxD=120,run=true;
+    function size(){ dpr=Math.min(devicePixelRatio||1,2); w=canvas.clientWidth; h=canvas.clientHeight;
+      canvas.width=w*dpr; canvas.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      const N=Math.max(30, Math.floor((w*h)/14000)); maxD = Math.min(160, Math.sqrt(w*h)/28);
+      parts = Array.from({length:N}, ()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*1.6+.6}));
+    }
+    size(); addEventListener('resize', size);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)'); function toggle(e){run=!e.matches} toggle(reduce); reduce.addEventListener('change', toggle);
+    function step(){
+      ctx.clearRect(0,0,w,h); if(!run) return;
+      for(const p of parts){
+        p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(34,211,238,0.45)'; ctx.fill();
+      }
+      for(let i=0;i<parts.length;i++){ for(let j=i+1;j<parts.length;j++){
+        const a=parts[i], b=parts[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+        if(d<maxD){ const t=1-d/maxD; ctx.strokeStyle=`rgba(37,99,235,${0.18*t})`; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }}
+    }
+    (function loop(){ step(); requestAnimationFrame(loop) })();
+  })();
+
+  // ===== Sound FX (off by default) =====
+  let audioCtx, masterGain, sfx=false;
+  function ac(){ if(audioCtx) return audioCtx; try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); masterGain=audioCtx.createGain(); masterGain.gain.value=.18; masterGain.connect(audioCtx.destination);}catch{} return audioCtx; }
+  function beep(f=760,d=.12,type='sine'){ if(!sfx||!ac()) return; const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type=type; o.frequency.value=f; g.gain.value=.0001; o.connect(g); g.connect(masterGain);
+    const t=audioCtx.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.stop(t+d+.02); }
+  const sfxBtn = $('#sfxToggle');
+  sfxBtn?.addEventListener('click', async ()=>{ ac(); if(audioCtx?.state==='suspended') await audioCtx.resume(); sfx=!sfx; sfxBtn.innerHTML = `<i class="fa-solid ${sfx?'fa-volume-high':'fa-volume-xmark'}"></i>`; if(sfx) beep(620) });
+
+  // ===== Command palette =====
+  const cmdWrap  = $('#cmdk'), cmdInput = $('#cmdInput'), cmdList = $('#cmdList');
+  $('#cmdOpen')?.addEventListener('click', openCmd);
+  $('#cmdClose')?.addEventListener('click', closeCmd);
+  addEventListener('keydown', e=>{ const mod=e.ctrlKey||e.metaKey; if(mod && e.key.toLowerCase()==='k'){ e.preventDefault(); cmdWrap.style.display==='flex'?closeCmd():openCmd(); } if(e.key==='Escape'&&cmdWrap.style.display==='flex') closeCmd(); });
+  function openCmd(){ cmdWrap.style.display='flex'; renderCmd(''); cmdInput.value=''; cmdInput.focus(); }
+  function closeCmd(){ cmdWrap.style.display='none'; }
+
+  function items(){
+    const arr = [
+      ...$$('header nav a').map(a=>({label:a.textContent.trim(), action:()=>a.click()})),
+      ...$$('#projGrid > div').map(card=>({label:card.dataset.title||'Project', action:()=>{ filterApplyFromTitle(card.dataset.title||''); card.scrollIntoView({behavior:'smooth',block:'center'}); }})),
+      {label:'Filter: LLM', action:()=>applyFilter('LLM', true)},
+      {label:'Filter: CV',  action:()=>applyFilter('CV', true)},
+      {label:'Filter: NLP', action:()=>applyFilter('NLP', true)},
+      {label:'Back to top', action:()=>scrollTo({top:0,behavior:'smooth'})},
+      {label:'Preview Resume', action:()=>openResume()}
+    ];
+    return arr;
+  }
+  function highlight(q,s){ if(!q) return s; const i=s.toLowerCase().indexOf(q.toLowerCase()); return i<0?s:s.slice(0,i)+'<b>'+s.slice(i,i+q.length)+'</b>'+s.slice(i+q.length); }
+  function renderCmd(q){
+    const list = items().map(x=>({...x,score:score(q,x.label),hl:highlight(q,x.label)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,60);
+    cmdList.innerHTML=''; list.forEach((x,i)=>{ const row=document.createElement('button'); row.className='item w-full text-left'; row.setAttribute('role','option'); if(i===0) row.setAttribute('aria-selected','true'); row.innerHTML=`<span>${x.hl}</span><i class="fa-solid fa-arrow-turn-down-left opacity-70"></i>`;
+      row.addEventListener('click', ()=>{ x.action(); closeCmd(); if(sfx) beep(680) }); cmdList.appendChild(row); });
+  }
+  function score(q,s){ q=q.toLowerCase().trim(); s=s.toLowerCase(); if(!q) return 1; const i=s.indexOf(q); if(i===0) return 3; if(i>0) return 2; let qi=0; for(let si=0;si<s.length&&qi<q.length;si++){ if(s[si]===q[qi]) qi++; } return qi===q.length?1.5:0; }
+  cmdInput?.addEventListener('input', e=>renderCmd(e.target.value));
+  cmdInput?.addEventListener('keydown', e=>{
+    const rows=$$('.item', cmdList); let idx=rows.findIndex(r=>r.getAttribute('aria-selected')==='true'); if(e.key==='ArrowDown'){ e.preventDefault(); idx=Math.min(rows.length-1, idx+1); } if(e.key==='ArrowUp'){ e.preventDefault(); idx=Math.max(0, idx-1); }
+    rows.forEach(r=>r.setAttribute('aria-selected','false')); rows[idx]?.setAttribute('aria-selected','true'); if(e.key==='Enter'){ e.preventDefault(); rows[idx]?.click(); }
+  });
+
+  // ===== Resume preview =====
+  const resumeModal = $('#resumeModal');
+  function openResume(){ resumeModal.classList.remove('hidden'); resumeModal.classList.add('flex'); }
+  function closeResume(){ resumeModal.classList.add('hidden'); resumeModal.classList.remove('flex'); }
+  $('#resumeClose')?.addEventListener('click', closeResume);
+  resumeModal?.addEventListener('click', e=>{ if(e.target===resumeModal) closeResume(); });
+  // Add “Preview” button next to your existing resume link (no text change)
+  (function addPreviewBtn(){
+    const link = Array.from(document.links).find(a=>/ASU_Resume_Template_Shivam\.pdf/i.test(a.href));
+    if(!link) return; const btn=document.createElement('button');
+    btn.textContent='Preview Resume'; btn.className='ml-2 border border-white/10 px-4 py-3 rounded-2xl hover:bg-white/5';
+    btn.addEventListener('click', openResume); link.insertAdjacentElement('afterend', btn);
+  })();
+
+  // ===== Project filters (with LLM FIX) =====
+  const chips    = $$('#projChips .chip');
+  const grid     = $('#projGrid');
+  const searchEl = $('#projSearch');
+  const sortEl   = $('#projSort');
+
+  chips.forEach(c=>c.addEventListener('click', ()=>{ chips.forEach(x=>x.setAttribute('aria-selected','false')); c.setAttribute('aria-selected','true'); applyFilter(c.dataset.filter, true); }));
+  searchEl?.addEventListener('input', ()=>applyFilter(activeTag(), false));
+  sortEl?.addEventListener('change', ()=>applyFilter(activeTag(), false));
+
+  function activeTag(){ return chips.find(x=>x.getAttribute('aria-selected')==='true')?.dataset.filter || 'All'; }
+
+  function filterApplyFromTitle(title){
+    // Derive tag from title mapping (simple heuristic)
+    if(/LLM|SQL Assistant/i.test(title)) applyFilter('LLM', true);
+    else if(/CineReco|Recommender|NLP/i.test(title)) applyFilter('NLP', true);
+    else if(/Gesture|Animal|Sleep|Vehicle|Vision|IoT|OpenCV/i.test(title)) applyFilter('CV', true);
+    else if(/AutoML/i.test(title)) applyFilter('ML', true);
+    else applyFilter('All', true);
+  }
+
+  function sortCards(list){
+    const mode = sortEl?.value || 'recent';
+    if(mode==='az')  list.sort((a,b)=> (a.dataset.title||'').localeCompare(b.dataset.title||''));
+    if(mode==='za')  list.sort((a,b)=> (b.dataset.title||'').localeCompare(a.dataset.title||''));
+    if(mode==='recent'){ /* keep DOM order (you listed from newest to oldest) */ }
+    return list;
+  }
+
+  // >>> LLM VISIBILITY FIX: after filtering, auto-scroll to Projects and focus first visible card
+  function afterFilterScroll(){
+    const sec = document.getElementById('projects'); if(!sec) return;
+    const header = document.querySelector('header'); const offset=(header?.offsetHeight||72)+10;
+    const y = sec.getBoundingClientRect().top + window.scrollY - offset;
+    // Scroll AFTER layout has settled
+    requestAnimationFrame(()=>{ window.scrollTo({top:y, behavior:'smooth'}); 
+      const first = Array.from(grid.children).find(el=>el.style.display!=='none');
+      if(first){ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); setTimeout(()=>first.removeAttribute('tabindex'), 800); }
+    });
+  }
+
+  function applyFilter(tag='All', doScroll=false){
+    const q = (searchEl?.value || '').trim().toLowerCase();
+    const cards = Array.from(grid.children);
+    // Show/hide
+    cards.forEach(card=>{
+      const cats = (card.dataset.cats||'').toLowerCase();
+      const title = (card.dataset.title||'').toLowerCase();
+      const text  = (card.textContent||'').toLowerCase();
+      const tagOk = (tag==='All') || cats.split(',').map(s=>s.trim()).includes(tag.toLowerCase());
+      const qOk   = !q || title.includes(q) || text.includes(q);
+      card.style.display = (tagOk && qOk) ? '' : 'none';
+    });
+    // Sorting (re-append)
+    const visible = cards.filter(c=>c.style.display!=='none');
+    sortCards(visible).forEach(c=>grid.appendChild(c));
+    if(doScroll) afterFilterScroll();
+  }
+
+  // Deep-link support: #projects?tag=LLM  (also fixes “LLM not visible” on load)
+  (function handleDeepLink(){
+    if(location.hash.startsWith('#projects') && location.hash.includes('tag=')){
+      const tag = decodeURIComponent(location.hash.split('tag=')[1]||'All');
+      const btn = chips.find(c=>c.dataset.filter.toLowerCase()===tag.toLowerCase());
+      if(btn){ chips.forEach(x=>x.setAttribute('aria-selected','false')); btn.setAttribute('aria-selected','true'); applyFilter(tag, true); }
+    }
+  })();
+
+  // ===== Contact form: confetti on success (no change to your handler) =====
+  (function(){
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    if(!form || !status) return;
+    const obs=new MutationObserver(()=>{
+      if(/Thank you/i.test(status.textContent||'')){ if(window.confetti) confetti({particleCount:120,spread:60,origin:{y:0.2}}); }
+    });
+    obs.observe(status,{childList:true,characterData:true,subtree:true});
+  })();
+
+  // ===== Live GitHub Stats =====
+  async function getJSON(u){ const r=await fetch(u,{headers:{'Accept':'application/vnd.github+json'}}); if(!r.ok) throw new Error(r.status); return r.json(); }
+  async function loadGH(){
+    const user = ($('#ghUser')?.value||'').trim(); if(!user) return;
+    $('#ghRepos').textContent=$('#ghStars').textContent=$('#ghFollowers').textContent=$('#ghActive').textContent='…';
+    $('#ghTop').innerHTML='';
+    try{
+      const u = await getJSON(`https://api.github.com/users/${user}`);
+      const repos = await getJSON(`https://api.github.com/users/${user}/repos?per_page=100&sort=updated`);
+      const stars = repos.reduce((a,r)=>a+(r.stargazers_count||0),0);
+      $('#ghRepos').textContent = u.public_repos ?? '0';
+      $('#ghFollowers').textContent = u.followers ?? '0';
+      $('#ghStars').textContent = stars.toString();
+      const last = repos[0]?.updated_at ? new Date(repos[0].updated_at) : null;
+      $('#ghActive').textContent = last ? Math.max(0, Math.round((Date.now()-last.getTime())/86400000)).toString() : '—';
+      repos.slice(0,4).forEach(r=>{
+        const card=document.createElement('div'); card.className='glass p-4';
+        card.innerHTML = `<div class="font-bold mb-1">${r.name}</div><div class="text-gray-400 text-sm mb-2">${r.description||'No description'}</div><div class="text-sm flex gap-3"><span>★ ${r.stargazers_count}</span><span>⟳ ${r.forks_count}</span><span>${r.language||''}</span></div><div class="mt-2"><a class="text-cyan-400 hover:underline" target="_blank" href="${r.html_url}"><i class="fa-brands fa-github mr-1"></i>Open</a></div>`;
+        $('#ghTop').appendChild(card);
+      });
+      $('#ghWhen').textContent = `Updated at ${new Date().toLocaleTimeString()}`;
+    }catch(e){ $('#ghTop').innerHTML='<div class="text-gray-400">GitHub rate limited. Try later.</div>'; $('#ghWhen').textContent=''; }
+  }
+  $('#ghFetch')?.addEventListener('click', loadGH); loadGH();
+
+  // ===== Notes =====
+  const notesWrap=$('#notesWrap'); const noteAdd=$('#noteAdd'); const noteClear=$('#noteClear');
+  function loadNotes(){ try{return JSON.parse(localStorage.getItem('notes-ss')||'[]')}catch{return[]} }
+  function saveNotes(a){ localStorage.setItem('notes-ss', JSON.stringify(a)); }
+  function renderNotes(){ const arr=loadNotes(); notesWrap.innerHTML=''; if(!arr.length){ notesWrap.innerHTML='<div class="glass p-4 text-gray-400">No notes yet. Click “New Note”.</div>'; return;}
+    arr.forEach((t,i)=>{ const n=document.createElement('div'); n.className='glass p-3';
+      n.innerHTML=`<textarea class="w-full bg-transparent outline-none" rows="6">${t||''}</textarea><div class="flex justify-end gap-2 mt-2"><button class="bg-gray-800 border border-white/10 px-3 py-1 rounded">Save</button><button class="bg-gray-800 border border-white/10 px-3 py-1 rounded">Delete</button></div>`;
+      const [ta,save,del]=[n.querySelector('textarea'), ...n.querySelectorAll('button')];
+      save.addEventListener('click',()=>{ const cur=loadNotes(); cur[i]=ta.value; saveNotes(cur); });
+      del.addEventListener('click',()=>{ const cur=loadNotes(); cur.splice(i,1); saveNotes(cur); renderNotes(); });
+      notesWrap.appendChild(n);
+    });
+  }
+  renderNotes();
+  noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
+  noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
+
+  // ===== Command Palette open/close click-outside =====
+  $('#cmdk')?.addEventListener('click', e=>{ if(e.target.id==='cmdk') closeCmd(); });
+  // ===== Resume deep link helper =====
+  // (Nothing needed; uses your same file link.)
+
+  // ===== LLM direct click test: ensure chip scrolls section into view =====
+  // (Handled by applyFilter(tag, true) + afterFilterScroll()).
+
+  </script>
+
+  <!-- Your existing form handler (unchanged) -->
+  <script>
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      fetch('https://formspree.io/f/mvgbyqwq', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          status.textContent = "✅ Thank you! Your message has been sent.";
+          status.classList.remove("text-red-600");
+          status.classList.add("text-green-400");
+          form.reset();
+          if(window.confetti) confetti({particleCount:140, spread:60, origin:{y:0.2}});
+        } else {
+          status.textContent = "❌ Oops! Something went wrong.";
+          status.classList.remove("text-green-400");
+          status.classList.add("text-red-400");
+        }
+      })
+      .catch(() => {
+        status.textContent = "❌ Oops! Something went wrong.";
+        status.classList.remove("text-green-400");
+        status.classList.add("text-red-400");
+      });
+    });
+  </script>
+</body>
+</html>
