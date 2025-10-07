@@ -1,226 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
   <title>Shivam Sharma | Portfolio</title>
+
+  <!-- SEO / Social -->
+  <meta
+    name="description"
+    content="Portfolio of Shivam Sharma — AI Engineer & Researcher specializing in Machine Learning, Deep Learning, Computer Vision, NLP, and Robotics."
+  />
+  <meta property="og:title" content="Shivam Sharma | Portfolio" />
+  <meta
+    property="og:description"
+    content="AI Engineer & Researcher — ML, DL, CV, NLP, and Robotics projects, research, and experience."
+  />
+  <meta property="og:image" content="profile.jpeg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS + Font Awesome -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <!-- VanillaTilt (for card hover tilt) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"
+    defer
+  ></script>
+
   <style>
+    /* Base */
     html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+
+    /* Offset for sticky header on anchor jumps */
+    section { scroll-margin-top: 96px; }
+
+    /* Glass + glow helpers */
+    .glass {
+      background: rgba(17, 24, 39, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: saturate(140%) blur(10px);
+    }
+    .glow {
+      box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.0), 0 20px 60px -15px rgba(34, 211, 238, 0.35);
+    }
+
+    /* Animated gradient text */
+    .gradient-text {
+      background: linear-gradient(90deg, #22d3ee, #2563eb, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hero avatar rim spin (subtle) */
+    .spin-slower { animation: spin 10s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      height: 3px;
+      position: fixed;
+      inset: 0 auto auto 0;
+      width: 0%;
+      z-index: 60;
+      background: linear-gradient(to right, #22d3ee, #2563eb);
+      transition: width 120ms linear;
+    }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      z-index: 50;
+      padding: .5rem .75rem;
+      border-radius: .5rem;
+      background: #111827;
+      color: #e5e7eb;
+      outline: 2px solid #22d3ee;
+    }
+
+    /* Nav active link underline */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #22d3ee, #2563eb);
+      transition: width .25s ease;
+    }
+    .nav-link:hover::after, .nav-link[aria-current="true"]::after { width: 100%; }
+
+    /* Reduced motion: tone things down */
+    @media (prefers-reduced-motion: reduce) {
+      .gradient-text { animation: none; }
+      .spin-slower { animation: none; }
+    }
   </style>
+
+  <!-- Structured data (not visible content) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Shivam Sharma",
+    "jobTitle": "AI Engineer and Researcher",
+    "image": "profile.jpeg",
+    "alumniOf": [
+      "Arizona State University",
+      "Amity University, Noida"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/shivam-sharma-333137202/"
+    ]
+  }
+  </script>
 </head>
-<body class="bg-black text-gray-100">
+<body class="bg-black text-gray-100 antialiased">
+
+  <!-- Scroll progress -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Skip to content -->
+  <a class="skip-link" href="#about">Skip to main content</a>
 
   <!-- Header / Navbar -->
-  <header class="bg-black shadow sticky top-0 z-50">
+  <header class="bg-black/70 supports-[backdrop-filter]:backdrop-blur sticky top-0 z-50 border-b border-white/5">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">Shivam Sharma</h1>
-      <nav class="space-x-6">
-        <a href="#about" class="hover:text-cyan-400 text-gray-200">About</a>
-        <a href="#skills" class="hover:text-cyan-400 text-gray-200">Skills</a>
-        <a href="#projects" class="hover:text-cyan-400 text-gray-200">Projects</a>
-        <a href="#research" class="hover:text-cyan-400 text-gray-200">Research</a>
-        <a href="#experience" class="hover:text-cyan-400 text-gray-200">Experience</a>
-        <a href="#contact" class="hover:text-cyan-400 text-gray-200">Contact</a>
+      <h1 class="text-2xl font-bold text-white gradient-text">Shivam Sharma</h1>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center space-x-6">
+        <a href="#about" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>About</a>
+        <a href="#skills" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>Projects</a>
+        <a href="#research" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>Research</a>
+        <a href="#experience" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>Experience</a>
+        <a href="#contact" class="hover:text-cyan-400 text-gray-200 nav-link" data-nav-link>Contact</a>
       </nav>
+
+      <!-- Mobile menu button -->
+      <button id="menu-toggle" class="md:hidden text-gray-200 hover:text-cyan-400 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
     </div>
+
+    <!-- Mobile nav -->
+    <nav id="mobile-menu" class="md:hidden hidden px-6 pb-4 border-t border-white/5">
+      <div class="flex flex-col space-y-3">
+        <a href="#about" class="hover:text-cyan-400 text-gray-200" data-nav-link>About</a>
+        <a href="#skills" class="hover:text-cyan-400 text-gray-200" data-nav-link>Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 text-gray-200" data-nav-link>Projects</a>
+        <a href="#research" class="hover:text-cyan-400 text-gray-200" data-nav-link>Research</a>
+        <a href="#experience" class="hover:text-cyan-400 text-gray-200" data-nav-link>Experience</a>
+        <a href="#contact" class="hover:text-cyan-400 text-gray-200" data-nav-link>Contact</a>
+      </div>
+    </nav>
   </header>
 
   <!-- Hero Section -->
- <section class="bg-black text-white py-32 relative overflow-hidden">
-  <div class="container mx-auto px-6 text-center relative z-10">
-    
-        <div class="mx-auto mb-5 w-32 h-32 rounded-full border-4 border-cyan-400 shadow-lg overflow-hidden flex items-center justify-center">
-      <img src="profile.jpeg" alt="Shivam Sharma Profile" class="w-full h-full object-cover">
-    </div>
+  <section class="bg-black text-white py-28 relative overflow-hidden">
+    <!-- Decorative gradient blobs -->
+    <div aria-hidden="true" class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[62rem] h-[62rem] bg-[radial-gradient(closest-side,rgba(34,211,238,0.18),transparent)] blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -bottom-56 -left-32 w-[42rem] h-[42rem] bg-[radial-gradient(closest-side,rgba(168,85,247,0.14),transparent)] blur-3xl"></div>
 
-    <h2 class="text-5xl font-bold mb-4 text-white">Hi, I'm Shivam 👋</h2>
-    
-        <p class="text-2xl mb-6 text-gray-100">
-      <span id="typed-text"></span>
-    </p>
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <!-- Avatar with animated rim -->
+      <div class="relative mx-auto mb-6 w-32 h-32">
+        <div class="absolute inset-0 rounded-full spin-slower opacity-60"
+             style="background: conic-gradient(from 0deg, #22d3ee, #2563eb, #a855f7, #22d3ee); filter: blur(6px);"></div>
+        <div class="relative w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-xl">
+          <img src="profile.jpeg" alt="Shivam Sharma Profile" class="w-full h-full object-cover rounded-full" />
+        </div>
+      </div>
 
-        <p class="text-lg mb-2 text-gray-200">🎓 MS in <strong class="text-yellow-400">Robotics & Autonomous Systems (AI)</strong> at Arizona State University</p>
-    <p class="text-lg mb-8 text-gray-200">🎓 B.Tech in <strong class="text-yellow-400">Artificial Intelligence</strong> from Amity University, Noida</p>
+      <h2 class="text-5xl font-extrabold mb-3 text-white">Hi, I'm Shivam 👋</h2>
 
-    <a href="ASU_Resume_Template_Shivam.pdf" target="_blank" 
-    class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:scale-105 transition transform">
-    Download Resume
-    </a>
-  </div>
-  <canvas id="particles" class="absolute top-0 left-0 w-full h-full"></canvas>
-</section>
+      <p class="text-2xl mb-6 text-gray-100">
+        <span id="typed-text"></span>
+      </p>
+
+      <p class="text-lg mb-1 text-gray-200">🎓 MS in <strong class="text-yellow-400">Robotics & Autonomous Systems (AI)</strong> at Arizona State University</p>
+      <p class="text-lg mb-8 text-gray-200">🎓 B.Tech in <strong class="text-yellow-400">Artificial Intelligence</strong> from Amity University, Noida</p>
+
+      <a
+        href="ASU_Resume_Template_Shivam.pdf"
+        target="_blank"
+        class="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:scale-[1.03] transition transform glow"
+        download
+        >Download Resume</a
+      >
+    </div>
+
+    <!-- Particles canvas -->
+    <canvas id="particles" class="absolute inset-0 w-full h-full"></canvas>
+  </section>
 
   <!-- About Me Section -->
   <section id="about" class="py-16 container mx-auto px-6">
     <h3 class="text-3xl font-semibold mb-8 text-cyan-400">About Me</h3>
-    <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
-      I am a passionate <strong class="text-yellow-400">AI Engineer and Researcher</strong> with hands-on experience in <strong class="text-yellow-400">Machine Learning, Deep Learning, Computer Vision, and NLP</strong>. 
-      My work spans building gesture-controlled IoT systems, AutoML frameworks, and AI-driven emotion detection systems.
-    </p>
-    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
-      Currently pursuing my <strong class="text-yellow-400">MS in Robotics & Autonomous Systems (AI)</strong> at Arizona State University, focusing on developing scalable AI systems for autonomous platforms. 
-      I hold a <strong class="text-yellow-400">B.Tech in Artificial Intelligence</strong> from Amity University, Noida.
-    </p>
-    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
-      I have professional experience as an <strong class="text-yellow-400">AI Engineer Intern at HCL Technologies</strong> and a <strong class="text-yellow-400">Data Science Intern at NullClass Technologies</strong>, 
-      where I worked on large-scale ML systems, computer vision pipelines, and AI-powered solutions with measurable impact.
-    </p>
-    <p class="text-lg leading-relaxed text-gray-100 mt-4" data-aos="fade-up">
-      My goal is to contribute to <strong class="text-yellow-400">next-generation AI and robotics solutions</strong> that enhance human–machine interaction, improve accessibility, 
-      and enable intelligent autonomous decision-making in real-world environments.
-    </p>
+    <div class="space-y-4 glass rounded-2xl p-6">
+      <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
+        I am a passionate <strong class="text-yellow-400">AI Engineer and Researcher</strong> with hands-on experience in <strong class="text-yellow-400">Machine Learning, Deep Learning, Computer Vision, and NLP</strong>. 
+        My work spans building gesture-controlled IoT systems, AutoML frameworks, and AI-driven emotion detection systems.
+      </p>
+      <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
+        Currently pursuing my <strong class="text-yellow-400">MS in Robotics & Autonomous Systems (AI)</strong> at Arizona State University, focusing on developing scalable AI systems for autonomous platforms. 
+        I hold a <strong class="text-yellow-400">B.Tech in Artificial Intelligence</strong> from Amity University, Noida.
+      </p>
+      <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
+        I have professional experience as an <strong class="text-yellow-400">AI Engineer Intern at HCL Technologies</strong> and a <strong class="text-yellow-400">Data Science Intern at NullClass Technologies</strong>, 
+        where I worked on large-scale ML systems, computer vision pipelines, and AI-powered solutions with measurable impact.
+      </p>
+      <p class="text-lg leading-relaxed text-gray-100" data-aos="fade-up">
+        My goal is to contribute to <strong class="text-yellow-400">next-generation AI and robotics solutions</strong> that enhance human–machine interaction, improve accessibility, 
+        and enable intelligent autonomous decision-making in real-world environments.
+      </p>
+    </div>
   </section>
 
   <!-- Skills Section -->
-  <section id="skills" class="py-16 bg-gray-900">
+  <section id="skills" class="py-16 bg-gray-950/70">
     <div class="container mx-auto px-6">
       <h3 class="text-3xl font-semibold mb-8 text-cyan-400">Skills</h3>
+
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">🤖 Artificial Intelligence & Machine Learning</h4>
           <p class="text-gray-200 text-sm">
             Supervised & unsupervised ML, AutoML, Deep Learning, Random Forest, Gradient Boosting, Optuna hyperparameter tuning.
           </p>
         </div>
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">👁️ Computer Vision</h4>
           <p class="text-gray-200 text-sm">
             OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, emotion detection, face recognition, object tracking.
           </p>
         </div>
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">💬 Natural Language Processing</h4>
           <p class="text-gray-200 text-sm">
             NLTK, Transformers (Hugging Face, GPT Models), text preprocessing, SBERT embeddings, recommender systems.
           </p>
         </div>
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">💻 Programming & Databases</h4>
           <p class="text-gray-200 text-sm">
             Python, R, MySQL, JavaScript, C, Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras.
           </p>
         </div>
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">⚙️ Tools & Frameworks</h4>
           <p class="text-gray-200 text-sm">
             Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google Palm API.
           </p>
         </div>
-  
-        <div data-aos="fade-up" class="bg-gray-800 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+
+        <div data-aos="fade-up" data-tilt class="glass p-6 rounded-2xl shadow hover:scale-[1.02] transition transform">
           <h4 class="font-bold text-lg mb-2 text-blue-400">📜 Certifications</h4>
           <p class="text-gray-200 text-sm">
             Applied AI (IBM, Coursera), Python for Data Science (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn).
           </p>
         </div>
-  
       </div>
     </div>
   </section>
 
-<!-- Projects Section -->
-<section id="projects" class="py-16 bg-black">
-  <div class="container mx-auto px-6">
-    <h3 class="text-3xl font-semibold mb-10 text-cyan-400">Projects</h3>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 bg-black">
+    <div class="container mx-auto px-6">
+      <h3 class="text-3xl font-semibold mb-10 text-cyan-400">Projects</h3>
 
-      <!-- AutoML -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🤖 AutoML Framework</h4>
-        <p class="text-gray-200">
-          A scalable end-to-end <strong class="text-yellow-400">AutoML pipeline</strong> with automated model selection, <strong class="text-yellow-400">hyperparameter tuning</strong> (Optuna, GridSearchCV), and evaluation.
-        </p>
-        <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- AutoML -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🤖 AutoML Framework</h4>
+          <p class="text-gray-200">
+            A scalable end-to-end <strong class="text-yellow-400">AutoML pipeline</strong> with automated model selection, <strong class="text-yellow-400">hyperparameter tuning</strong> (Optuna, GridSearchCV), and evaluation.
+          </p>
+          <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Gesture Controlled IoT -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🖐 Gesture-Controlled IoT</h4>
+          <p class="text-gray-200">
+            Real-time <strong class="text-yellow-400">gesture recognition</strong> interface using Mediapipe + OpenCV with Arduino for IoT device control.
+          </p>
+          <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Female Voice Emotion Detection -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🎙 Female English Voice Emotion Detection</h4>
+          <p class="text-gray-200">
+            Fine-tuned deep learning system for <strong class="text-yellow-400">real-time female English voice emotion recognition</strong> with Mel-Spectrograms + VGG16.
+          </p>
+          <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Animal Emotion Detection -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🐾 Animal Emotion Classifier</h4>
+          <p class="text-gray-200">
+            AI-powered <strong class="text-yellow-400">MobileNetV2 image classifier</strong> to detect and classify 9 animal emotion classes with real-time Tkinter popups.
+          </p>
+          <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- Vehicle Sleep Detection -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🚗 AI-Based Vehicle Sleep Detection & Age Prediction</h4>
+          <p class="text-gray-200">
+            Deep learning + CV system detecting <strong class="text-yellow-400">drowsiness & predicting age</strong> using VGG16 CNNs + OpenCV + Tkinter GUI.
+          </p>
+          <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- CineReco -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">🎬 CineReco: Hybrid Movie Recommendation</h4>
+          <p class="text-gray-200">
+            An AI-powered <strong class="text-yellow-400">recommender system</strong> combining Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.
+          </p>
+          <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
+
+        <!-- AtliQ SQL Assistant -->
+        <div data-aos="fade-up" data-tilt class="glass rounded-2xl shadow p-6 hover:scale-[1.02] transition transform">
+          <h4 class="text-xl font-bold mb-2 text-blue-400">📊 AtliQ T-Shirts: LLM-Powered SQL Assistant</h4>
+          <p class="text-gray-200">
+            LangChain + Google Palm-powered tool that converts <strong class="text-yellow-400">natural language into SQL queries</strong> for real-time MySQL insights.
+          </p>
+          <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+        </div>
       </div>
-
-      <!-- Gesture Controlled IoT -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🖐 Gesture-Controlled IoT</h4>
-        <p class="text-gray-200">
-          Real-time <strong class="text-yellow-400">gesture recognition</strong> interface using Mediapipe + OpenCV with Arduino for IoT device control.
-        </p>
-        <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
-      <!-- Female Voice Emotion Detection -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🎙 Female English Voice Emotion Detection</h4>
-        <p class="text-gray-200">
-          Fine-tuned deep learning system for <strong class="text-yellow-400">real-time female English voice emotion recognition</strong> with Mel-Spectrograms + VGG16.
-        </p>
-        <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
-      <!-- Animal Emotion Detection -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🐾 Animal Emotion Classifier</h4>
-        <p class="text-gray-200">
-          AI-powered <strong class="text-yellow-400">MobileNetV2 image classifier</strong> to detect and classify 9 animal emotion classes with real-time Tkinter popups.
-        </p>
-        <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
-      <!-- Vehicle Sleep Detection -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🚗 AI-Based Vehicle Sleep Detection & Age Prediction</h4>
-        <p class="text-gray-200">
-          Deep learning + CV system detecting <strong class="text-yellow-400">drowsiness & predicting age</strong> using VGG16 CNNs + OpenCV + Tkinter GUI.
-        </p>
-        <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
-      <!-- CineReco -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">🎬 CineReco: Hybrid Movie Recommendation</h4>
-        <p class="text-gray-200">
-          An AI-powered <strong class="text-yellow-400">recommender system</strong> combining Sentence-BERT embeddings, collaborative filtering, and hybrid fusion.
-        </p>
-        <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
-      <!-- AtliQ SQL Assistant -->
-      <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform">
-        <h4 class="text-xl font-bold mb-2 text-blue-400">📊 AtliQ T-Shirts: LLM-Powered SQL Assistant</h4>
-        <p class="text-gray-200">
-          LangChain + Google Palm-powered tool that converts <strong class="text-yellow-400">natural language into SQL queries</strong> for real-time MySQL insights.
-        </p>
-        <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-cyan-400 hover:underline mt-2 inline-flex items-center">
-          <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-      </div>
-
     </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- Research Section -->
   <section id="research" class="py-16 container mx-auto px-6">
     <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Research & Publications</h3>
-    <div class="space-y-8">
 
+    <div class="space-y-8">
       <!-- Paper 1 -->
-      <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+      <div data-aos="fade-up" class="glass p-6 rounded-2xl shadow hover:scale-[1.01] transition transform">
         <h4 class="text-xl font-bold mb-2 text-blue-400">Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction</h4>
         <p class="text-gray-200 mb-4">
           Proposed a <strong class="text-yellow-400">virtual hardware simulation layer</strong> for gesture-based AI systems, enabling IoT integration 
@@ -232,7 +412,7 @@
       </div>
 
       <!-- Paper 2 -->
-      <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+      <div data-aos="fade-up" class="glass p-6 rounded-2xl shadow hover:scale-[1.01] transition transform">
         <h4 class="text-xl font-bold mb-2 text-blue-400">Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT</h4>
         <p class="text-gray-200 mb-4">
           Developed a <strong class="text-yellow-400">hybrid gesture + IoT framework</strong> where gestures trigger <em>virtual calculations</em> 
@@ -242,7 +422,6 @@
           📄 View Paper
         </a>
       </div>
-
     </div>
   </section>
 
@@ -251,9 +430,8 @@
     <div class="container mx-auto px-6">
       <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Experience</h3>
       <div class="space-y-6">
-
         <!-- HCL -->
-        <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <div data-aos="fade-up" class="glass p-6 rounded-2xl shadow hover:scale-[1.01] transition transform">
           <h4 class="text-xl font-bold text-blue-400">AI Engineer Intern – HCL Technologies</h4>
           <ul class="list-disc list-inside mt-2 space-y-2 text-gray-200">
             <li>Built ML models (<strong class="text-yellow-400">Random Forest, Gradient Boosting</strong>) to predict customer churn on 500K+ records.</li>
@@ -264,7 +442,7 @@
         </div>
 
         <!-- NullClass -->
-        <div data-aos="fade-up" class="bg-gray-900 p-6 rounded-2xl shadow hover:scale-105 transition transform">
+        <div data-aos="fade-up" class="glass p-6 rounded-2xl shadow hover:scale-[1.01] transition transform">
           <h4 class="text-xl font-bold text-blue-400">Data Science Intern – NullClass Technologies</h4>
           <ul class="list-disc list-inside mt-2 space-y-2 text-gray-200">
             <li>Created a Multi-Attribute Face Classifier GUI <strong class="text-yellow-400">(VGG16 + MobileNetV2)</strong> with 95% accuracy.</li>
@@ -273,96 +451,279 @@
             <li>Designed <strong class="text-yellow-400">Tkinter-based GUIs</strong> for interactive model usage.</li>
           </ul>
         </div>
+      </div>
+    </div>
   </section>
 
-<!-- Contact -->
-<section id="contact" class="py-16 container mx-auto px-6 text-center">
-  <h3 class="text-3xl font-semibold mb-6 text-blue-400">
-    Feel free to reach out for collaborations, research, or internships:
-  </h3>
+  <!-- Contact -->
+  <section id="contact" class="py-16 container mx-auto px-6 text-center">
+    <h3 class="text-3xl font-semibold mb-6 text-blue-400">
+      Feel free to reach out for collaborations, research, or internships:
+    </h3>
 
-  <p class="mb-4 text-gray-300">
-    📩 Email: 
-    <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-400 hover:underline">
-      sharmashivam15112003@gmail.com
-    </a>
-  </p>
+    <p class="mb-4 text-gray-300">
+      📩 Email:
+      <a href="mailto:sharmashivam15112003@gmail.com" class="text-blue-400 hover:underline">
+        sharmashivam15112003@gmail.com
+      </a>
+      <!-- copy email button (no extra text content) -->
+      <button id="copy-email" class="ml-2 inline-flex items-center justify-center rounded-md border border-white/10 p-2 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-cyan-500" aria-label="Copy email address" title="Copy email">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </p>
 
-  <p class="mb-6 text-gray-300">
-    🔗 LinkedIn: 
-    <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-400 hover:underline" target="_blank">
-      Shivam Sharma
-    </a>
-  </p>
+    <p class="mb-6 text-gray-300">
+      🔗 LinkedIn:
+      <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" class="text-blue-400 hover:underline" target="_blank">
+        Shivam Sharma
+      </a>
+    </p>
 
-  <form id="contact-form" class="max-w-lg mx-auto bg-gray-900 p-6 rounded-2xl shadow-lg space-y-4">
-    <input type="text" name="name" placeholder="Your Name" required
-      class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-    
-    <input type="email" name="email" placeholder="Your Email" required
-      class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"/>
-    
-    <textarea name="message" placeholder="Your Message" required
-      class="w-full border px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
-    
-    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
-      Send Message
-    </button>
+    <form id="contact-form" class="max-w-lg mx-auto glass p-6 rounded-2xl shadow-lg space-y-4">
+      <input
+        type="text" name="name" placeholder="Your Name" required
+        class="w-full border border-white/10 px-4 py-2 rounded-lg bg-gray-800/70 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+      />
+      <input
+        type="email" name="email" placeholder="Your Email" required
+        class="w-full border border-white/10 px-4 py-2 rounded-lg bg-gray-800/70 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+      />
+      <textarea
+        name="message" placeholder="Your Message" required rows="5"
+        class="w-full border border-white/10 px-4 py-2 rounded-lg bg-gray-800/70 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+      ></textarea>
 
-    <p id="form-status" class="mt-2 font-semibold"></p>
-  </form>
-</section>
+      <button
+        type="submit"
+        id="submit-btn"
+        class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition inline-flex items-center justify-center gap-2"
+      >
+        <span class="btn-text">Send Message</span>
+        <span id="spinner" class="hidden h-5 w-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+      </button>
 
-<!-- Footer -->
-<footer class="bg-black text-gray-400 py-6 text-center border-t border-gray-800">
-  <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
-</footer>
+      <p id="form-status" class="mt-2 font-semibold" aria-live="polite"></p>
+    </form>
+  </section>
 
-<script>
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(form);
-
-    fetch('https://formspree.io/f/mvgbyqwq', {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
-      if (response.ok) {
-        status.textContent = "✅ Thank you! Your message has been sent.";
-        status.classList.remove("text-red-600");
-        status.classList.add("text-green-400");
-        form.reset();
-      } else {
-        status.textContent = "❌ Oops! Something went wrong.";
-        status.classList.remove("text-green-400");
-        status.classList.add("text-red-400");
-      }
-    })
-    .catch(() => {
-      status.textContent = "❌ Oops! Something went wrong.";
-      status.classList.remove("text-green-400");
-      status.classList.add("text-red-400");
-    });
-  });
-</script>
-
+  <!-- Footer -->
+  <footer class="bg-black text-gray-400 py-6 text-center border-t border-gray-800">
+    <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
+  </footer>
 
   <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script>
-    AOS.init({ duration: 1000 });
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
 
-    var typed = new Typed('#typed-text', {
-      strings: ["AI Engineer", "Deep Learning Enthusiast", "Computer Vision Developer", "NLP Researcher","Robotics And Automation Engineer","Machine Learning Enthusiast"],
-      typeSpeed: 70,
-      backSpeed: 50,
-      loop: true
+  <script>
+    // ===== Utilities =====
+    const $ = (s, c = document) => c.querySelector(s);
+    const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+
+    // ===== Mobile menu =====
+    const menuBtn = $('#menu-toggle');
+    const mobileMenu = $('#mobile-menu');
+    menuBtn?.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Close mobile menu on link click
+    $$('#mobile-menu a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    // ===== AOS (on load) =====
+    window.addEventListener('load', () => {
+      if (window.AOS) AOS.init({ duration: 900, once: true, offset: 80 });
+    });
+
+    // ===== Typed.js with reduced-motion fallback =====
+    function initTyped() {
+      const target = $('#typed-text');
+      if (!target) return;
+
+      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const strings = ["AI Engineer", "Deep Learning Enthusiast", "Computer Vision Developer", "NLP Researcher","Robotics And Automation Engineer","Machine Learning Enthusiast"];
+
+      if (prefersReduce || !window.Typed) {
+        target.textContent = strings[0];
+        return;
+      }
+      new Typed('#typed-text', {
+        strings,
+        typeSpeed: 70,
+        backSpeed: 50,
+        loop: true
+      });
+    }
+    window.addEventListener('load', initTyped);
+
+    // ===== Scroll progress bar =====
+    const progressEl = $('#scroll-progress');
+    const updateProgress = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - window.innerHeight;
+      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      progressEl.style.width = pct + '%';
+    };
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+
+    // ===== ScrollSpy (active nav links) =====
+    const sections = ['about','skills','projects','research','experience','contact'].map(id => document.getElementById(id)).filter(Boolean);
+    const navLinks = $$('a[data-nav-link]');
+    const linkFor = id => navLinks.find(a => a.getAttribute('href') === '#' + id);
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const link = linkFor(entry.target.id);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.setAttribute('aria-current', 'false'));
+          link.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0.2 });
+    sections.forEach(sec => spy.observe(sec));
+
+    // ===== Particles background (light & efficient) =====
+    (function initParticles(){
+      const canvas = document.getElementById('particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, particles, maxDist, running = true;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth;
+        h = canvas.clientHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const N = Math.floor((w * h) / 14000); // density
+        maxDist = Math.min(140, Math.max(90, Math.sqrt(w*h)/30));
+        particles = Array.from({length: N}, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          r: Math.random() * 1.6 + 0.6
+        }));
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function toggleMotion(e){ running = !e.matches; }
+      toggleMotion(prefersReduce);
+      prefersReduce.addEventListener('change', toggleMotion);
+
+      function step() {
+        ctx.clearRect(0,0,w,h);
+        if (!running) return; // paused for reduced motion
+
+        // Update + draw
+        for (let p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(34, 211, 238, 0.45)';
+          ctx.fill();
+        }
+
+        // Lines
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const a = particles[i], b = particles[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < maxDist) {
+              const t = 1 - dist / maxDist;
+              ctx.strokeStyle = `rgba(37, 99, 235, ${0.18 * t})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+      function loop() {
+        step();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+
+    // ===== Tilt on cards =====
+    window.addEventListener('load', () => {
+      if (window.VanillaTilt) {
+        VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
+          max: 8,
+          speed: 400,
+          glare: true,
+          'max-glare': 0.2
+        });
+      }
+    });
+
+    // ===== Contact form (Formspree) with UX polish =====
+    const form = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+    const spinner = document.getElementById('spinner');
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      formStatus.textContent = "";
+      submitBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      try {
+        const response = await fetch('https://formspree.io/f/mvgbyqwq', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          formStatus.textContent = "✅ Thank you! Your message has been sent.";
+          formStatus.classList.remove("text-red-400");
+          formStatus.classList.add("text-green-400");
+          form.reset();
+        } else {
+          formStatus.textContent = "❌ Oops! Something went wrong.";
+          formStatus.classList.remove("text-green-400");
+          formStatus.classList.add("text-red-400");
+        }
+      } catch (e) {
+        formStatus.textContent = "❌ Oops! Something went wrong.";
+        formStatus.classList.remove("text-green-400");
+        formStatus.classList.add("text-red-400");
+      } finally {
+        submitBtn.disabled = false;
+        spinner.classList.add('hidden');
+        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+      }
+    });
+
+    // ===== Copy email helper =====
+    const copyBtn = document.getElementById('copy-email');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('sharmashivam15112003@gmail.com');
+        copyBtn.classList.add('text-cyan-400');
+        setTimeout(() => copyBtn.classList.remove('text-cyan-400'), 900);
+      } catch {}
     });
   </script>
 </body>
