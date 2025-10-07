@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- PWA (optional, add manifest.webmanifest file provided below) -->
+  <!-- PWA (optional) -->
   <link rel="manifest" href="manifest.webmanifest"/>
 
   <style>
@@ -52,6 +52,20 @@
     .blob.two{bottom:-220px;left:-160px;width:720px;height:720px;background:radial-gradient(closest-side,rgba(168,85,247,.14),transparent)}
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){.glow,.blob{animation:none}}
+
+    /* === Intro overlay (non-destructive) === */
+    #intro{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(600px 400px at 50% 20%, #071022ee, transparent 60%), rgba(0,0,0,.75);z-index:90}
+    #intro.show{display:flex}
+    .intro-card{width:min(720px,94vw);background:#0b0f1ae6;border:1px solid rgba(255,255,255,.12);border-radius:16px;box-shadow:0 24px 120px rgba(0,0,0,.6);text-align:center;padding:20px}
+    .intro-title{position:relative;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+    .intro-title::before,.intro-title::after{content:attr(data-text);position:absolute;left:0;top:0}
+    .intro-title::before{color:#ff2d95;transform:translate(1px,0);clip-path:inset(0 0 70% 0);animation:introGl1 2s infinite linear alternate}
+    .intro-title::after{color:#22d3ee;transform:translate(-1px,0);clip-path:inset(60% 0 0 0);animation:introGl2 2.2s infinite linear alternate-reverse}
+    @keyframes introGl1{0%{clip-path:inset(0 0 70% 0)}50%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(40% 0 0 0)}}
+    @keyframes introGl2{0%{clip-path:inset(0 0 0 0)}50%{clip-path:inset(60% 0 0 0)}100%{clip-path:inset(0 0 80% 0)}}
+    @media (prefers-reduced-motion: reduce){
+      .intro-title::before,.intro-title::after{animation:none}
+    }
   </style>
 
   <!-- Structured data -->
@@ -63,6 +77,29 @@
 
   <!-- Progress -->
   <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ===== Intro Overlay (cinematic) ===== -->
+  <div id="intro" class="show">
+    <div class="intro-card">
+      <img src="profile.jpeg" alt="" class="w-20 h-20 rounded-full mx-auto mb-2 border-2 border-cyan-400"/>
+      <h1 class="intro-title text-3xl sm:text-4xl mb-1" data-text="Shivam Sharma">Shivam Sharma</h1>
+      <div class="text-cyan-400 font-bold tracking-wide mb-3">AI • CV • NLP • Robotics</div>
+      <p class="text-gray-300 mb-4">Best with sound. Choose options and press Enter.</p>
+      <div class="flex justify-center gap-3 mb-4">
+        <label class="inline-flex items-center gap-2 text-sm"><input id="optSfx" type="checkbox" class="accent-cyan-500" checked> Sound FX</label>
+        <label class="inline-flex items-center gap-2 text-sm"><input id="optMusic" type="checkbox" class="accent-cyan-500"> Music</label>
+        <label class="inline-flex items-center gap-2 text-sm"><input id="optHide" type="checkbox" class="accent-cyan-500" checked> Don’t show again</label>
+      </div>
+      <div class="flex justify-center gap-2">
+        <button id="startIntro" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-4 py-2 rounded-lg">
+          Enter <span class="hidden sm:inline">(press Enter)</span>
+        </button>
+        <button id="skipIntro" class="border border-white/10 px-4 py-2 rounded-lg text-gray-200">Skip</button>
+      </div>
+    </div>
+    <!-- animated grid behind the card -->
+    <canvas id="introFx" class="absolute inset-0 -z-10"></canvas>
+  </div>
 
   <!-- ======= ORIGINAL CONTENT (UNMODIFIED TEXT/LINKS) ======= -->
 
@@ -322,6 +359,7 @@
   <!-- FABs -->
   <div class="fab">
     <button class="btn" id="sfxToggle" title="Toggle sound (off)"><i class="fa-solid fa-volume-xmark"></i></button>
+    <button class="btn" id="musicToggle" title="Music"><i class="fa-solid fa-music"></i></button>
     <button class="btn" id="backTop" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
     <button class="btn" id="cmdOpen" title="Command palette (Ctrl/Cmd+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
   </div>
@@ -353,7 +391,7 @@
     </div>
   </div>
 
-  <!-- Stats + Notes (extra, optional) -->
+  <!-- Stats + Notes (optional extras) -->
   <section class="py-14 container mx-auto px-6">
     <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Live Code Stats</h3>
     <div class="flex flex-wrap items-center gap-3 mb-4">
@@ -380,11 +418,12 @@
     <small class="text-gray-400">Saved only in your browser (localStorage).</small>
   </section>
 
-  <!-- Scripts -->
+  <!-- Libraries -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
+  <!-- Main Enhancements (AOS, Typed, particles, filters with LLM fix, palette, stats, notes, SFX) -->
   <script>
   // ===== Utilities =====
   const $= (s, c=document)=>c.querySelector(s);
@@ -438,13 +477,18 @@
     (function loop(){ step(); requestAnimationFrame(loop) })();
   })();
 
-  // ===== Sound FX (off by default) =====
-  let audioCtx, masterGain, sfx=false;
-  function ac(){ if(audioCtx) return audioCtx; try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); masterGain=audioCtx.createGain(); masterGain.gain.value=.18; masterGain.connect(audioCtx.destination);}catch{} return audioCtx; }
-  function beep(f=760,d=.12,type='sine'){ if(!sfx||!ac()) return; const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type=type; o.frequency.value=f; g.gain.value=.0001; o.connect(g); g.connect(masterGain);
-    const t=audioCtx.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.stop(t+d+.02); }
+  // ===== Sound FX (site-wide, off by default; persisted) =====
+  let __audioCtx, __masterGain, __sfx=false;
+  function __ensureAc(){ if(__audioCtx) return __audioCtx; try{ __audioCtx=new (window.AudioContext||window.webkitAudioContext)(); __masterGain=__audioCtx.createGain(); __masterGain.gain.value=.18; __masterGain.connect(__audioCtx.destination);}catch{} return __audioCtx; }
+  function __beep(f=760,d=.12,type='sine'){ if(!__sfx||!__ensureAc()) return; const o=__audioCtx.createOscillator(), g=__audioCtx.createGain(); o.type=type; o.frequency.value=f; g.gain.value=.0001; o.connect(g); g.connect(__masterGain);
+    const t=__audioCtx.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.stop(t+d+.02); }
   const sfxBtn = $('#sfxToggle');
-  sfxBtn?.addEventListener('click', async ()=>{ ac(); if(audioCtx?.state==='suspended') await audioCtx.resume(); sfx=!sfx; sfxBtn.innerHTML = `<i class="fa-solid ${sfx?'fa-volume-high':'fa-volume-xmark'}"></i>`; if(sfx) beep(620) });
+  function __setSfx(on){ __sfx=!!on; if(sfxBtn) sfxBtn.innerHTML = `<i class="fa-solid ${__sfx?'fa-volume-high':'fa-volume-xmark'}"></i>`; localStorage.setItem('shivam-sfx', __sfx?'1':'0'); }
+  // Init from storage
+  __setSfx(localStorage.getItem('shivam-sfx')==='1');
+  sfxBtn?.addEventListener('click', async ()=>{ __ensureAc(); if(__audioCtx?.state==='suspended') await __audioCtx.resume(); __setSfx(!__sfx); if(__sfx) __beep(620) });
+  // expose for intro
+  window.__setSfxOn = __setSfx; window.__beep = __beep;
 
   // ===== Command palette =====
   const cmdWrap  = $('#cmdk'), cmdInput = $('#cmdInput'), cmdList = $('#cmdList');
@@ -453,7 +497,6 @@
   addEventListener('keydown', e=>{ const mod=e.ctrlKey||e.metaKey; if(mod && e.key.toLowerCase()==='k'){ e.preventDefault(); cmdWrap.style.display==='flex'?closeCmd():openCmd(); } if(e.key==='Escape'&&cmdWrap.style.display==='flex') closeCmd(); });
   function openCmd(){ cmdWrap.style.display='flex'; renderCmd(''); cmdInput.value=''; cmdInput.focus(); }
   function closeCmd(){ cmdWrap.style.display='none'; }
-
   function items(){
     const arr = [
       ...$$('header nav a').map(a=>({label:a.textContent.trim(), action:()=>a.click()})),
@@ -467,12 +510,12 @@
     return arr;
   }
   function highlight(q,s){ if(!q) return s; const i=s.toLowerCase().indexOf(q.toLowerCase()); return i<0?s:s.slice(0,i)+'<b>'+s.slice(i,i+q.length)+'</b>'+s.slice(i+q.length); }
+  function score(q,s){ q=q.toLowerCase().trim(); s=s.toLowerCase(); if(!q) return 1; const i=s.indexOf(q); if(i===0) return 3; if(i>0) return 2; let qi=0; for(let si=0;si<s.length&&qi<q.length;si++){ if(s[si]===q[qi]) qi++; } return qi===q.length?1.5:0; }
   function renderCmd(q){
     const list = items().map(x=>({...x,score:score(q,x.label),hl:highlight(q,x.label)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,60);
     cmdList.innerHTML=''; list.forEach((x,i)=>{ const row=document.createElement('button'); row.className='item w-full text-left'; row.setAttribute('role','option'); if(i===0) row.setAttribute('aria-selected','true'); row.innerHTML=`<span>${x.hl}</span><i class="fa-solid fa-arrow-turn-down-left opacity-70"></i>`;
-      row.addEventListener('click', ()=>{ x.action(); closeCmd(); if(sfx) beep(680) }); cmdList.appendChild(row); });
+      row.addEventListener('click', ()=>{ x.action(); closeCmd(); if(__sfx) __beep(680) }); cmdList.appendChild(row); });
   }
-  function score(q,s){ q=q.toLowerCase().trim(); s=s.toLowerCase(); if(!q) return 1; const i=s.indexOf(q); if(i===0) return 3; if(i>0) return 2; let qi=0; for(let si=0;si<s.length&&qi<q.length;si++){ if(s[si]===q[qi]) qi++; } return qi===q.length?1.5:0; }
   cmdInput?.addEventListener('input', e=>renderCmd(e.target.value));
   cmdInput?.addEventListener('keydown', e=>{
     const rows=$$('.item', cmdList); let idx=rows.findIndex(r=>r.getAttribute('aria-selected')==='true'); if(e.key==='ArrowDown'){ e.preventDefault(); idx=Math.min(rows.length-1, idx+1); } if(e.key==='ArrowUp'){ e.preventDefault(); idx=Math.max(0, idx-1); }
@@ -485,7 +528,6 @@
   function closeResume(){ resumeModal.classList.add('hidden'); resumeModal.classList.remove('flex'); }
   $('#resumeClose')?.addEventListener('click', closeResume);
   resumeModal?.addEventListener('click', e=>{ if(e.target===resumeModal) closeResume(); });
-  // Add “Preview” button next to your existing resume link (no text change)
   (function addPreviewBtn(){
     const link = Array.from(document.links).find(a=>/ASU_Resume_Template_Shivam\.pdf/i.test(a.href));
     if(!link) return; const btn=document.createElement('button');
@@ -504,40 +546,31 @@
   sortEl?.addEventListener('change', ()=>applyFilter(activeTag(), false));
 
   function activeTag(){ return chips.find(x=>x.getAttribute('aria-selected')==='true')?.dataset.filter || 'All'; }
-
   function filterApplyFromTitle(title){
-    // Derive tag from title mapping (simple heuristic)
     if(/LLM|SQL Assistant/i.test(title)) applyFilter('LLM', true);
     else if(/CineReco|Recommender|NLP/i.test(title)) applyFilter('NLP', true);
     else if(/Gesture|Animal|Sleep|Vehicle|Vision|IoT|OpenCV/i.test(title)) applyFilter('CV', true);
     else if(/AutoML/i.test(title)) applyFilter('ML', true);
     else applyFilter('All', true);
   }
-
   function sortCards(list){
     const mode = sortEl?.value || 'recent';
     if(mode==='az')  list.sort((a,b)=> (a.dataset.title||'').localeCompare(b.dataset.title||''));
-    if(mode==='za')  list.sort((a,b)=> (b.dataset.title||'').localeCompare(a.dataset.title||''));
-    if(mode==='recent'){ /* keep DOM order (you listed from newest to oldest) */ }
+    if(mode==='za')  list.sort((a,b)=> (b.dataset.title||'').localeCompare(a.dataset.title||'')); 
     return list;
   }
-
-  // >>> LLM VISIBILITY FIX: after filtering, auto-scroll to Projects and focus first visible card
   function afterFilterScroll(){
     const sec = document.getElementById('projects'); if(!sec) return;
     const header = document.querySelector('header'); const offset=(header?.offsetHeight||72)+10;
     const y = sec.getBoundingClientRect().top + window.scrollY - offset;
-    // Scroll AFTER layout has settled
     requestAnimationFrame(()=>{ window.scrollTo({top:y, behavior:'smooth'}); 
       const first = Array.from(grid.children).find(el=>el.style.display!=='none');
       if(first){ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); setTimeout(()=>first.removeAttribute('tabindex'), 800); }
     });
   }
-
   function applyFilter(tag='All', doScroll=false){
     const q = (searchEl?.value || '').trim().toLowerCase();
     const cards = Array.from(grid.children);
-    // Show/hide
     cards.forEach(card=>{
       const cats = (card.dataset.cats||'').toLowerCase();
       const title = (card.dataset.title||'').toLowerCase();
@@ -546,13 +579,10 @@
       const qOk   = !q || title.includes(q) || text.includes(q);
       card.style.display = (tagOk && qOk) ? '' : 'none';
     });
-    // Sorting (re-append)
     const visible = cards.filter(c=>c.style.display!=='none');
     sortCards(visible).forEach(c=>grid.appendChild(c));
     if(doScroll) afterFilterScroll();
   }
-
-  // Deep-link support: #projects?tag=LLM  (also fixes “LLM not visible” on load)
   (function handleDeepLink(){
     if(location.hash.startsWith('#projects') && location.hash.includes('tag=')){
       const tag = decodeURIComponent(location.hash.split('tag=')[1]||'All');
@@ -614,14 +644,105 @@
   noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
   noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
 
-  // ===== Command Palette open/close click-outside =====
-  $('#cmdk')?.addEventListener('click', e=>{ if(e.target.id==='cmdk') closeCmd(); });
-  // ===== Resume deep link helper =====
-  // (Nothing needed; uses your same file link.)
+  // ===== PWA: register SW if present (safe if missing) =====
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(()=>{});
+    });
+  }
+  </script>
 
-  // ===== LLM direct click test: ensure chip scrolls section into view =====
-  // (Handled by applyFilter(tag, true) + afterFilterScroll()).
+  <!-- Music FAB toggle (WebAudio; exposed to intro) -->
+  <script>
+  (function(){
+    let ctx, gain, on=false, loops=[];
+    function ensure(){ if(ctx) return true; try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); gain=ctx.createGain(); gain.gain.value=.16; gain.connect(ctx.destination); return true; }catch{} }
+    function start(){
+      if(on||!ensure()) return; on=true;
+      const pad=ctx.createOscillator(), pg=ctx.createGain(); pad.type='sawtooth'; pad.frequency.value=220; pg.gain.value=.0001; pad.connect(pg); pg.connect(gain); pad.start();
+      pg.gain.exponentialRampToValueAtTime(.06, ctx.currentTime+.4);
+      const seq=[261.63,329.63,392.00,329.63]; let i=0; const tempo=88;
+      const tick=()=>{ if(!on) return; const o=ctx.createOscillator(), g2=ctx.createGain(); o.type='triangle'; o.frequency.value=seq[i%seq.length]; g2.gain.value=.0001; o.connect(g2); g2.connect(gain);
+        const t=ctx.currentTime; o.start(t); g2.gain.exponentialRampToValueAtTime(.18,t+.01); g2.gain.exponentialRampToValueAtTime(.0001,t+.25); o.stop(t+.28); i++; loops[1]=setTimeout(tick,(60/tempo)*1000); };
+      loops[0]=pad; loops[1]=setTimeout(tick,10);
+    }
+    function stop(){ on=false; try{ loops[0]?.stop(); }catch{} if(loops[1]) clearTimeout(loops[1]); loops=[]; }
+    const btn = document.getElementById('musicToggle');
+    if(!btn) return;
+    // restore desired icon (not autoplaying until user clicks)
+    if(localStorage.getItem('shivam-music')==='1'){ btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
+    btn.addEventListener('click', async ()=>{
+      ensure(); if(ctx?.state==='suspended') await ctx.resume();
+      if(btn.dataset.on==='1'){ stop(); btn.dataset.on='0'; btn.innerHTML='<i class="fa-solid fa-music"></i>'; localStorage.setItem('shivam-music','0'); }
+      else { start(); btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; localStorage.setItem('shivam-music','1'); }
+    });
+    // expose to intro
+    window.__musicStart = async ()=>{ ensure(); if(ctx?.state==='suspended') await ctx.resume(); if(btn.dataset.on!=='1'){ start(); btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; localStorage.setItem('shivam-music','1'); } };
+    window.__musicStop = ()=>{ if(btn.dataset.on==='1'){ stop(); btn.dataset.on='0'; btn.innerHTML='<i class="fa-solid fa-music"></i>'; localStorage.setItem('shivam-music','0'); } };
+  })();
+  </script>
 
+  <!-- Cinematic Intro Engine (calls music & sfx) -->
+  <script>
+  (function(){
+    const intro = document.getElementById('intro');
+    if(!intro) return;
+    const SEEN_KEY = 'intro-seen-v1';
+    const seen = localStorage.getItem(SEEN_KEY)==='1';
+    if(seen){ intro.classList.remove('show'); intro.remove(); return; }
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+    const optSfx   = document.getElementById('optSfx');
+    const optMusic = document.getElementById('optMusic');
+    const optHide  = document.getElementById('optHide');
+    const btnStart = document.getElementById('startIntro');
+    const btnSkip  = document.getElementById('skipIntro');
+
+    function closeIntro(){
+      intro.classList.remove('show'); intro.classList.add('hidden');
+      setTimeout(()=> intro.remove(), 280);
+      if(optHide.checked) localStorage.setItem(SEEN_KEY, '1');
+    }
+
+    btnStart?.addEventListener('click', async ()=>{
+      // Persist choices
+      localStorage.setItem('shivam-sfx',   optSfx.checked ? '1':'0');
+      localStorage.setItem('shivam-music', optMusic.checked? '1':'0');
+
+      // Sync SFX immediately
+      if(typeof window.__setSfxOn === 'function'){
+        window.__setSfxOn(optSfx.checked);
+        if(optSfx.checked && typeof window.__beep === 'function' && !reduce.matches){
+          [740,880,660].forEach((f,k)=> setTimeout(()=>window.__beep(f,.1), k*120));
+        }
+      }
+
+      // Start/stop music using exposed functions (user gesture-safe)
+      if(optMusic.checked && typeof window.__musicStart === 'function') { await window.__musicStart(); }
+      if(!optMusic.checked && typeof window.__musicStop === 'function') { window.__musicStop(); }
+
+      closeIntro();
+    });
+
+    btnSkip?.addEventListener('click', closeIntro);
+    addEventListener('keydown', e=>{ if(e.key==='Enter' && intro.isConnected) btnStart.click(); });
+
+    // Soft grid animation behind the card
+    (function(){
+      const cvs=document.getElementById('introFx'); if(!cvs) return; const c=cvs.getContext('2d');
+      let W,H,DPR=Math.min(2,devicePixelRatio||1); function resize(){ W=innerWidth; H=innerHeight; cvs.width=W*DPR; cvs.height=H*DPR; c.setTransform(DPR,0,0,DPR,0,0); }
+      resize(); addEventListener('resize', resize);
+      if(reduce.matches) return;
+      let t=0; function draw(){
+        c.clearRect(0,0,W,H); c.strokeStyle='#22d3ee44'; c.lineWidth=1;
+        const horizon=H*0.45, depth=H*0.7, vanX=W/2;
+        for(let i=0;i<28;i++){ const z=((i+t)%10)/10+.02; const y=horizon + (depth/(z*z+0.05)); if(y>H) continue; c.globalAlpha=.6; c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke(); }
+        for(let i=-22;i<=22;i++){ const x1=vanX + i*30, y1=horizon; const x2=vanX + i*1800, y2=H+100; c.globalAlpha=.35; c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); }
+        t+=.02; requestAnimationFrame(draw);
+      } draw();
+    })();
+  })();
   </script>
 
   <!-- Your existing form handler (unchanged) -->
