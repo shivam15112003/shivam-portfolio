@@ -27,45 +27,78 @@
     html{scroll-behavior:smooth}
     body{--nav-h:72px}
     section{scroll-margin-top:calc(var(--nav-h) + 12px)}
+
     /* Glass + glow */
     .glass{background:#0b0f1ad9;border:1px solid rgba(255,255,255,.08);backdrop-filter:saturate(140%) blur(10px);border-radius:16px}
     .glow{box-shadow:0 20px 60px -15px rgba(34, 211, 238, 0.35)}
+
     /* Progress bar */
     #scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#22d3ee,#2563eb);z-index:60;transition:width .12s linear}
+
     /* Floating controls */
     .fab{position:fixed;right:1rem;bottom:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:60}
     .fab .btn{background:rgba(17,24,39,.85);border:1px solid rgba(255,255,255,.08);padding:.6rem .8rem;border-radius:.75rem;color:#e5e7eb}
     #backTop{display:none}
+
     /* Command palette */
     #cmdk{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);z-index:70}
     #cmdk .card{width:min(720px,94vw)} #cmdk .row{display:flex;gap:.6rem;align-items:center;padding:.7rem .8rem}
     #cmdk .list{max-height:54vh;overflow:auto}
     #cmdk .item{padding:.6rem .8rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;border-radius:.4rem}
     #cmdk .item[aria-selected="true"]{background:#0f1a2e}
+
     /* Chips */
     .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.25rem 0 1rem}
     .chip{border:1px solid rgba(255,255,255,.08);padding:.35rem .7rem;border-radius:9999px;background:rgba(255,255,255,.03)}
     .chip[aria-selected="true"]{background:linear-gradient(90deg,#22d3ee,#2563eb);color:#0b0f1a;border-color:transparent}
+
     /* Neon blobs */
     .blob{position:absolute;pointer-events:none;filter:blur(40px);opacity:.6}
     .blob.one{top:-140px;left:50%;width:1000px;height:1000px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(34,211,238,.18),transparent)}
     .blob.two{bottom:-220px;left:-160px;width:720px;height:720px;background:radial-gradient(closest-side,rgba(168,85,247,.14),transparent)}
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){.glow,.blob{animation:none}}
 
-    /* === Intro overlay (non-destructive) === */
-    #intro{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(600px 400px at 50% 20%, #071022ee, transparent 60%), rgba(0,0,0,.75);z-index:90}
-    #intro.show{display:flex}
-    .intro-card{width:min(720px,94vw);background:#0b0f1ae6;border:1px solid rgba(255,255,255,.12);border-radius:16px;box-shadow:0 24px 120px rgba(0,0,0,.6);text-align:center;padding:20px}
-    .intro-title{position:relative;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-    .intro-title::before,.intro-title::after{content:attr(data-text);position:absolute;left:0;top:0}
-    .intro-title::before{color:#ff2d95;transform:translate(1px,0);clip-path:inset(0 0 70% 0);animation:introGl1 2s infinite linear alternate}
-    .intro-title::after{color:#22d3ee;transform:translate(-1px,0);clip-path:inset(60% 0 0 0);animation:introGl2 2.2s infinite linear alternate-reverse}
-    @keyframes introGl1{0%{clip-path:inset(0 0 70% 0)}50%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(40% 0 0 0)}}
-    @keyframes introGl2{0%{clip-path:inset(0 0 0 0)}50%{clip-path:inset(60% 0 0 0)}100%{clip-path:inset(0 0 80% 0)}}
-    @media (prefers-reduced-motion: reduce){
-      .intro-title::before,.intro-title::after{animation:none}
+    /* ===================== STAR WARS INTRO ===================== */
+    #sw-intro{position:fixed;inset:0;background:#000;z-index:100;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    #sw-intro[hidden]{display:none!important}
+
+    /* Starfield (simple) */
+    #sw-intro::before,#sw-intro::after{
+      content:""; position:absolute; inset:-20%; background:
+        radial-gradient(2px 2px at 20% 30%,#fff,transparent 40%),
+        radial-gradient(1.5px 1.5px at 70% 40%,#fff,transparent 45%),
+        radial-gradient(1.8px 1.8px at 40% 80%,#fff,transparent 45%),
+        radial-gradient(1.2px 1.2px at 80% 70%,#fff,transparent 45%),
+        radial-gradient(1.3px 1.3px at 30% 60%,#fff,transparent 45%),
+        radial-gradient(1.6px 1.6px at 55% 20%,#fff,transparent 45%);
+      opacity:.45; animation:starPan 40s linear infinite;
     }
+    #sw-intro::after{ animation-duration:60s; opacity:.25 }
+    @keyframes starPan{from{transform:translateY(0)}to{transform:translateY(20%)}}
+
+    /* Start panel */
+    .sw-start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+    .sw-start .panel{background:#0b0f1ad9;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 20px;text-align:center;max-width:min(720px,94vw)}
+    .sw-btn{background:linear-gradient(90deg,#22d3ee,#2563eb);color:#061018;font-weight:900;padding:.65rem 1rem;border-radius:.75rem}
+    .sw-ghost{border:1px solid rgba(255,255,255,.12);padding:.65rem 1rem;border-radius:.75rem}
+
+    /* "A long time ago..." */
+    .sw-longtime{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .6s ease}
+    .sw-longtime .txt{color:#4bd5ee;font-size:clamp(18px,3vw,28px);letter-spacing:.1em;text-align:center}
+    .sw-longtime.show{opacity:1}
+    .sw-longtime.hide{opacity:0}
+
+    /* Opening crawl */
+    .sw-viewport{position:absolute;left:50%;top:54%;transform:translateX(-50%);height:60vh;width:min(820px,90vw);perspective:400px;overflow:hidden;opacity:0;transition:opacity .6s ease}
+    .sw-viewport.show{opacity:1}
+    .sw-viewport::after{content:"";position:absolute;left:0;right:0;top:0;height:30%;background:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,0));pointer-events:none}
+    .sw-crawl{position:absolute;bottom:-12vh;transform-origin:50% 100%;transform:rotateX(25deg);color:#ffe81f;font-weight:700;letter-spacing:.02em;line-height:1.5;text-align:justify;font-size:clamp(16px,2.2vw,20px)}
+    .sw-crawl.start{animation:swCrawl 24s linear forwards}
+    .sw-crawl .title{text-align:center;margin-bottom:1rem}
+    .sw-crawl .title h2{font-size:clamp(18px,2.6vw,22px);margin:.2rem 0 0}
+    .sw-skip{position:absolute;right:12px;bottom:12px;background:#0b0f1ad9;border:1px solid rgba(255,255,255,.12);color:#e5e7eb;padding:.5rem .75rem;border-radius:.5rem;z-index:2}
+    @keyframes swCrawl{0%{bottom:-12vh}100%{bottom:120vh}}
+    @media (prefers-reduced-motion: reduce){ .sw-crawl.start{animation:none} .sw-viewport{opacity:0} .sw-longtime{opacity:0} }
   </style>
 
   <!-- Structured data -->
@@ -78,28 +111,45 @@
   <!-- Progress -->
   <div id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- ===== Intro Overlay (cinematic) ===== -->
-  <div id="intro" class="show">
-    <div class="intro-card">
-      <img src="profile.jpeg" alt="" class="w-20 h-20 rounded-full mx-auto mb-2 border-2 border-cyan-400"/>
-      <h1 class="intro-title text-3xl sm:text-4xl mb-1" data-text="Shivam Sharma">Shivam Sharma</h1>
-      <div class="text-cyan-400 font-bold tracking-wide mb-3">AI • CV • NLP • Robotics</div>
-      <p class="text-gray-300 mb-4">Best with sound. Choose options and press Enter.</p>
-      <div class="flex justify-center gap-3 mb-4">
-        <label class="inline-flex items-center gap-2 text-sm"><input id="optSfx" type="checkbox" class="accent-cyan-500" checked> Sound FX</label>
-        <label class="inline-flex items-center gap-2 text-sm"><input id="optMusic" type="checkbox" class="accent-cyan-500"> Music</label>
-        <label class="inline-flex items-center gap-2 text-sm"><input id="optHide" type="checkbox" class="accent-cyan-500" checked> Don’t show again</label>
-      </div>
-      <div class="flex justify-center gap-2">
-        <button id="startIntro" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-4 py-2 rounded-lg">
-          Enter <span class="hidden sm:inline">(press Enter)</span>
-        </button>
-        <button id="skipIntro" class="border border-white/10 px-4 py-2 rounded-lg text-gray-200">Skip</button>
+  <!-- ===== Star Wars Intro (no big name title; music + skip) ===== -->
+  <div id="sw-intro" role="dialog" aria-modal="true">
+    <button class="sw-skip" id="swSkip" title="Skip intro">Skip</button>
+
+    <!-- Start gate (required for audio autoplay policies) -->
+    <div class="sw-start" id="swStart">
+      <div class="panel">
+        <img src="profile.jpeg" alt="" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-cyan-400"/>
+        <div class="text-gray-200 font-semibold mb-2">Cinematic intro available</div>
+        <p class="text-gray-400 text-sm mb-4">Click “Start Intro” to play music and see the opening crawl.</p>
+        <div class="flex gap-2 justify-center">
+          <button class="sw-btn" id="swStartBtn">Start Intro</button>
+          <button class="sw-ghost" id="swSkipBtn">Skip</button>
+        </div>
       </div>
     </div>
-    <!-- animated grid behind the card -->
-    <canvas id="introFx" class="absolute inset-0 -z-10"></canvas>
+
+    <!-- "A long time ago..." -->
+    <div class="sw-longtime" id="swLong"><div class="txt">A long time ago in a galaxy far, far away…</div></div>
+
+    <!-- Opening crawl -->
+    <div class="sw-viewport" id="swView" aria-hidden="true">
+      <div class="sw-crawl" id="swCrawl">
+        <p class="title">
+          <span>EPISODE I</span><br/>
+          <h2>THE PORTFOLIO</h2>
+        </p>
+        <p>In an era of rapid innovation, a developer embarks on a quest to build intelligent systems — from vision pipelines to language models — striving to bring ideas to life with clean engineering and bold research.</p>
+        <p>Armed with Python, deep learning, and a passion for robotics, he traverses datasets and deployments, tuning models, shipping apps, and exploring frontiers in AI.</p>
+        <p>Now, the journey continues. Explore the projects, research, and experience that shape the path ahead…</p>
+      </div>
+    </div>
+
+    <!-- Intro audio (provide your own MP3 at this path) -->
+    <audio id="swAudio" src="assets/intro.mp3" preload="auto" playsinline></audio>
   </div>
+
+  <!-- Background music for the site (toggle with the Music button) -->
+  <audio id="bgm" src="assets/bgm.mp3" preload="auto" loop playsinline></audio>
 
   <!-- ======= ORIGINAL CONTENT (UNMODIFIED TEXT/LINKS) ======= -->
 
@@ -185,7 +235,7 @@
     <div class="container mx-auto px-6">
       <h3 class="text-3xl font-semibold mb-6 text-cyan-400">Projects</h3>
 
-      <!-- NEW: Project tools (filters/search/sort) — non-destructive -->
+      <!-- Filters / search / sort -->
       <div class="chips" id="projChips" role="tablist" aria-label="Project filters">
         <button class="chip" data-filter="All" role="tab" aria-selected="true">All</button>
         <button class="chip" data-filter="ML" role="tab">ML</button>
@@ -203,7 +253,6 @@
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projGrid">
-
         <!-- AutoML -->
         <div data-aos="fade-up" class="bg-gray-900 rounded-2xl shadow p-6 hover:scale-105 transition transform" data-title="AutoML Framework" data-cats="ML">
           <h4 class="text-xl font-bold mb-2 text-blue-400">🤖 AutoML Framework</h4>
@@ -423,7 +472,7 @@
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-  <!-- Main Enhancements (AOS, Typed, particles, filters with LLM fix, palette, stats, notes, SFX) -->
+  <!-- Main Enhancements -->
   <script>
   // ===== Utilities =====
   const $= (s, c=document)=>c.querySelector(s);
@@ -477,18 +526,15 @@
     (function loop(){ step(); requestAnimationFrame(loop) })();
   })();
 
-  // ===== Sound FX (site-wide, off by default; persisted) =====
+  // ===== Sound FX (beeps on interactions) =====
   let __audioCtx, __masterGain, __sfx=false;
   function __ensureAc(){ if(__audioCtx) return __audioCtx; try{ __audioCtx=new (window.AudioContext||window.webkitAudioContext)(); __masterGain=__audioCtx.createGain(); __masterGain.gain.value=.18; __masterGain.connect(__audioCtx.destination);}catch{} return __audioCtx; }
   function __beep(f=760,d=.12,type='sine'){ if(!__sfx||!__ensureAc()) return; const o=__audioCtx.createOscillator(), g=__audioCtx.createGain(); o.type=type; o.frequency.value=f; g.gain.value=.0001; o.connect(g); g.connect(__masterGain);
     const t=__audioCtx.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.stop(t+d+.02); }
   const sfxBtn = $('#sfxToggle');
   function __setSfx(on){ __sfx=!!on; if(sfxBtn) sfxBtn.innerHTML = `<i class="fa-solid ${__sfx?'fa-volume-high':'fa-volume-xmark'}"></i>`; localStorage.setItem('shivam-sfx', __sfx?'1':'0'); }
-  // Init from storage
   __setSfx(localStorage.getItem('shivam-sfx')==='1');
   sfxBtn?.addEventListener('click', async ()=>{ __ensureAc(); if(__audioCtx?.state==='suspended') await __audioCtx.resume(); __setSfx(!__sfx); if(__sfx) __beep(620) });
-  // expose for intro
-  window.__setSfxOn = __setSfx; window.__beep = __beep;
 
   // ===== Command palette =====
   const cmdWrap  = $('#cmdk'), cmdInput = $('#cmdInput'), cmdList = $('#cmdList');
@@ -555,7 +601,7 @@
   }
   function sortCards(list){
     const mode = sortEl?.value || 'recent';
-    if(mode==='az')  list.sort((a,b)=> (a.dataset.title||'').localeCompare(b.dataset.title||''));
+    if(mode==='az')  list.sort((a,b)=> (a.dataset.title||'').localeCompare(b.dataset.title||'')); 
     if(mode==='za')  list.sort((a,b)=> (b.dataset.title||'').localeCompare(a.dataset.title||'')); 
     return list;
   }
@@ -591,7 +637,7 @@
     }
   })();
 
-  // ===== Contact form: confetti on success (no change to your handler) =====
+  // ===== Contact form: confetti on success =====
   (function(){
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
@@ -644,7 +690,7 @@
   noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
   noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
 
-  // ===== PWA: register SW if present (safe if missing) =====
+  // ===== PWA: register SW if present =====
   if('serviceWorker' in navigator){
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(()=>{});
@@ -652,100 +698,101 @@
   }
   </script>
 
-  <!-- Music FAB toggle (WebAudio; exposed to intro) -->
+  <!-- Background Music Toggle (file-based) -->
   <script>
   (function(){
-    let ctx, gain, on=false, loops=[];
-    function ensure(){ if(ctx) return true; try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); gain=ctx.createGain(); gain.gain.value=.16; gain.connect(ctx.destination); return true; }catch{} }
-    function start(){
-      if(on||!ensure()) return; on=true;
-      const pad=ctx.createOscillator(), pg=ctx.createGain(); pad.type='sawtooth'; pad.frequency.value=220; pg.gain.value=.0001; pad.connect(pg); pg.connect(gain); pad.start();
-      pg.gain.exponentialRampToValueAtTime(.06, ctx.currentTime+.4);
-      const seq=[261.63,329.63,392.00,329.63]; let i=0; const tempo=88;
-      const tick=()=>{ if(!on) return; const o=ctx.createOscillator(), g2=ctx.createGain(); o.type='triangle'; o.frequency.value=seq[i%seq.length]; g2.gain.value=.0001; o.connect(g2); g2.connect(gain);
-        const t=ctx.currentTime; o.start(t); g2.gain.exponentialRampToValueAtTime(.18,t+.01); g2.gain.exponentialRampToValueAtTime(.0001,t+.25); o.stop(t+.28); i++; loops[1]=setTimeout(tick,(60/tempo)*1000); };
-      loops[0]=pad; loops[1]=setTimeout(tick,10);
-    }
-    function stop(){ on=false; try{ loops[0]?.stop(); }catch{} if(loops[1]) clearTimeout(loops[1]); loops=[]; }
     const btn = document.getElementById('musicToggle');
-    if(!btn) return;
-    // restore desired icon (not autoplaying until user clicks)
-    if(localStorage.getItem('shivam-music')==='1'){ btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
-    btn.addEventListener('click', async ()=>{
-      ensure(); if(ctx?.state==='suspended') await ctx.resume();
-      if(btn.dataset.on==='1'){ stop(); btn.dataset.on='0'; btn.innerHTML='<i class="fa-solid fa-music"></i>'; localStorage.setItem('shivam-music','0'); }
-      else { start(); btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; localStorage.setItem('shivam-music','1'); }
-    });
-    // expose to intro
-    window.__musicStart = async ()=>{ ensure(); if(ctx?.state==='suspended') await ctx.resume(); if(btn.dataset.on!=='1'){ start(); btn.dataset.on='1'; btn.innerHTML='<i class="fa-solid fa-pause"></i>'; localStorage.setItem('shivam-music','1'); } };
-    window.__musicStop = ()=>{ if(btn.dataset.on==='1'){ stop(); btn.dataset.on='0'; btn.innerHTML='<i class="fa-solid fa-music"></i>'; localStorage.setItem('shivam-music','0'); } };
-  })();
-  </script>
+    const bgm = document.getElementById('bgm');
+    if(!btn || !bgm) return;
 
-  <!-- Cinematic Intro Engine (calls music & sfx) -->
-  <script>
-  (function(){
-    const intro = document.getElementById('intro');
-    if(!intro) return;
-    const SEEN_KEY = 'intro-seen-v1';
-    const seen = localStorage.getItem(SEEN_KEY)==='1';
-    if(seen){ intro.classList.remove('show'); intro.remove(); return; }
-
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-
-    const optSfx   = document.getElementById('optSfx');
-    const optMusic = document.getElementById('optMusic');
-    const optHide  = document.getElementById('optHide');
-    const btnStart = document.getElementById('startIntro');
-    const btnSkip  = document.getElementById('skipIntro');
-
-    function closeIntro(){
-      intro.classList.remove('show'); intro.classList.add('hidden');
-      setTimeout(()=> intro.remove(), 280);
-      if(optHide.checked) localStorage.setItem(SEEN_KEY, '1');
+    function setState(on){
+      btn.dataset.on = on ? '1' : '0';
+      btn.innerHTML = on ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-music"></i>';
+      localStorage.setItem('shivam-music', on ? '1' : '0');
     }
 
-    btnStart?.addEventListener('click', async ()=>{
-      // Persist choices
-      localStorage.setItem('shivam-sfx',   optSfx.checked ? '1':'0');
-      localStorage.setItem('shivam-music', optMusic.checked? '1':'0');
+    // Try to restore preference (may still require a click to actually play)
+    const wantOn = localStorage.getItem('shivam-music')==='1';
+    setState(false); // don’t auto-play; user must click
+    bgm.volume = 0.6;
 
-      // Sync SFX immediately
-      if(typeof window.__setSfxOn === 'function'){
-        window.__setSfxOn(optSfx.checked);
-        if(optSfx.checked && typeof window.__beep === 'function' && !reduce.matches){
-          [740,880,660].forEach((f,k)=> setTimeout(()=>window.__beep(f,.1), k*120));
-        }
+    btn.addEventListener('click', async ()=>{
+      if(btn.dataset.on==='1'){
+        bgm.pause(); setState(false);
+      }else{
+        try{ await bgm.play(); setState(true); }catch{ setState(false); }
       }
-
-      // Start/stop music using exposed functions (user gesture-safe)
-      if(optMusic.checked && typeof window.__musicStart === 'function') { await window.__musicStart(); }
-      if(!optMusic.checked && typeof window.__musicStop === 'function') { window.__musicStop(); }
-
-      closeIntro();
     });
-
-    btnSkip?.addEventListener('click', closeIntro);
-    addEventListener('keydown', e=>{ if(e.key==='Enter' && intro.isConnected) btnStart.click(); });
-
-    // Soft grid animation behind the card
-    (function(){
-      const cvs=document.getElementById('introFx'); if(!cvs) return; const c=cvs.getContext('2d');
-      let W,H,DPR=Math.min(2,devicePixelRatio||1); function resize(){ W=innerWidth; H=innerHeight; cvs.width=W*DPR; cvs.height=H*DPR; c.setTransform(DPR,0,0,DPR,0,0); }
-      resize(); addEventListener('resize', resize);
-      if(reduce.matches) return;
-      let t=0; function draw(){
-        c.clearRect(0,0,W,H); c.strokeStyle='#22d3ee44'; c.lineWidth=1;
-        const horizon=H*0.45, depth=H*0.7, vanX=W/2;
-        for(let i=0;i<28;i++){ const z=((i+t)%10)/10+.02; const y=horizon + (depth/(z*z+0.05)); if(y>H) continue; c.globalAlpha=.6; c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke(); }
-        for(let i=-22;i<=22;i++){ const x1=vanX + i*30, y1=horizon; const x2=vanX + i*1800, y2=H+100; c.globalAlpha=.35; c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); }
-        t+=.02; requestAnimationFrame(draw);
-      } draw();
-    })();
   })();
   </script>
 
-  <!-- Your existing form handler (unchanged) -->
+  <!-- ===== Star Wars Intro Orchestrator ===== -->
+  <script>
+  (function(){
+    const wrap   = document.getElementById('sw-intro');
+    const gate   = document.getElementById('swStart');
+    const btnGo  = document.getElementById('swStartBtn');
+    const btnSk1 = document.getElementById('swSkipBtn');
+    const btnSk2 = document.getElementById('swSkip');
+    const longT  = document.getElementById('swLong');
+    const view   = document.getElementById('swView');
+    const crawl  = document.getElementById('swCrawl');
+    const audio  = document.getElementById('swAudio');
+
+    if(!wrap) return;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function hideIntro(){
+      wrap.setAttribute('hidden','');
+      // Stop intro audio and rewind
+      try{ audio.pause(); audio.currentTime = 0; }catch{}
+      // Ensure page is scrolled to top for clean reveal
+      window.scrollTo({top:0, behavior:'auto'});
+    }
+
+    // Respect reduced motion: no intro animation; show site immediately
+    if(reduce){ hideIntro(); return; }
+
+    async function startIntro(){
+      // Remove start gate
+      gate.style.display = 'none';
+
+      // Try music (user gesture already happened)
+      audio.volume = 0.9;
+      try{ await audio.play(); }catch{}
+
+      // Sequence: long-time -> crawl
+      longT.classList.add('show');
+      setTimeout(()=>{  // fade it out then show crawl
+        longT.classList.remove('show'); longT.classList.add('hide');
+        setTimeout(()=>{
+          view.classList.add('show');
+          crawl.classList.add('start');
+
+          // Finish after crawl duration (24s) + small buffer
+          const END_MS = 24000 + 600;
+          setTimeout(()=>{
+            // Fade audio
+            const iv = setInterval(()=>{
+              audio.volume = Math.max(0, audio.volume - 0.06);
+              if(audio.volume<=0.01){ clearInterval(iv); hideIntro(); }
+            }, 120);
+          }, END_MS);
+        }, 700);
+      }, 3200);
+    }
+
+    btnGo?.addEventListener('click', startIntro);
+    btnSk1?.addEventListener('click', hideIntro);
+    btnSk2?.addEventListener('click', hideIntro);
+
+    // Safety: if audio ends earlier, hide
+    audio?.addEventListener('ended', hideIntro);
+  })();
+  </script>
+
+  <!-- Contact form (unchanged) -->
   <script>
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
