@@ -111,11 +111,11 @@
   <!-- Progress -->
   <div id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- ===== Star Wars Intro (no big name title; music + skip) ===== -->
+  <!-- ===== Star Wars Intro (music + skip) ===== -->
   <div id="sw-intro" role="dialog" aria-modal="true">
     <button class="sw-skip" id="swSkip" title="Skip intro">Skip</button>
 
-    <!-- Start gate (required for audio autoplay policies) -->
+    <!-- Start gate -->
     <div class="sw-start" id="swStart">
       <div class="panel">
         <img src="profile.jpeg" alt="" class="w-16 h-16 rounded-full mx-auto mb-2 border-2 border-cyan-400"/>
@@ -144,14 +144,14 @@
       </div>
     </div>
 
-    <!-- Intro audio (provide your own MP3 at this path) -->
+    <!-- Intro audio -->
     <audio id="swAudio" src="assets/intro.mp3" preload="auto" playsinline></audio>
   </div>
 
-  <!-- Background music for the site (toggle with the Music button) -->
+  <!-- Background music for the site -->
   <audio id="bgm" src="assets/bgm.mp3" preload="auto" loop playsinline></audio>
 
-  <!-- ======= ORIGINAL CONTENT (UNMODIFIED TEXT/LINKS) ======= -->
+  <!-- ======= ORIGINAL CONTENT ======= -->
 
   <!-- Header / Navbar -->
   <header class="bg-black shadow sticky top-0 z-50">
@@ -405,9 +405,8 @@
     <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" target="_blank" class="text-gray-200 hover:text-cyan-300"><i class="fa-brands fa-linkedin"></i><span class="hidden sm:inline"> LinkedIn</span></a>
   </div>
 
-  <!-- FABs -->
+  <!-- FABs (speaker/SFX button removed) -->
   <div class="fab">
-    <button class="btn" id="sfxToggle" title="Toggle sound (off)"><i class="fa-solid fa-volume-xmark"></i></button>
     <button class="btn" id="musicToggle" title="Music"><i class="fa-solid fa-music"></i></button>
     <button class="btn" id="backTop" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
     <button class="btn" id="cmdOpen" title="Command palette (Ctrl/Cmd+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -474,11 +473,10 @@
 
   <!-- Main Enhancements -->
   <script>
-  // ===== Utilities =====
   const $= (s, c=document)=>c.querySelector(s);
   const $$=(s, c=document)=>Array.from(c.querySelectorAll(s));
 
-  // ===== AOS & typed =====
+  // AOS & typed
   window.addEventListener('load', ()=>{
     if(window.AOS) AOS.init({duration:900, once:true, offset:80});
     if(window.Typed){
@@ -489,7 +487,7 @@
     } else { const t=$('#typed-text'); if(t) t.textContent="AI Engineer"; }
   });
 
-  // ===== Scroll progress & back to top =====
+  // Scroll progress & back to top
   const progressEl = $('#scroll-progress');
   const backTop   = $('#backTop');
   function updProg(){
@@ -501,7 +499,7 @@
   updProg(); addEventListener('scroll', updProg, {passive:true}); addEventListener('resize', updProg);
   backTop?.addEventListener('click', ()=> scrollTo({top:0,behavior:'smooth'}));
 
-  // ===== Particles background (efficient) =====
+  // Particles
   (function(){
     const canvas = document.getElementById('particles'); if(!canvas) return;
     const ctx = canvas.getContext('2d'); let w,h,dpr,parts=[],maxD=120,run=true;
@@ -526,17 +524,15 @@
     (function loop(){ step(); requestAnimationFrame(loop) })();
   })();
 
-  // ===== Sound FX (beeps on interactions) =====
+  // (SFX core kept but no button; default OFF)
   let __audioCtx, __masterGain, __sfx=false;
   function __ensureAc(){ if(__audioCtx) return __audioCtx; try{ __audioCtx=new (window.AudioContext||window.webkitAudioContext)(); __masterGain=__audioCtx.createGain(); __masterGain.gain.value=.18; __masterGain.connect(__audioCtx.destination);}catch{} return __audioCtx; }
   function __beep(f=760,d=.12,type='sine'){ if(!__sfx||!__ensureAc()) return; const o=__audioCtx.createOscillator(), g=__audioCtx.createGain(); o.type=type; o.frequency.value=f; g.gain.value=.0001; o.connect(g); g.connect(__masterGain);
     const t=__audioCtx.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.stop(t+d+.02); }
-  const sfxBtn = $('#sfxToggle');
-  function __setSfx(on){ __sfx=!!on; if(sfxBtn) sfxBtn.innerHTML = `<i class="fa-solid ${__sfx?'fa-volume-high':'fa-volume-xmark'}"></i>`; localStorage.setItem('shivam-sfx', __sfx?'1':'0'); }
+  function __setSfx(on){ __sfx=!!on; localStorage.setItem('shivam-sfx', __sfx?'1':'0'); }
   __setSfx(localStorage.getItem('shivam-sfx')==='1');
-  sfxBtn?.addEventListener('click', async ()=>{ __ensureAc(); if(__audioCtx?.state==='suspended') await __audioCtx.resume(); __setSfx(!__sfx); if(__sfx) __beep(620) });
 
-  // ===== Command palette =====
+  // Command palette
   const cmdWrap  = $('#cmdk'), cmdInput = $('#cmdInput'), cmdList = $('#cmdList');
   $('#cmdOpen')?.addEventListener('click', openCmd);
   $('#cmdClose')?.addEventListener('click', closeCmd);
@@ -568,7 +564,7 @@
     rows.forEach(r=>r.setAttribute('aria-selected','false')); rows[idx]?.setAttribute('aria-selected','true'); if(e.key==='Enter'){ e.preventDefault(); rows[idx]?.click(); }
   });
 
-  // ===== Resume preview =====
+  // Resume preview
   const resumeModal = $('#resumeModal');
   function openResume(){ resumeModal.classList.remove('hidden'); resumeModal.classList.add('flex'); }
   function closeResume(){ resumeModal.classList.add('hidden'); resumeModal.classList.remove('flex'); }
@@ -581,7 +577,7 @@
     btn.addEventListener('click', openResume); link.insertAdjacentElement('afterend', btn);
   })();
 
-  // ===== Project filters (with LLM FIX) =====
+  // Project filters
   const chips    = $$('#projChips .chip');
   const grid     = $('#projGrid');
   const searchEl = $('#projSearch');
@@ -637,7 +633,7 @@
     }
   })();
 
-  // ===== Contact form: confetti on success =====
+  // Contact form confetti
   (function(){
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
@@ -648,7 +644,7 @@
     obs.observe(status,{childList:true,characterData:true,subtree:true});
   })();
 
-  // ===== Live GitHub Stats =====
+  // GitHub stats
   async function getJSON(u){ const r=await fetch(u,{headers:{'Accept':'application/vnd.github+json'}}); if(!r.ok) throw new Error(r.status); return r.json(); }
   async function loadGH(){
     const user = ($('#ghUser')?.value||'').trim(); if(!user) return;
@@ -673,7 +669,7 @@
   }
   $('#ghFetch')?.addEventListener('click', loadGH); loadGH();
 
-  // ===== Notes =====
+  // Notes
   const notesWrap=$('#notesWrap'); const noteAdd=$('#noteAdd'); const noteClear=$('#noteClear');
   function loadNotes(){ try{return JSON.parse(localStorage.getItem('notes-ss')||'[]')}catch{return[]} }
   function saveNotes(a){ localStorage.setItem('notes-ss', JSON.stringify(a)); }
@@ -690,7 +686,7 @@
   noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
   noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
 
-  // ===== PWA: register SW if present =====
+  // PWA SW
   if('serviceWorker' in navigator){
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(()=>{});
@@ -698,7 +694,7 @@
   }
   </script>
 
-  <!-- Background Music Toggle (file-based) -->
+  <!-- Background Music Toggle -->
   <script>
   (function(){
     const btn = document.getElementById('musicToggle');
@@ -711,9 +707,8 @@
       localStorage.setItem('shivam-music', on ? '1' : '0');
     }
 
-    // Try to restore preference (may still require a click to actually play)
     const wantOn = localStorage.getItem('shivam-music')==='1';
-    setState(false); // don’t auto-play; user must click
+    setState(false); // user gesture required
     bgm.volume = 0.6;
 
     btn.addEventListener('click', async ()=>{
@@ -726,7 +721,7 @@
   })();
   </script>
 
-  <!-- ===== Star Wars Intro Orchestrator ===== -->
+  <!-- Star Wars Intro Orchestrator -->
   <script>
   (function(){
     const wrap   = document.getElementById('sw-intro');
@@ -740,40 +735,29 @@
     const audio  = document.getElementById('swAudio');
 
     if(!wrap) return;
-
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function hideIntro(){
       wrap.setAttribute('hidden','');
-      // Stop intro audio and rewind
       try{ audio.pause(); audio.currentTime = 0; }catch{}
-      // Ensure page is scrolled to top for clean reveal
       window.scrollTo({top:0, behavior:'auto'});
     }
 
-    // Respect reduced motion: no intro animation; show site immediately
     if(reduce){ hideIntro(); return; }
 
     async function startIntro(){
-      // Remove start gate
       gate.style.display = 'none';
-
-      // Try music (user gesture already happened)
       audio.volume = 0.9;
       try{ await audio.play(); }catch{}
 
-      // Sequence: long-time -> crawl
       longT.classList.add('show');
-      setTimeout(()=>{  // fade it out then show crawl
+      setTimeout(()=>{
         longT.classList.remove('show'); longT.classList.add('hide');
         setTimeout(()=>{
           view.classList.add('show');
           crawl.classList.add('start');
-
-          // Finish after crawl duration (24s) + small buffer
           const END_MS = 24000 + 600;
           setTimeout(()=>{
-            // Fade audio
             const iv = setInterval(()=>{
               audio.volume = Math.max(0, audio.volume - 0.06);
               if(audio.volume<=0.01){ clearInterval(iv); hideIntro(); }
@@ -786,13 +770,11 @@
     btnGo?.addEventListener('click', startIntro);
     btnSk1?.addEventListener('click', hideIntro);
     btnSk2?.addEventListener('click', hideIntro);
-
-    // Safety: if audio ends earlier, hide
     audio?.addEventListener('ended', hideIntro);
   })();
   </script>
 
-  <!-- Contact form (unchanged) -->
+  <!-- Contact form -->
   <script>
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
