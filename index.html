@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Shivam Sharma | Portfolio — Dune Edition</title>
+
+  <!-- SEO / Social -->
+  <meta name="description" content="Shivam Sharma — AI Engineer & Researcher. ML, DL, CV, NLP, Robotics. Portfolio, projects, research & experience."/>
+  <meta property="og:title" content="Shivam Sharma | Portfolio — Dune Edition"/>
+  <meta property="og:description" content="AI Engineer & Researcher — ML, DL, CV, NLP & Robotics projects, research & experience."/>
+  <meta property="og:image" content="profile.jpeg"/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0e0a07"/>
+
+  <!-- Preload ambient audio -->
+  <link rel="preload" href="assets/soothing.wav" as="audio" type="audio/wav">
+
+  <!-- Fonts (Marcellus for display, Inter for UI, IBM Plex Mono for code) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&family=Marcellus&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Marcellus','serif'],
+            sans: ['Inter','ui-sans-serif','system-ui'],
+            mono: ['IBM Plex Mono','ui-monospace','SFMono-Regular']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- AOS + Font Awesome + Typed + Confetti -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- PWA (optional) -->
+  <link rel="manifest" href="manifest.webmanifest"/>
+
+  <style>
+    :root{
+      /* Dune palette */
+      --bg:#0e0a07;           /* deep desert night */
+      --panel:#12100e;        /* darker panel */
+      --panel-2:#15120f;      /* alt panel */
+      --text:#efe8da;         /* warm sand */
+      --muted:#c7bda9;        /* muted sand */
+      --line:#2a2119;         /* hairline */
+      --line-hi:#3a2f25;      /* bevel highlight */
+      --accent:#d27d2f;       /* spice */
+      --accent-2:#b08968;     /* bronze */
+    }
+
+    html{scroll-behavior:smooth}
+    body{ background:var(--bg); color:var(--text); --nav-h:64px; }
+    section{scroll-margin-top:calc(var(--nav-h) + 12px)}
+
+    /* Safe area on iOS */
+    header{ padding-left: max(1.25rem, env(safe-area-inset-left)); padding-right: max(1.25rem, env(safe-area-inset-right)); }
+
+    /* Panels with bronze bevel */
+    .bevel{ background:var(--panel); border:1px solid var(--line); border-radius:14px; box-shadow:
+      inset 0 1px 0 var(--line-hi), inset 0 -1px 0 rgba(0,0,0,.35), 0 12px 30px rgba(0,0,0,.22);
+    }
+    .bevel-2{ background:var(--panel-2); border:1px solid var(--line); border-radius:12px; box-shadow:
+      inset 0 1px 0 var(--line-hi), inset 0 -1px 0 rgba(0,0,0,.4);
+    }
+
+    /* Ornamented divider */
+    .orn{ position:relative; height:2px; background:linear-gradient(90deg,transparent, var(--accent), transparent) }
+    .orn:before,.orn:after{ content:""; position:absolute; top:-6px; width:9px; height:9px; border:1px solid var(--accent); transform:rotate(45deg); }
+    .orn:before{ left:12px } .orn:after{ right:12px }
+
+    /* Desert sun + dunes (hero) */
+    .hero-wrap{ position:relative; overflow:hidden }
+    .sun{ position:absolute; width:720px; height:720px; border-radius:50%; left:50%; top:-220px; transform:translateX(-50%);
+      background:radial-gradient(closest-side, rgba(210,125,47,.28), transparent 70%); filter:blur(10px); pointer-events:none }
+    .dune{ position:absolute; left:0; right:0; height:220px; background:
+      radial-gradient(120% 160% at 50% 0%, rgba(210,125,47,.12), transparent 60%),
+      linear-gradient(to right, rgba(176,137,104,.25), rgba(176,137,104,.08));
+      transform:skewY(-3deg); border-top:1px solid rgba(176,137,104,.18); }
+    .dune.one{ bottom:-60px; filter:blur(1px) }
+    .dune.two{ bottom:-140px; opacity:.7 }
+    .grain{ position:absolute; inset:-20%; background-image:
+      radial-gradient(rgba(255,255,255,.04) 1px, transparent 1.2px);
+      background-size:9px 9px; opacity:.35; animation:drift 26s linear infinite; pointer-events:none }
+    @keyframes drift{ from{ transform:translateY(0) } to{ transform:translateY(8%) } }
+
+    /* Subtle wind lines */
+    .wind:before{ content:""; position:absolute; right:-10%; top:18%; width:120%; height:1px;
+      background:linear-gradient(90deg, transparent, rgba(210,125,47,.45), transparent);
+      box-shadow:0 18px 0 rgba(210,125,47,.28), 0 36px 0 rgba(210,125,47,.18); opacity:.4 }
+
+    /* Progress bar */
+    #scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0; background:var(--accent); z-index:60; transition:width .12s linear }
+
+    /* Command palette */
+    #cmdk{position:fixed; inset:0; display:none; align-items:flex-start; justify-content:center; padding-top:12vh; background:rgba(0,0,0,.55); backdrop-filter:blur(3px); z-index:70}
+    #cmdk .card{ width:min(720px,94vw) }
+    #cmdk .row{ display:flex; gap:.6rem; align-items:center; padding:.7rem .8rem }
+    #cmdk .list{ max-height:54vh; overflow:auto }
+    #cmdk .item{ padding:.6rem .8rem; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; border-radius:.35rem }
+    #cmdk .item[aria-selected="true"]{ background:#19140f }
+
+    .u:hover{ text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--accent) }
+
+    /* Buttons */
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border:1px solid var(--line); background:var(--panel-2); color:var(--text); padding:.65rem 1rem; border-radius:.7rem; font-weight:700 }
+    .btn:hover{ border-color:var(--line-hi) }
+    .btn-acc{ background:var(--accent); color:#140f0b; border-color:transparent }
+    .btn-acc:hover{ background:#c4712b }
+
+    /* Fields */
+    .field{ background:#100d0a; border:1px solid var(--line); border-radius:.6rem; padding:.6rem .8rem; color:var(--text) }
+    .field:focus{ outline:none; box-shadow:0 0 0 2px var(--accent) }
+
+    /* Chips */
+    .chip{ border:1px solid var(--line); background:var(--panel-2); padding:.38rem .7rem; border-radius:9999px; color:var(--muted); font-weight:600; }
+    .chip[aria-selected="true"]{ background:var(--accent); color:#140f0b; border-color:transparent }
+
+    /* Display headings */
+    .dh{ font-family: var(--display, 'Marcellus'); letter-spacing:.02em }
+
+    /* Mobile menu overlay */
+    #mobileMenu{ background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
+    #mobileMenu .sheet{ background: var(--panel); border:1px solid var(--line); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.35) }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      [data-aos]{ opacity:1 !important; transform:none !important; transition:none !important }
+      .grain,.sun,.wind:before{ animation:none }
+    }
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Shivam Sharma","jobTitle":"AI Engineer and Researcher","alumniOf":["Arizona State University","Amity University, Noida"],"image":"profile.jpeg","sameAs":["https://www.linkedin.com/in/shivam-sharma-333137202/"]}
+  </script>
+</head>
+<body class="antialiased font-sans">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-black text-white px-3 py-2 rounded">Skip to content</a>
+
+  <!-- Progress -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-[#0c0a08]/75 border-b border-[var(--line)]">
+    <div class="mx-auto max-w-6xl py-3 flex justify-between items-center">
+      <a href="#" class="flex items-center gap-3 u px-5">
+        <div class="w-8 h-8 rounded border border-[var(--line)] grid place-items-center text-[var(--muted)]">SS</div>
+        <span class="text-lg font-extrabold font-display dh">Shivam Sharma</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-[var(--muted)] px-5">
+        <a class="hover:text-white" href="#about">About</a>
+        <a class="hover:text-white" href="#skills">Skills</a>
+        <a class="hover:text-white" href="#projects">Projects</a>
+        <a class="hover:text-white" href="#research">Research</a>
+        <a class="hover:text-white" href="#experience">Experience</a>
+        <a class="hover:text-white" href="#contact">Contact</a>
+      </nav>
+      <div class="flex items-center gap-2 pr-3">
+        <button class="btn" id="musicToggle" title="Ambient music"><i class="fa-solid fa-seedling"></i><span class="hidden sm:inline"> Ambient</span></button>
+        <button class="btn md:hidden" id="menuToggle" title="Menu"><i class="fa-solid fa-bars"></i></button>
+        <button class="btn hidden md:inline-flex" id="cmdOpen" title="Command palette (Ctrl/Cmd+K)"><i class="fa-solid fa-magnifying-glass"></i><span class="hidden sm:inline"> Jump</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <div id="mobileMenu" class="fixed inset-0 hidden items-start justify-end p-4 z-50">
+    <div class="sheet w-full max-w-xs p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold dh">Navigate</div>
+        <button id="menuClose" class="btn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="flex flex-col gap-2 text-[var(--muted)]">
+        <a class="btn" href="#about">About</a>
+        <a class="btn" href="#skills">Skills</a>
+        <a class="btn" href="#projects">Projects</a>
+        <a class="btn" href="#research">Research</a>
+        <a class="btn" href="#experience">Experience</a>
+        <a class="btn" href="#contact">Contact</a>
+      </nav>
+      <div class="mt-3"><button class="btn w-full" id="cmdOpenMobile"><i class="fa-solid fa-terminal"></i> Command</button></div>
+    </div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <main id="main">
+    <section class="hero-wrap wind relative">
+      <div class="sun"></div>
+      <div class="grain"></div>
+      <div class="mx-auto max-w-6xl px-5 py-16 md:py-20 relative">
+        <div class="grid md:grid-cols-[auto,1fr] items-center gap-6 md:gap-8">
+          <div class="bevel p-1 rounded-xl w-28 h-28 md:w-36 md:h-36 overflow-hidden mx-auto md:mx-0">
+            <img src="profile.jpeg" alt="Shivam Sharma" class="w-full h-full object-cover rounded-[10px]">
+          </div>
+          <div class="text-center md:text-left">
+            <h1 class="text-3xl md:text-5xl font-extrabold dh">Shivam Sharma</h1>
+            <p class="mt-2 text-lg md:text-xl text-[var(--muted)]"><span id="typed-text"></span></p>
+            <p class="mt-4 text-[var(--muted)] max-w-2xl mx-auto md:mx-0">MS in <span class="font-semibold text-white">Robotics & Autonomous Systems (AI)</span> at Arizona State University. B.Tech in <span class="font-semibold text-white">Artificial Intelligence</span> from Amity University, Noida.</p>
+            <div class="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
+             <a href="assets/ASU_Resume_Template_Shivam.pdf" target="_blank" class="btn btn-acc"><i class="fa-solid fa-file-arrow-down"></i> Resume</a>
+              <a href="#projects" class="btn u"><i class="fa-solid fa-diagram-project"></i> Projects</a>
+            </div>
+          </div>
+        </div>
+        <div class="orn my-10"></div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4" data-aos="fade-up">
+          <div class="bevel p-4">
+            <div class="text-xs md:text-sm uppercase tracking-widest text-[var(--muted)]">Focus</div>
+            <div class="font-bold mt-1">Computer Vision, NLP, Robotics</div>
+          </div>
+          <div class="bevel p-4">
+            <div class="text-xs md:text-sm uppercase tracking-widest text-[var(--muted)]">Tooling</div>
+            <div class="font-bold mt-1">PyTorch, TensorFlow, LangChain, OpenCV</div>
+          </div>
+          <div class="bevel p-4 sm:col-span-2 md:col-span-1">
+            <div class="text-xs md:text-sm uppercase tracking-widest text-[var(--muted)]">Now</div>
+            <div class="font-bold mt-1">Building intelligent systems for autonomy</div>
+          </div>
+        </div>
+      </div>
+      <div class="dune one"></div>
+      <div class="dune two"></div>
+      <canvas id="particles" class="absolute inset-0 -z-10 opacity-[.18]"></canvas>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="py-14 md:py-16">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">About Me</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bevel p-6" data-aos="fade-up">
+            <p class="text-base md:text-lg leading-relaxed">I am a passionate <strong class="text-white">AI Engineer and Researcher</strong> with hands-on experience in <strong class="text-white">Machine Learning, Deep Learning, Computer Vision, and NLP</strong>. My work spans gesture-controlled IoT, AutoML frameworks, and AI-driven emotion detection.</p>
+          </div>
+          <div class="bevel p-6" data-aos="fade-up">
+            <p class="text-base md:text-lg leading-relaxed">Currently pursuing my <strong class="text-white">MS in Robotics & Autonomous Systems (AI)</strong> at Arizona State University, focusing on scalable AI systems for autonomous platforms. Previously completed a <strong class="text-white">B.Tech in AI</strong> from Amity University, Noida.</p>
+          </div>
+          <div class="bevel p-6" data-aos="fade-up">
+            <p class="text-base md:text-lg leading-relaxed">Experience as an <strong class="text-white">AI Engineer Intern at HCL Technologies</strong> and <strong class="text-white">Data Science Intern at NullClass Technologies</strong>, building production-ready ML and CV pipelines with measurable impact.</p>
+          </div>
+          <div class="bevel p-6" data-aos="fade-up">
+            <p class="text-base md:text-lg leading-relaxed">Goal: contribute to <strong class="text-white">next-generation AI & robotics</strong> that enhance HMI, improve accessibility, and enable intelligent autonomous decision-making.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SKILLS ===================== -->
+    <section id="skills" class="py-14 md:py-16 bg-[#0f0c09] border-y border-[var(--line)]">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-8 text-[var(--accent)] dh">Skills</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">🤖 AI & ML</h4>
+            <p class="text-[var(--muted)] text-sm">Supervised/unsupervised ML, AutoML, DL, Random Forest, Gradient Boosting, Optuna tuning.</p>
+          </div>
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">👁 Computer Vision</h4>
+            <p class="text-[var(--muted)] text-sm">OpenCV, Mediapipe, CNNs (VGG16, MobileNetV2), transfer learning, tracking, detection.</p>
+          </div>
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">💬 NLP</h4>
+            <p class="text-[var(--muted)] text-sm">NLTK, Transformers (HF), text preprocessing, SBERT, recommenders.</p>
+          </div>
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">💻 Programming & DB</h4>
+            <p class="text-[var(--muted)] text-sm">Python, R, MySQL, JS, C, Pandas, NumPy, scikit-learn, TensorFlow, PyTorch, Keras.</p>
+          </div>
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">⚙ Tools</h4>
+            <p class="text-[var(--muted)] text-sm">Docker, Streamlit, Tkinter, Jupyter, GridSearchCV, Optuna, LangChain, Google PaLM API.</p>
+          </div>
+          <div class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="font-bold text-lg mb-2">📜 Certifications</h4>
+            <p class="text-[var(--muted)] text-sm">Applied AI (IBM), Python for DS (NPTEL), Microsoft AI Participation, Aerial Robotics (UPenn).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section id="projects" class="py-14 md:py-16">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Projects</h3>
+
+        <!-- Filters / search / sort -->
+        <div class="flex flex-wrap gap-2 mb-5">
+          <button class="chip" data-filter="All" role="tab" aria-selected="true">All</button>
+          <button class="chip" data-filter="ML" role="tab">ML</button>
+          <button class="chip" data-filter="CV" role="tab">CV</button>
+          <button class="chip" data-filter="NLP" role="tab">NLP</button>
+          <button class="chip" data-filter="Audio" role="tab">Audio</button>
+          <button class="chip" data-filter="LLM" role="tab">LLM</button>
+          <button class="chip" data-filter="IoT" role="tab">IoT</button>
+          <input id="projSearch" class="field ml-1 text-sm" type="search" placeholder="Search projects…"/>
+          <select id="projSort" class="field text-sm">
+            <option value="recent">Sort: Recent</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+          </select>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projGrid">
+          <!-- AutoML -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="AutoML Framework" data-cats="ML">
+            <h4 class="text-xl font-bold mb-2">🤖 AutoML Framework</h4>
+            <p class="text-[var(--muted)]">End-to-end <span class="text-white font-semibold">AutoML pipeline</span> with automated model selection, <span class="text-white font-semibold">hyperparameter tuning</span> (Optuna, GridSearchCV), and evaluation.</p>
+            <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+
+          <!-- Gesture Controlled IoT -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="Gesture-Controlled IoT" data-cats="CV,IoT">
+            <h4 class="text-xl font-bold mb-2">🖐 Gesture-Controlled IoT</h4>
+            <p class="text-[var(--muted)]">Real-time <span class="text-white font-semibold">gesture recognition</span> using Mediapipe + OpenCV with Arduino for IoT device control.</p>
+            <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+
+          <!-- Female Voice Emotion Detection -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="Female English Voice Emotion Detection" data-cats="Audio,DL">
+            <h4 class="text-xl font-bold mb-2">🎙 Female English Voice Emotion Detection</h4>
+            <p class="text-[var(--muted)]">Deep learning for <span class="text-white font-semibold">real-time female English voice emotion recognition</span> with Mel-Spectrograms + VGG16.</p>
+            <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+
+          <!-- Animal Emotion Detection -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="Animal Emotion Classifier" data-cats="CV">
+            <h4 class="text-xl font-bold mb-2">🐾 Animal Emotion Classifier</h4>
+            <p class="text-[var(--muted)]">AI-powered <span class="text-white font-semibold">MobileNetV2</span> image classifier to detect and classify 9 animal emotion classes with real-time Tkinter popups.</p>
+            <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a><a class="u" href="assets/ASU_Resume_Template_Shivam.pdf" target="_blank">Resume</a>
+
+          </article>
+
+          <!-- Vehicle Sleep Detection -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="AI-Based Vehicle Sleep Detection & Age Prediction" data-cats="CV,Safety">
+            <h4 class="text-xl font-bold mb-2">🚗 Vehicle Sleep Detection & Age Prediction</h4>
+            <p class="text-[var(--muted)]">DL + CV system detecting <span class="text-white font-semibold">drowsiness & predicting age</span> using VGG16, OpenCV + Tkinter GUI.</p>
+            <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+
+          <!-- CineReco -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="CineReco: Hybrid Movie Recommendation" data-cats="NLP,Recommender">
+            <h4 class="text-xl font-bold mb-2">🎬 CineReco: Hybrid Movie Recommendation</h4>
+            <p class="text-[var(--muted)]">An AI-powered <span class="text-white font-semibold">recommender</span> combining SBERT embeddings, collaborative filtering, and hybrid fusion.</p>
+            <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+
+          <!-- LLM SQL Assistant -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="AtliQ T-Shirts: LLM-Powered SQL Assistant" data-cats="LLM,Data">
+            <h4 class="text-xl font-bold mb-2">📊 LLM-Powered SQL Assistant</h4>
+            <p class="text-[var(--muted)]">LangChain + Google PaLM tool converting <span class="text-white font-semibold">natural language → SQL</span> for real-time MySQL insights.</p>
+            <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RESEARCH ===================== -->
+    <section id="research" class="py-14 md:py-16">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Research & Publications</h3>
+        <div class="grid gap-6">
+          <article class="bevel p-6" data-aos="fade-up">
+            <h4 class="text-xl font-bold mb-2 dh">Handcrafted AI: Designing Virtual Hardware for Hand Gesture-Based Interaction</h4>
+            <p class="text-[var(--muted)] mb-4">Proposed a <span class="text-white font-semibold">virtual hardware simulation layer</span> for gesture-based AI systems, enabling IoT integration without physical devices. Achieved <span class="text-white font-semibold">93% accuracy</span> with Mediapipe + OpenCV pipelines across 5 gestures.</p>
+            <a href="https://ieeexplore.ieee.org/document/10939210" target="_blank" class="btn u"><i class="fa-regular fa-file-pdf"></i> View Paper</a>
+          </article>
+          <article class="bevel p-6" data-aos="fade-up">
+            <h4 class="text-xl font-bold mb-2 dh">Smart Interaction: Combining Special Gestures, Virtual Calculations, and IoT</h4>
+            <p class="text-[var(--muted)] mb-4">Developed a <span class="text-white font-semibold">hybrid gesture + IoT framework</span> where gestures trigger <em>virtual calculations</em> and control smart devices in real-time (~75ms latency). Demonstrated in <span class="text-white font-semibold">smart-home control</span> applications.</p>
+            <a href="https://doi.org/10.1109/ICIMA64861.2025.11074109" target="_blank" class="btn u"><i class="fa-regular fa-file-pdf"></i> View Paper</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPERIENCE ===================== -->
+    <section id="experience" class="py-14 md:py-16 bg-[#0f0c09] border-y border-[var(--line)]">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Experience</h3>
+        <div class="space-y-6">
+          <article class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="text-xl font-bold dh">AI Engineer Intern – HCL Technologies</h4>
+            <ul class="list-disc list-inside mt-2 space-y-2 text-[var(--muted)]">
+              <li>Built ML models (<span class="text-white">Random Forest, Gradient Boosting</span>) to predict customer churn on 500K+ records.</li>
+              <li>Improved AUC by 25% with advanced feature engineering (<span class="text-white">behavioral, transactional, demographic</span>).</li>
+              <li>Optimized with <span class="text-white">GridSearchCV</span> tuning using scikit-learn + NumPy.</li>
+              <li>Developed <span class="text-white">interactive dashboards</span> for BI using Streamlit.</li>
+            </ul>
+          </article>
+          <article class="bevel-2 p-6" data-aos="fade-up">
+            <h4 class="text-xl font-bold dh">Data Science Intern – NullClass Technologies</h4>
+            <ul class="list-disc list-inside mt-2 space-y-2 text-[var(--muted)]">
+              <li>Multi-Attribute Face Classifier GUI <span class="text-white">(VGG16 + MobileNetV2)</span> with 95% accuracy.</li>
+              <li>DL pipelines for emotion detection (human face, female voice, animal images, 91–94% accuracy).</li>
+              <li>AI-powered sleep detection & age prediction for driver monitoring (~95% accuracy).</li>
+              <li>Designed <span class="text-white">Tkinter-based GUIs</span> for interactive model usage.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="py-14 md:py-16">
+      <div class="mx-auto max-w-6xl px-5 text-center">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 dh">Reach out for collaborations, research, or internships</h3>
+        <p class="mb-3 text-[var(--muted)]">📩 <a href="mailto:sharmashivam15112003@gmail.com" class="u">sharmashivam15112003@gmail.com</a></p>
+        <p class="mb-6 text-[var(--muted)]">🔗 <a href="https://www.linkedin.com/in/shivam-sharma-333137202/" target="_blank" class="u">LinkedIn — Shivam Sharma</a></p>
+
+        <form id="contact-form" class="max-w-lg mx-auto bevel p-6 space-y-4 text-left">
+          <input type="text" name="name" placeholder="Your Name" required class="field w-full"/>
+          <input type="email" name="email" placeholder="Your Email" required class="field w-full"/>
+          <textarea name="message" placeholder="Your Message" required class="field w-full h-36"></textarea>
+          <button type="submit" class="btn btn-acc w-full"><i class="fa-regular fa-paper-plane"></i> Send Message</button>
+          <p id="form-status" class="mt-2 font-semibold"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== STATS & NOTES ===================== -->
+    <section class="py-14 md:py-16">
+      <div class="mx-auto max-w-6xl px-5">
+        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Live Code Stats</h3>
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <input id="ghUser" class="field text-sm" value="shivam15112003"/>
+          <button id="ghFetch" class="btn btn-acc">Fetch</button>
+          <small id="ghWhen" class="text-[var(--muted)]"></small>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <div class="bevel p-4 text-center"><div class="text-2xl font-extrabold" id="ghRepos">—</div><div class="text-[var(--muted)] text-sm">Public Repos</div></div>
+          <div class="bevel p-4 text-center"><div class="text-2xl font-extrabold" id="ghStars">—</div><div class="text-[var(--muted)] text-sm">Stars</div></div>
+          <div class="bevel p-4 text-center"><div class="text-2xl font-extrabold" id="ghFollowers">—</div><div class="text-[var(--muted)] text-sm">Followers</div></div>
+          <div class="bevel p-4 text-center"><div class="text-2xl font-extrabold" id="ghActive">—</div><div class="text-[var(--muted)] text-sm">Last Activity (days)</div></div>
+        </div>
+        <div id="ghTop" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+        <div class="orn my-10"></div>
+
+        <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-[var(--accent)] dh">Notes (local)</h3>
+        <div class="flex gap-2 mb-3">
+          <button id="noteAdd" class="btn btn-acc">New Note</button>
+          <button id="noteClear" class="btn">Clear All</button>
+        </div>
+        <div id="notesWrap" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+        <small class="text-[var(--muted)] block mt-2">Saved only in your browser (localStorage).</small>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="text-[var(--muted)] py-6 text-center border-t border-[var(--line)]">
+    <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
+    <div class="mt-2 flex gap-4 justify-center">
+      <a class="u" href="assets/ASU_Resume_Template_Shivam.pdf" target="_blank">Resume</a>
+      <a class="u" href="mailto:sharmashivam15112003@gmail.com">Email</a>
+      <a class="u" href="https://www.linkedin.com/in/shivam-sharma-333137202/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- ===== Command palette ===== -->
+  <div id="cmdk" role="dialog" aria-modal="true">
+    <div class="card bevel">
+      <div class="row border-b border-[var(--line)]">
+        <i class="fa-solid fa-magnifying-glass text-[var(--accent)]"></i>
+        <input id="cmdInput" type="text" placeholder="Jump to section, filter projects, or run an action…" class="field flex-1"/>
+        <button class="text-[var(--muted)] hover:text-white" id="cmdClose" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="list" id="cmdList" role="listbox"></div>
+      <div class="px-3 py-2 text-xs text-[var(--muted)]">Tips: try “LLM”, “Contact”, “Resume”, “scroll top”.</div>
+    </div>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Main JS -->
+  <script>
+    const $ = (s, c=document) => c.querySelector(s);
+    const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
+
+    // AOS & typed
+    window.addEventListener('load', () => {
+      if (window.AOS) AOS.init({ duration: 700, once: true, offset: 80 });
+      if (window.Typed) {
+        new Typed('#typed-text', {
+          strings: [
+            'AI Engineer',
+            'Deep Learning Enthusiast',
+            'Computer Vision Developer',
+            'NLP Researcher',
+            'Robotics & Automation Engineer'
+          ],
+          typeSpeed: 60, backSpeed: 40, loop: true
+        });
+      } else { const t = $('#typed-text'); if (t) t.textContent = 'AI Engineer'; }
+    });
+
+    // Scroll progress
+    const progressEl = $('#scroll-progress');
+    function updProg(){
+      const h = document.documentElement;
+      const max = h.scrollHeight - innerHeight;
+      const pct = Math.min(100, Math.max(0, (scrollY / max) * 100));
+      progressEl.style.width = pct + '%';
+    }
+    updProg(); addEventListener('scroll', updProg, { passive: true }); addEventListener('resize', updProg);
+
+    // Mobile menu
+    (function(){
+      const menu = $('#mobileMenu');
+      const openBtn = $('#menuToggle');
+      const closeBtn = $('#menuClose');
+      const cmdBtn = $('#cmdOpenMobile');
+      const cmdOpen = ()=>{ cmdWrap.style.display='flex'; renderCmd(''); cmdInput.value=''; cmdInput.focus(); };
+
+      function open(){ menu.classList.remove('hidden'); menu.classList.add('flex'); document.body.style.overflow='hidden'; }
+      function close(){ menu.classList.add('hidden'); menu.classList.remove('flex'); document.body.style.overflow=''; }
+
+      openBtn?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', close);
+      menu?.addEventListener('click', e=>{ if(e.target===menu) close(); });
+      cmdBtn?.addEventListener('click', ()=>{ close(); document.querySelector('#cmdOpen')?.click(); });
+    })();
+
+    // Subtle particles (spice motes)
+    (function(){
+      const canvas = document.getElementById('particles'); if(!canvas) return;
+      const ctx = canvas.getContext('2d'); let w,h,dpr,parts=[],maxD=130,run=true;
+      function size(){
+        dpr = Math.min(devicePixelRatio||1,2); w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+        const N = Math.max(28, Math.floor((w*h)/15000)); maxD = Math.min(150, Math.sqrt(w*h)/28);
+        parts = Array.from({length:N}, ()=>({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          vx: (Math.random()-.5)*.3,
+          vy: (Math.random()-.5)*.3,
+          r: Math.random()*1.6+.5
+        }));
+      }
+      size(); addEventListener('resize', size);
+      const mq = matchMedia('(prefers-reduced-motion: reduce)'); function toggle(e){ run = !e.matches } toggle(mq); mq.addEventListener('change', toggle);
+      function step(){
+        ctx.clearRect(0,0,w,h); if(!run) { requestAnimationFrame(step); return; }
+        for(const p of parts){
+          p.x += p.vx; p.y += p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(210,125,47,0.35)'; ctx.fill();
+        }
+        ctx.lineWidth = 1;
+        for(let i=0;i<parts.length;i++){
+          for(let j=i+1;j<parts.length;j++){
+            const a=parts[i], b=parts[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+            if(d<maxD){ const t=1-d/maxD; ctx.strokeStyle=`rgba(192,146,105,${0.14*t})`; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+          }
+        }
+        requestAnimationFrame(step);
+      }
+      step();
+    })();
+
+    // Command palette
+    const cmdWrap = $('#cmdk'), cmdInput = $('#cmdInput'), cmdList = $('#cmdList');
+    $('#cmdOpen')?.addEventListener('click', openCmd);
+    $('#cmdClose')?.addEventListener('click', closeCmd);
+    addEventListener('keydown', e=>{
+      const mod=e.ctrlKey||e.metaKey; if(mod && e.key.toLowerCase()==='k'){ e.preventDefault(); cmdWrap.style.display==='flex'?closeCmd():openCmd(); }
+      if(e.key==='Escape'&&cmdWrap.style.display==='flex') closeCmd();
+    });
+    function openCmd(){ cmdWrap.style.display='flex'; renderCmd(''); cmdInput.value=''; cmdInput.focus(); }
+    function closeCmd(){ cmdWrap.style.display='none'; }
+    function items(){
+      const arr = [
+        ...$$('header nav a').map(a=>({label:a.textContent.trim(), action:()=>a.click()})),
+        ...$$('#projGrid > article').map(card=>({label:card.dataset.title||'Project', action:()=>{ filterApplyFromTitle(card.dataset.title||''); card.scrollIntoView({behavior:'smooth',block:'center'}); }})),
+        {label:'Filter: LLM', action:()=>applyFilter('LLM', true)},
+        {label:'Filter: CV',  action:()=>applyFilter('CV', true)},
+        {label:'Filter: NLP', action:()=>applyFilter('NLP', true)},
+        {label:'Back to top', action:()=>scrollTo({top:0,behavior:'smooth'})},
+        {label:'Open Resume', action:()=>window.open('assets/ASU_Resume_Template_Shivam.pdf','_blank') }
+      ];
+      return arr;
+    }
+    function highlight(q,s){ if(!q) return s; const i=s.toLowerCase().indexOf(q.toLowerCase()); return i<0?s:`${s.slice(0,i)}<b>${s.slice(i,i+q.length)}</b>${s.slice(i+q.length)}`; }
+    function score(q,s){ q=q.toLowerCase().trim(); s=s.toLowerCase(); if(!q) return 1; const i=s.indexOf(q); if(i===0) return 3; if(i>0) return 2; let qi=0; for(let si=0;si<s.length&&qi<q.length;si++){ if(s[si]===q[qi]) qi++; } return qi===q.length?1.5:0; }
+    function renderCmd(q){
+      const list = items().map(x=>({...x,score:score(q,x.label),hl:highlight(q,x.label)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,60);
+      cmdList.innerHTML=''; list.forEach((x,i)=>{ const row=document.createElement('button'); row.className='item w-full text-left'; row.setAttribute('role','option'); if(i===0) row.setAttribute('aria-selected','true'); row.innerHTML=`<span>${x.hl}</span><i class="fa-solid fa-arrow-turn-down-left opacity-70"></i>`;
+        row.addEventListener('click', ()=>{ x.action(); closeCmd(); }); cmdList.appendChild(row); });
+    }
+
+    // Project filters
+    const chips    = $$('#projects .chip');
+    const grid     = $('#projGrid');
+    const searchEl = $('#projSearch');
+    const sortEl   = $('#projSort');
+
+    chips.forEach(c=>c.addEventListener('click', ()=>{ chips.forEach(x=>x.setAttribute('aria-selected','false')); c.setAttribute('aria-selected','true'); applyFilter(c.dataset.filter, true); }));
+    searchEl?.addEventListener('input', ()=>applyFilter(activeTag(), false));
+    sortEl?.addEventListener('change', ()=>applyFilter(activeTag(), false));
+
+    function activeTag(){ return chips.find(x=>x.getAttribute('aria-selected')==='true')?.dataset.filter || 'All'; }
+    function filterApplyFromTitle(title){
+      if(/LLM|SQL Assistant/i.test(title)) applyFilter('LLM', true);
+      else if(/CineReco|Recommender|NLP/i.test(title)) applyFilter('NLP', true);
+      else if(/Gesture|Animal|Sleep|Vehicle|Vision|IoT|OpenCV/i.test(title)) applyFilter('CV', true);
+      else if(/AutoML/i.test(title)) applyFilter('ML', true);
+      else applyFilter('All', true);
+    }
+    function sortCards(list){
+      const mode = sortEl?.value || 'recent';
+      if(mode==='az')  list.sort((a,b)=> (a.dataset.title||'').localeCompare(b.dataset.title||'')); 
+      if(mode==='za')  list.sort((a,b)=> (b.dataset.title||'').localeCompare(a.dataset.title||'')); 
+      return list;
+    }
+    function afterFilterScroll(){
+      const sec = document.getElementById('projects'); if(!sec) return;
+      const header = document.querySelector('header'); const offset=(header?.offsetHeight||64)+10;
+      const y = sec.getBoundingClientRect().top + window.scrollY - offset;
+      requestAnimationFrame(()=>{ window.scrollTo({top:y, behavior:'smooth'}); 
+        const first = Array.from(grid.children).find(el=>el.style.display!=='none');
+        if(first){ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); setTimeout(()=>first.removeAttribute('tabindex'), 800); }
+      });
+    }
+    function applyFilter(tag='All', doScroll=false){
+      const q = (searchEl?.value || '').trim().toLowerCase();
+      const cards = Array.from(grid.children);
+      cards.forEach(card=>{
+        const cats = (card.dataset.cats||'').toLowerCase();
+        const title = (card.dataset.title||'').toLowerCase();
+        const text  = (card.textContent||'').toLowerCase();
+        const tagOk = (tag==='All') || cats.split(',').map(s=>s.trim()).includes(tag.toLowerCase());
+        const qOk   = !q || title.includes(q) || text.includes(q);
+        card.style.display = (tagOk && qOk) ? '' : 'none';
+      });
+      const visible = cards.filter(c=>c.style.display!=='none');
+      sortCards(visible).forEach(c=>grid.appendChild(c));
+      if(doScroll) afterFilterScroll();
+    }
+
+    // GitHub stats
+    async function getJSON(u){ const r=await fetch(u,{headers:{'Accept':'application/vnd.github+json'}}); if(!r.ok) throw new Error(r.status); return r.json(); }
+    async function loadGH(){
+      const user = ($('#ghUser')?.value||'').trim(); if(!user) return;
+      $('#ghRepos').textContent=$('#ghStars').textContent=$('#ghFollowers').textContent=$('#ghActive').textContent='…';
+      $('#ghTop').innerHTML='';
+      try{
+        const u = await getJSON(`https://api.github.com/users/${user}`);
+        const repos = await getJSON(`https://api.github.com/users/${user}/repos?per_page=100&sort=updated`);
+        const stars = repos.reduce((a,r)=>a+(r.stargazers_count||0),0);
+        $('#ghRepos').textContent = u.public_repos ?? '0';
+        $('#ghFollowers').textContent = u.followers ?? '0';
+        $('#ghStars').textContent = String(stars);
+        const last = repos[0]?.updated_at ? new Date(repos[0].updated_at) : null;
+        $('#ghActive').textContent = last ? Math.max(0, Math.round((Date.now()-last.getTime())/86400000)).toString() : '—';
+        repos.slice(0,4).forEach(r=>{
+          const card=document.createElement('div'); card.className='bevel p-4';
+          card.innerHTML = `
+            <div class="font-bold mb-1">${r.name}</div>
+            <div class="text-[var(--muted)] text-sm mb-2">${r.description||'No description'}</div>
+            <div class="text-sm flex gap-3">
+              <span>★ ${r.stargazers_count}</span>
+              <span>⟳ ${r.forks_count}</span>
+              <span>${r.language||''}</span>
+            </div>
+            <div class="mt-2"><a class="text-[var(--accent)] hover:underline" target="_blank" href="${r.html_url}"><i class="fa-brands fa-github mr-1"></i>Open</a></div>`;
+          $('#ghTop').appendChild(card);
+        });
+        $('#ghWhen').textContent = `Updated at ${new Date().toLocaleTimeString()}`;
+      }catch(e){ $('#ghTop').innerHTML='<div class="text-[var(--muted)]">GitHub rate limited. Try later.</div>'; $('#ghWhen').textContent=''; }
+    }
+    $('#ghFetch')?.addEventListener('click', loadGH); loadGH();
+
+    // Notes
+    const notesWrap=$('#notesWrap'); const noteAdd=$('#noteAdd'); const noteClear=$('#noteClear');
+    function loadNotes(){ try{return JSON.parse(localStorage.getItem('notes-ss')||'[]')}catch{return[]} }
+    function saveNotes(a){ localStorage.setItem('notes-ss', JSON.stringify(a)); }
+    function renderNotes(){ const arr=loadNotes(); notesWrap.innerHTML=''; if(!arr.length){ notesWrap.innerHTML='<div class="bevel p-4 text-[var(--muted)]">No notes yet. Click “New Note”.</div>'; return;}
+      arr.forEach((t,i)=>{ const n=document.createElement('div'); n.className='bevel p-3';
+        n.innerHTML=`<textarea class="w-full bg-transparent outline-none" rows="6">${t||''}</textarea>
+          <div class="flex justify-end gap-2 mt-2">
+            <button class="btn">Save</button>
+            <button class="btn">Delete</button>
+          </div>`;
+        const ta=n.querySelector('textarea'); const [saveBtn,delBtn]=n.querySelectorAll('button');
+        saveBtn.addEventListener('click',()=>{ const cur=loadNotes(); cur[i]=ta.value; saveNotes(cur); });
+        delBtn.addEventListener('click',()=>{ const cur=loadNotes(); cur.splice(i,1); saveNotes(cur); renderNotes(); });
+        notesWrap.appendChild(n);
+      });
+    }
+    renderNotes();
+    noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
+    noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
+
+    // Ambient music: uses generated assets/soothing.wav; default OFF; tries once on first interaction
+    (function(){
+      const btn = document.getElementById('musicToggle');
+      if(!btn) return;
+      const audio = new Audio('assets/soothing.wav');
+      audio.loop = true; audio.preload = 'auto'; audio.volume = 0.0; // fade in
+      let targetVol = 0.45;
+      let fadeIv = null;
+
+      function setBtn(on){
+        btn.dataset.on = on ? '1' : '0';
+        btn.innerHTML = on
+          ? '<i class="fa-solid fa-pause"></i><span class="hidden sm:inline"> Ambient</span>'
+          : '<i class="fa-solid fa-seedling"></i><span class="hidden sm:inline"> Ambient</span>';
+      }
+
+      function fadeTo(v){
+        if(fadeIv) clearInterval(fadeIv);
+        const step = (v - audio.volume) / 20;
+        fadeIv = setInterval(()=>{
+          let nv = audio.volume + step;
+          if((step>0 && nv>=v) || (step<0 && nv<=v)){ nv = v; clearInterval(fadeIv); fadeIv=null; }
+          nv = Math.max(0, Math.min(1, nv));
+          audio.volume = nv;
+        }, 50);
+      }
+
+      async function play(){
+        try{ await audio.play(); setBtn(true); fadeTo(targetVol); }catch{ /* blocked by browser until gesture */ }
+      }
+      function pause(){ fadeTo(0.0); setTimeout(()=>{ try{ audio.pause(); }catch{} setBtn(false); }, 1100); }
+
+      setBtn(false);
+
+      // Toggle
+      btn.addEventListener('click', async ()=>{
+        if(btn.dataset.on==='1'){ pause(); } else { await play(); }
+      });
+
+      // Try once on first user gesture
+      const once = async ()=>{ window.removeEventListener('pointerdown', once); await play(); };
+      window.addEventListener('pointerdown', once, { once: true });
+    })();
+
+    // Contact form (Formspree)
+    (function(){
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      if(!form||!status) return;
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch('https://formspree.io/f/mvgbyqwq', {
+          method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+          if (response.ok) {
+            status.textContent = '✅ Thank you! Your message has been sent.';
+            status.classList.remove('text-red-400');
+            status.classList.add('text-green-400');
+            form.reset();
+            if(window.confetti) confetti({particleCount:140, spread:60, origin:{y:0.2}});
+          } else { throw new Error('Bad response'); }
+        })
+        .catch(() => { status.textContent = '❌ Oops! Something went wrong.'; status.classList.remove('text-green-400'); status.classList.add('text-red-400'); });
+      });
+    })();
+  </script>
+</body>
+</html>
