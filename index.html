@@ -127,6 +127,19 @@
     /* Display headings */
     .dh{ font-family: var(--display, 'Marcellus'); letter-spacing:.02em }
 
+    /* GitHub link (unified style) */
+    .gh-link{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      color:var(--accent);
+      font-weight:600;
+    }
+    .gh-link:hover{
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
     /* Mobile menu overlay */
     #mobileMenu{ background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
     #mobileMenu .sheet{ background: var(--panel); border:1px solid var(--line); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.35) }
@@ -337,17 +350,22 @@
             <li>• Safe UI actions only: click (pixel coords), type, wait; logs every step</li>
             <li>• PPT presentation & demo video included — perfect for recruiters</li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <a href="https://github.com/shivam15112003/llm-linkedin-autoapply-bot.git" target="_blank" class="btn"><i class="fab fa-github mr-2"></i> Repo</a>
+          <div class="mt-3 flex flex-wrap gap-3 items-center">
+            <a href="https://github.com/shivam15112003/llm-linkedin-autoapply-bot.git" target="_blank" class="gh-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
             <a href="https://www.linkedin.com/posts/ss1511_artificialintelligence-python-generativeai-activity-7408413956794486784-3F5z" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
             <a href="linkedin_auto_apply_bot_presentation.pptx" class="btn u" download><i class="fa-solid fa-file-powerpoint"></i> PPTX</a>
           </div>
           <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Dec 2025</div>
         </article>
+
           <!-- NEW: Agentic Robot Control via LLM/VLM -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Agentic Robot Control via LLM/VLM (Prompt-to-Action)" data-cats="Robotics,LLM,CV">
             <h4 class="text-xl font-bold mb-2">🤖 Agentic Robot Control via LLM/VLM (Prompt‑to‑Action)</h4>
             <p class="text-[var(--muted)]">LLM/VLM‑driven robot control that translates natural‑language prompts to pick/place/rotate actions with monocular depth, IK, and gripper control. Expanded prompt templates and kinematic awareness for precise execution.</p>
+            <div class="mt-3 flex flex-wrap gap-3 items-center">
+              <a href="https://github.com/shivam15112003/Agentic-Robot-Control-via-LLM-VLM.git" target="_blank" class="gh-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
+              <a href="https://www.linkedin.com/posts/ss1511_robotics-dobot-computervision-activity-7401419150549843968-g7lK?utm_source=share&utm_medium=member_desktop&rcm=ACoAADOiEBcBfeZohokyDTXwG0fo2BslAbJFwUk" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
+            </div>
             <div class="text-[var(--muted)] text-xs mt-2">Sep 2025 – Dec 2025</div>
           </article>
 
@@ -355,6 +373,20 @@
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Dobot Magician: Agentic Tic-Tac-Toe (Vision + LLM Planning)" data-cats="Robotics,LLM,CV">
             <h4 class="text-xl font-bold mb-2">🦾 Dobot Magician: Agentic Tic‑Tac‑Toe (Vision + LLM Planning)</h4>
             <p class="text-[var(--muted)]">OpenCV board‑state detection (calibration, AprilTags), ROS2 control, and LLM‑orchestrated planning with function calls (perceive_board → choose_move → execute_move). ~1.4 s p50 turn latency, ≤2 mm placement error over 200 games.</p>
+            <div class="mt-3 flex flex-wrap gap-3 items-center">
+              <a href="https://www.linkedin.com/posts/ss1511_asu-robotics-ai-activity-7394842320443072512-O4I-?utm_source=share&utm_medium=member_desktop&rcm=ACoAADOiEBcBfeZohokyDTXwG0fo2BslAbJFwUk" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
+            </div>
+            <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Sep 2025</div>
+          </article>
+
+          <!-- NEW: Dobot Magician Lite Maze -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="Dobot Magician Lite Maze — Agentic AI Scene + Local Planner (Ubuntu, Camera/File)" data-cats="Robotics,CV">
+            <h4 class="text-xl font-bold mb-2">🧩 Dobot Magician Lite Maze — Agentic AI Scene + Local Planner</h4>
+            <p class="text-[var(--muted)]">Dobot Magician Lite maze navigation with an agentic AI scene and local planner on Ubuntu, supporting both camera and file-based inputs. Integrates perception, maze reasoning, and Dobot control for reliable path execution.</p>
+            <div class="mt-3 flex flex-wrap gap-3 items-center">
+              <a href="https://github.com/shivam15112003/dobot-magician-lite-maze-agentic_github.git" target="_blank" class="gh-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
+              <a href="https://www.linkedin.com/posts/ss1511_asu-robotics-ai-activity-7394842320443072512-O4I-?utm_source=share&utm_medium=member_desktop&rcm=ACoAADOiEBcBfeZohokyDTXwG0fo2BslAbJFwUk" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
+            </div>
             <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Sep 2025</div>
           </article>
 
@@ -369,56 +401,56 @@
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="AutoML Framework" data-cats="ML">
             <h4 class="text-xl font-bold mb-2">🤖 AutoML Framework</h4>
             <p class="text-[var(--muted)]">End‑to‑end <span class="text-white font-semibold">AutoML pipeline</span> with automated model selection, <span class="text-white font-semibold">hyperparameter tuning</span> (Optuna, GridSearchCV), and evaluation.</p>
-            <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/AutoML-Universal-System.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Gesture-Controlled IoT" data-cats="CV,IoT">
             <h4 class="text-xl font-bold mb-2">🖐 Gesture‑Controlled IoT</h4>
             <p class="text-[var(--muted)]">Real‑time <span class="text-white font-semibold">gesture recognition</span> using MediaPipe + OpenCV with Arduino for IoT device control.</p>
-            <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/Smart-Gesture-Based-Interaction-System.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Female English Voice Emotion Detection" data-cats="Audio,DL">
             <h4 class="text-xl font-bold mb-2">🎙 Female English Voice Emotion Detection</h4>
             <p class="text-[var(--muted)]">Deep learning for <span class="text-white font-semibold">real‑time female English voice emotion recognition</span> with Mel‑Spectrograms + VGG16.</p>
-            <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/VocalEmotionNet-FemaleAudioClassifier.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Animal Emotion Classifier" data-cats="CV">
             <h4 class="text-xl font-bold mb-2">🐾 Animal Emotion Classifier</h4>
             <p class="text-[var(--muted)]">AI‑powered <span class="text-white font-semibold">MobileNetV2</span> image classifier to detect and classify 9 animal emotion classes with real‑time Tkinter popups.</p>
-            <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/Animal-emotion-classifier.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="AI-Based Vehicle Sleep Detection & Age Prediction" data-cats="CV,Safety">
             <h4 class="text-xl font-bold mb-2">🚗 Vehicle Sleep Detection & Age Prediction</h4>
             <p class="text-[var(--muted)]">DL + CV system detecting <span class="text-white font-semibold">drowsiness & predicting age</span> using VGG16, OpenCV + Tkinter GUI.</p>
-            <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/AI-Based-Vehicle-Sleep-Detection-Age-Prediction-System.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="CineReco: Hybrid Movie Recommendation" data-cats="NLP,Recommender">
             <h4 class="text-xl font-bold mb-2">🎬 CineReco: Hybrid Movie Recommendation</h4>
             <p class="text-[var(--muted)]">An AI‑powered <span class="text-white font-semibold">recommender</span> combining SBERT embeddings, collaborative filtering, and hybrid fusion.</p>
-            <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/CineReco-AI-Powered-Hybrid-Movie-Recommender-Deep-Learning-NLP-.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
 
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="LLM-Powered SQL Assistant" data-cats="LLM,Data">
             <h4 class="text-xl font-bold mb-2">📊 LLM‑Powered SQL Assistant</h4>
             <p class="text-[var(--muted)]">LangChain + Google PaLM tool converting <span class="text-white font-semibold">natural language → SQL</span> for real‑time MySQL insights.</p>
-            <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="text-[var(--accent)] hover:underline mt-2 inline-flex items-center">
-              <i class="fab fa-github mr-2"></i> GitHub
+            <a href="https://github.com/shivam15112003/LLM_Project.git" target="_blank" class="gh-link mt-2">
+              <i class="fa-brands fa-github"></i><span>GitHub</span>
             </a>
           </article>
         </div>
@@ -498,7 +530,7 @@
     <!-- ===================== STATS & NOTES ===================== -->
     <section class="py-14 md:py-16">
       <div class="mx-auto max-w-6xl px-5">
-        <h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Live Code Stats</h3>
+        <h3 class="text-2xl md:py-3 md:text-3xl font-semibold mb-6 text-[var(--accent)] dh">Live Code Stats</h3>
         <div class="flex flex-wrap items-center gap-3 mb-4">
           <input id="ghUser" class="field text-sm" value="shivam15112003"/>
           <button id="ghFetch" class="btn btn-acc">Fetch</button>
