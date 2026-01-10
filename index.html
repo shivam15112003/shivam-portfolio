@@ -639,15 +639,29 @@
     $('#cmdOpen')?.addEventListener('click', openCmd);
     $('#cmdClose')?.addEventListener('click', closeCmd);
     addEventListener('keydown', e=>{
-      const mod=e.ctrlKey||e.metaKey; if(mod && e.key.toLowerCase()==='k'){ e.preventDefault(); cmdWrap.style.display==='flex'?closeCmd():openCmd(); }
+      const mod=e.ctrlKey||e.metaKey;
+      if(mod && e.key.toLowerCase()==='k'){
+        e.preventDefault();
+        cmdWrap.style.display==='flex'?closeCmd():openCmd();
+      }
       if(e.key==='Escape'&&cmdWrap.style.display==='flex') closeCmd();
     });
-    function openCmd(){ cmdWrap.style.display='flex'; renderCmd(''); cmdInput.value=''; cmdInput.focus(); }
+
+    function openCmd(){
+      cmdWrap.style.display='flex';
+      cmdInput.value='';
+      renderCmd('');
+      cmdInput.focus();
+    }
     function closeCmd(){ cmdWrap.style.display='none'; }
+
     function items(){
       const arr = [
         ...$$('header nav a').map(a=>({label:a.textContent.trim(), action:()=>a.click()})),
-        ...$$('#projGrid > article').map(card=>({label:card.dataset.title||'Project', action:()=>{ filterApplyFromTitle(card.dataset.title||''); card.scrollIntoView({behavior:'smooth',block:'center'}); }})),
+        ...$$('#projGrid > article').map(card=>({
+          label:card.dataset.title||'Project',
+          action:()=>{ filterApplyFromTitle(card.dataset.title||''); card.scrollIntoView({behavior:'smooth',block:'center'}); }
+        })),
         {label:'Filter: Robotics', action:()=>applyFilter('Robotics', true)},
         {label:'Filter: LLM', action:()=>applyFilter('LLM', true)},
         {label:'Filter: CV',  action:()=>applyFilter('CV', true)},
@@ -656,13 +670,47 @@
       ];
       return arr;
     }
-    function highlight(q,s){ if(!q) return s; const i=s.toLowerCase().indexOf(q.toLowerCase()); return i<0?s:`${s.slice(0,i)}<b>${s.slice(i,i+q.length)}</b>${s.slice(i+q.length)}`; }
-    function score(q,s){ q=q.toLowerCase().trim(); s=s.toLowerCase(); if(!q) return 1; const i=s.indexOf(q); if(i===0) return 3; if(i>0) return 2; let qi=0; for(let si=0;si<s.length&&qi<q.length;si++){ if(s[si]===q[qi]) qi++; } return qi===q.length?1.5:0; }
-    function renderCmd(q){
-      const list = items().map(x=>({...x,score:score(q,x.label),hl:highlight(q,x.label)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,60);
-      cmdList.innerHTML=''; list.forEach((x,i)=>{ const row=document.createElement('button'); row.className='item w-full text-left'; row.setAttribute('role','option'); if(i===0) row.setAttribute('aria-selected','true'); row.innerHTML=`<span>${x.hl}</span><i class="fa-solid fa-arrow-turn-down-left opacity-70"></i>`;
-        row.addEventListener('click', ()=>{ x.action(); closeCmd(); }); cmdList.appendChild(row); });
+
+    function highlight(q,s){
+      if(!q) return s;
+      const i = s.toLowerCase().indexOf(q.toLowerCase());
+      if(i < 0) return s;
+      return `${s.slice(0,i)}<b>${s.slice(i,i+q.length)}</b>${s.slice(i+q.length)}`;
     }
+
+    // SIMPLER: only match labels that contain the query
+    function score(q,s){
+      q = q.toLowerCase().trim();
+      s = s.toLowerCase();
+      if(!q) return 1;
+      if(s.startsWith(q)) return 3;
+      if(s.includes(q)) return 2;
+      return 0;
+    }
+
+    function renderCmd(q){
+      const list = items()
+        .map(x => ({...x, score:score(q,x.label), hl:highlight(q,x.label)}))
+        .filter(x => x.score > 0)
+        .sort((a,b) => b.score - a.score)
+        .slice(0,60);
+
+      cmdList.innerHTML='';
+      list.forEach((x,i)=>{
+        const row = document.createElement('button');
+        row.className='item w-full text-left';
+        row.setAttribute('role','option');
+        if(i===0) row.setAttribute('aria-selected','true');
+        row.innerHTML=`<span>${x.hl}</span><i class="fa-solid fa-arrow-turn-down-left opacity-70"></i>`;
+        row.addEventListener('click', ()=>{ x.action(); closeCmd(); });
+        cmdList.appendChild(row);
+      });
+    }
+
+    // 🔥 Wire input to live search
+    cmdInput?.addEventListener('input', e => {
+      renderCmd(e.target.value || '');
+    });
 
     // Project filters
     const chips    = $$('#projects .chip');
@@ -670,7 +718,11 @@
     const searchEl = $('#projSearch');
     const sortEl   = $('#projSort');
 
-    chips.forEach(c=>c.addEventListener('click', ()=>{ chips.forEach(x=>x.setAttribute('aria-selected','false')); c.setAttribute('aria-selected','true'); applyFilter(c.dataset.filter, true); }));
+    chips.forEach(c=>c.addEventListener('click', ()=>{
+      chips.forEach(x=>x.setAttribute('aria-selected','false'));
+      c.setAttribute('aria-selected','true');
+      applyFilter(c.dataset.filter, true);
+    }));
     searchEl?.addEventListener('input', ()=>applyFilter(activeTag(), false));
     sortEl?.addEventListener('change', ()=>applyFilter(activeTag(), false));
 
@@ -693,9 +745,14 @@
       const sec = document.getElementById('projects'); if(!sec) return;
       const header = document.querySelector('header'); const offset=(header?.offsetHeight||64)+10;
       const y = sec.getBoundingClientRect().top + window.scrollY - offset;
-      requestAnimationFrame(()=>{ window.scrollTo({top:y, behavior:'smooth'}); 
+      requestAnimationFrame(()=>{
+        window.scrollTo({top:y, behavior:'smooth'}); 
         const first = Array.from(grid.children).find(el=>el.style.display!=='none');
-        if(first){ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); setTimeout(()=>first.removeAttribute('tabindex'), 800); }
+        if(first){
+          first.setAttribute('tabindex','-1');
+          first.focus({preventScroll:true});
+          setTimeout(()=>first.removeAttribute('tabindex'), 800);
+        }
       });
     }
     function applyFilter(tag='All', doScroll=false){
@@ -743,7 +800,10 @@
           $('#ghTop').appendChild(card);
         });
         $('#ghWhen').textContent = `Updated at ${new Date().toLocaleTimeString()}`;
-      }catch(e){ $('#ghTop').innerHTML='<div class="text-[var(--muted)]">GitHub rate limited. Try later.</div>'; $('#ghWhen').textContent=''; }
+      }catch(e){
+        $('#ghTop').innerHTML='<div class="text-[var(--muted)]">GitHub rate limited. Try later.</div>';
+        $('#ghWhen').textContent='';
+      }
     }
     $('#ghFetch')?.addEventListener('click', loadGH); loadGH();
 
@@ -751,8 +811,14 @@
     const notesWrap=$('#notesWrap'); const noteAdd=$('#noteAdd'); const noteClear=$('#noteClear');
     function loadNotes(){ try{return JSON.parse(localStorage.getItem('notes-ss')||'[]')}catch{return[]} }
     function saveNotes(a){ localStorage.setItem('notes-ss', JSON.stringify(a)); }
-    function renderNotes(){ const arr=loadNotes(); notesWrap.innerHTML=''; if(!arr.length){ notesWrap.innerHTML='<div class="bevel p-4 text-[var(--muted)]">No notes yet. Click “New Note”.</div>'; return;}
-      arr.forEach((t,i)=>{ const n=document.createElement('div'); n.className='bevel p-3';
+    function renderNotes(){
+      const arr=loadNotes(); notesWrap.innerHTML='';
+      if(!arr.length){
+        notesWrap.innerHTML='<div class="bevel p-4 text-[var(--muted)]">No notes yet. Click “New Note”.</div>';
+        return;
+      }
+      arr.forEach((t,i)=>{
+        const n=document.createElement('div'); n.className='bevel p-3';
         n.innerHTML=`<textarea class="w-full bg-transparent outline-none" rows="6">${t||''}</textarea>
           <div class="flex justify-end gap-2 mt-2">
             <button class="btn">Save</button>
@@ -827,7 +893,11 @@
             if(window.confetti) confetti({particleCount:140, spread:60, origin:{y:0.2}});
           } else { throw new Error('Bad response'); }
         })
-        .catch(() => { status.textContent = '❌ Oops! Something went wrong.'; status.classList.remove('text-green-400'); status.classList.add('text-red-400'); });
+        .catch(() => {
+          status.textContent = '❌ Oops! Something went wrong.';
+          status.classList.remove('text-green-400');
+          status.classList.add('text-red-400');
+        });
       });
     })();
   </script>
