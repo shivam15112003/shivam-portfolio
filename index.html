@@ -13,8 +13,8 @@
   <meta property="og:type" content="website"/>
   <meta name="theme-color" content="#0e0a07"/>
 
-  <!-- Preload ambient audio -->
-  <link rel="preload" href="assets/soothing.wav" as="audio" type="audio/wav">
+  <!-- Preload ambient audio (portfolio pick) -->
+  <link rel="preload" href="assets/portfolio-ambient.wav" as="audio" type="audio/wav">
 
   <!-- Fonts (Marcellus for display, Inter for UI, IBM Plex Mono for code) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,7 +188,6 @@
         <a class="hover:text-white" href="#skills">Skills</a>
         <a class="hover:text-white" href="#projects">Projects</a>
         <a class="hover:text-white" href="#research">Research</a>
-        <a class="hover:text-white" href="#experience">Experience</a>
         <a class="hover:text-white" href="#contact">Contact</a>
       </nav>
       <div class="flex items-center gap-2 pr-3">
@@ -211,7 +210,6 @@
         <a class="btn" href="#skills">Skills</a>
         <a class="btn" href="#projects">Projects</a>
         <a class="btn" href="#research">Research</a>
-        <a class="btn" href="#experience">Experience</a>
         <a class="btn" href="#contact">Contact</a>
       </nav>
       <div class="mt-3"><button class="btn w-full" id="cmdOpenMobile"><i class="fa-solid fa-terminal"></i> Command</button></div>
@@ -338,26 +336,25 @@
           </select>
         </div>
 
-       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projGrid">
-    
-        <!-- LLM LinkedIn Auto-Apply Bot (new, demo ready) -->
-        <article class="bevel-2 p-6" data-aos="fade-up" data-title="llm-linkedin-autoapply-bot" data-cats="LLM,Automation">
-          <h4 class="text-xl font-bold mb-2">🤖 llm-linkedin-autoapply-bot — Intelligent Apply Pipeline</h4>
-          <p class="text-[var(--muted)]">A safe, LLM-assisted automation that extracts job descriptions, generates role-matched application materials & cover letters (Gemini → LaTeX → PDF), and fills application forms using structured LLM guidance. Preferred flow: LinkedIn Easy Apply; fallback: external portal with recovery steps. Built for traceability, honesty, and safe human-in-the-loop handling of CAPTCHAs.</p>
-          <ul class="text-[var(--muted)] text-sm mt-3 space-y-1">
-            <li>• LLM-powered application tailoring and JSON-structured form answers</li>
-            <li>• Safe UI actions only: click (pixel coords), type, wait; logs every step</li>
-            <li>• PPT presentation & demo video included — perfect for recruiters</li>
-          </ul>
-          <div class="mt-3 flex flex-wrap gap-3 items-center">
-            <a href="https://github.com/shivam15112003/llm-linkedin-autoapply-bot.git" target="_blank" class="gh-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
-            <a href="https://www.linkedin.com/posts/ss1511_artificialintelligence-python-generativeai-activity-7408413956794486784-3F5z" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
-            <a href="linkedin_auto_apply_bot_presentation.pptx" class="btn u" download><i class="fa-solid fa-file-powerpoint"></i> PPTX</a>
-          </div>
-          <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Dec 2025</div>
-        </article>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projGrid">
+          <!-- LLM LinkedIn Auto-Apply Bot (new, demo ready) -->
+          <article class="bevel-2 p-6" data-aos="fade-up" data-title="llm-linkedin-autoapply-bot" data-cats="LLM,Automation">
+            <h4 class="text-xl font-bold mb-2">🤖 llm-linkedin-autoapply-bot — Intelligent Apply Pipeline</h4>
+            <p class="text-[var(--muted)]">A safe, LLM-assisted automation that extracts job descriptions, generates role-matched application materials & cover letters (Gemini → LaTeX → PDF), and fills application forms using structured LLM guidance. Preferred flow: LinkedIn Easy Apply; fallback: external portal with recovery steps. Built for traceability, honesty, and safe human-in-the-loop handling of CAPTCHAs.</p>
+            <ul class="text-[var(--muted)] text-sm mt-3 space-y-1">
+              <li>• LLM-powered application tailoring and JSON-structured form answers</li>
+              <li>• Safe UI actions only: click (pixel coords), type, wait; logs every step</li>
+              <li>• PPT presentation & demo video included — perfect for recruiters</li>
+            </ul>
+            <div class="mt-3 flex flex-wrap gap-3 items-center">
+              <a href="https://github.com/shivam15112003/llm-linkedin-autoapply-bot.git" target="_blank" class="gh-link"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
+              <a href="https://www.linkedin.com/posts/ss1511_artificialintelligence-python-generativeai-activity-7408413956794486784-3F5z" target="_blank" class="btn btn-acc"><i class="fa-solid fa-play"></i> Watch Demo</a>
+              <a href="linkedin_auto_apply_bot_presentation.pptx" class="btn u" download><i class="fa-solid fa-file-powerpoint"></i> PPTX</a>
+            </div>
+            <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Dec 2025</div>
+          </article>
 
-          <!-- NEW: Agentic Robot Control via LLM/VLM -->
+          <!-- Agentic Robot Control via LLM/VLM -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Agentic Robot Control via LLM/VLM (Prompt-to-Action)" data-cats="Robotics,LLM,CV">
             <h4 class="text-xl font-bold mb-2">🤖 Agentic Robot Control via LLM/VLM (Prompt‑to‑Action)</h4>
             <p class="text-[var(--muted)]">LLM/VLM‑driven robot control that translates natural‑language prompts to pick/place/rotate actions with monocular depth, IK, and gripper control. Expanded prompt templates and kinematic awareness for precise execution.</p>
@@ -368,14 +365,14 @@
             <div class="text-[var(--muted)] text-xs mt-2">Sep 2025 – Dec 2025</div>
           </article>
 
-          <!-- NEW: Dobot Magician Tic-Tac-Toe -->
+          <!-- Dobot Magician Tic-Tac-Toe -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Dobot Magician: Agentic Tic-Tac-Toe (Vision + LLM Planning)" data-cats="Robotics,LLM,CV">
             <h4 class="text-xl font-bold mb-2">🦾 Dobot Magician: Agentic Tic‑Tac‑Toe (Vision + LLM Planning)</h4>
             <p class="text-[var(--muted)]">OpenCV board‑state detection (calibration, AprilTags), ROS2 control, and LLM‑orchestrated planning with function calls (perceive_board → choose_move → execute_move). ~1.4 s p50 turn latency, ≤2 mm placement error over 200 games.</p>
             <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Sep 2025</div>
           </article>
 
-          <!-- NEW: Dobot Magician Lite Maze -->
+          <!-- Dobot Magician Lite Maze -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Dobot Magician Lite Maze — Agentic AI Scene + Local Planner (Ubuntu, Camera/File)" data-cats="Robotics,CV">
             <h4 class="text-xl font-bold mb-2">🧩 Dobot Magician Lite Maze — Agentic AI Scene + Local Planner</h4>
             <p class="text-[var(--muted)]">Dobot Magician Lite maze navigation with an agentic AI scene and local planner on Ubuntu, supporting both camera and file-based inputs. Integrates perception, maze reasoning, and Dobot control for reliable path execution.</p>
@@ -386,14 +383,14 @@
             <div class="text-[var(--muted)] text-xs mt-2">Aug 2025 – Sep 2025</div>
           </article>
 
-          <!-- NEW: ROS2 Gesture-to-Robot -->
+          <!-- ROS2 Gesture-to-Robot -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="ROS2 Gesture-to-Robot: Vision-based Tele-operation" data-cats="Robotics,CV,IoT">
             <h4 class="text-xl font-bold mb-2">✋ ROS2 Gesture‑to‑Robot: Vision‑based Tele‑operation</h4>
             <p class="text-[var(--muted)]">Real‑time MediaPipe/OpenCV gestures mapped to ROS2 actions for TurtleBot nav & gripper control. ≥95% gesture F1, ~55 ms end‑to‑end latency, safety supervisor (debouncing, Kalman, dead‑man) with ≥97% reliability and ≤120 ms safe‑stop.</p>
             <div class="text-[var(--muted)] text-xs mt-2">Jan 2025 – Apr 2025</div>
           </article>
 
-          <!-- Existing projects (kept) -->
+          <!-- AutoML Framework -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="AutoML Framework" data-cats="ML">
             <h4 class="text-xl font-bold mb-2">🤖 AutoML Framework</h4>
             <p class="text-[var(--muted)]">End‑to‑end <span class="text-white font-semibold">AutoML pipeline</span> with automated model selection, <span class="text-white font-semibold">hyperparameter tuning</span> (Optuna, GridSearchCV), and evaluation.</p>
@@ -402,6 +399,7 @@
             </a>
           </article>
 
+          <!-- Gesture-Controlled IoT -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Gesture-Controlled IoT" data-cats="CV,IoT">
             <h4 class="text-xl font-bold mb-2">🖐 Gesture‑Controlled IoT</h4>
             <p class="text-[var(--muted)]">Real‑time <span class="text-white font-semibold">gesture recognition</span> using MediaPipe + OpenCV with Arduino for IoT device control.</p>
@@ -410,6 +408,7 @@
             </a>
           </article>
 
+          <!-- Female English Voice Emotion Detection -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Female English Voice Emotion Detection" data-cats="Audio,DL">
             <h4 class="text-xl font-bold mb-2">🎙 Female English Voice Emotion Detection</h4>
             <p class="text-[var(--muted)]">Deep learning for <span class="text-white font-semibold">real‑time female English voice emotion recognition</span> with Mel‑Spectrograms + VGG16.</p>
@@ -418,6 +417,7 @@
             </a>
           </article>
 
+          <!-- Animal Emotion Classifier -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="Animal Emotion Classifier" data-cats="CV">
             <h4 class="text-xl font-bold mb-2">🐾 Animal Emotion Classifier</h4>
             <p class="text-[var(--muted)]">AI‑powered <span class="text-white font-semibold">MobileNetV2</span> image classifier to detect and classify 9 animal emotion classes with real‑time Tkinter popups.</p>
@@ -426,6 +426,7 @@
             </a>
           </article>
 
+          <!-- Vehicle Sleep Detection & Age Prediction -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="AI-Based Vehicle Sleep Detection & Age Prediction" data-cats="CV,Safety">
             <h4 class="text-xl font-bold mb-2">🚗 Vehicle Sleep Detection & Age Prediction</h4>
             <p class="text-[var(--muted)]">DL + CV system detecting <span class="text-white font-semibold">drowsiness & predicting age</span> using VGG16, OpenCV + Tkinter GUI.</p>
@@ -434,6 +435,7 @@
             </a>
           </article>
 
+          <!-- CineReco -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="CineReco: Hybrid Movie Recommendation" data-cats="NLP,Recommender">
             <h4 class="text-xl font-bold mb-2">🎬 CineReco: Hybrid Movie Recommendation</h4>
             <p class="text-[var(--muted)]">An AI‑powered <span class="text-white font-semibold">recommender</span> combining SBERT embeddings, collaborative filtering, and hybrid fusion.</p>
@@ -442,6 +444,7 @@
             </a>
           </article>
 
+          <!-- LLM-Powered SQL Assistant -->
           <article class="bevel-2 p-6" data-aos="fade-up" data-title="LLM-Powered SQL Assistant" data-cats="LLM,Data">
             <h4 class="text-xl font-bold mb-2">📊 LLM‑Powered SQL Assistant</h4>
             <p class="text-[var(--muted)]">LangChain + Google PaLM tool converting <span class="text-white font-semibold">natural language → SQL</span> for real‑time MySQL insights.</p>
@@ -471,8 +474,6 @@
         </div>
       </div>
     </section>
-
-   
 
     <!-- ===================== CONTACT ===================== -->
     <section id="contact" class="py-14 md:py-16">
@@ -767,13 +768,13 @@
     noteAdd?.addEventListener('click',()=>{ const cur=loadNotes(); cur.unshift(''); saveNotes(cur); renderNotes(); });
     noteClear?.addEventListener('click',()=>{ if(confirm('Clear all notes?')){ saveNotes([]); renderNotes(); } });
 
-    // Ambient music
+    // Ambient music (portfolio track)
     (function(){
       const btn = document.getElementById('musicToggle');
       if(!btn) return;
-      const audio = new Audio('assets/soothing.wav');
-      audio.loop = true; audio.preload = 'auto'; audio.volume = 0.0; // fade in
-      let targetVol = 0.45;
+      const audio = new Audio('assets/portfolio-ambient.wav');
+      audio.loop = true; audio.preload = 'auto'; audio.volume = 0.0;
+      let targetVol = 0.20;
       let fadeIv = null;
 
       function setBtn(on){
@@ -795,14 +796,13 @@
       }
 
       async function play(){
-        try{ await audio.play(); setBtn(true); fadeTo(targetVol); }catch{ /* blocked by browser until gesture */ }
+        try{ await audio.play(); setBtn(true); fadeTo(targetVol); }catch{}
       }
       function pause(){ fadeTo(0.0); setTimeout(()=>{ try{ audio.pause(); }catch{} setBtn(false); }, 1100); }
 
       setBtn(false);
       btn.addEventListener('click', async ()=>{ if(btn.dataset.on==='1'){ pause(); } else { await play(); } });
 
-      // Try once on first user gesture
       const once = async ()=>{ window.removeEventListener('pointerdown', once); await play(); };
       window.addEventListener('pointerdown', once, { once: true });
     })();
