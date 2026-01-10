@@ -236,7 +236,6 @@
               B.Tech in <span class="font-semibold text-white">Artificial Intelligence</span> — Amity University, Noida (Graduated <strong class="text-white">May 2025</strong>).
             </p>
             <div class="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-              <a href="assets/ASU_Resume_Template_Shivam.pdf" target="_blank" class="btn btn-acc"><i class="fa-solid fa-file-arrow-down"></i> Resume</a>
               <a href="#projects" class="btn u"><i class="fa-solid fa-diagram-project"></i> Projects</a>
             </div>
           </div>
@@ -344,9 +343,9 @@
         <!-- LLM LinkedIn Auto-Apply Bot (new, demo ready) -->
         <article class="bevel-2 p-6" data-aos="fade-up" data-title="llm-linkedin-autoapply-bot" data-cats="LLM,Automation">
           <h4 class="text-xl font-bold mb-2">🤖 llm-linkedin-autoapply-bot — Intelligent Apply Pipeline</h4>
-          <p class="text-[var(--muted)]">A safe, LLM-assisted automation that extracts job descriptions, generates role-matched resumes & cover letters (Gemini → LaTeX → PDF), and fills application forms using structured LLM guidance. Preferred flow: LinkedIn Easy Apply; fallback: external portal with recovery steps. Built for traceability, honesty, and safe human-in-the-loop handling of CAPTCHAs.</p>
+          <p class="text-[var(--muted)]">A safe, LLM-assisted automation that extracts job descriptions, generates role-matched application materials & cover letters (Gemini → LaTeX → PDF), and fills application forms using structured LLM guidance. Preferred flow: LinkedIn Easy Apply; fallback: external portal with recovery steps. Built for traceability, honesty, and safe human-in-the-loop handling of CAPTCHAs.</p>
           <ul class="text-[var(--muted)] text-sm mt-3 space-y-1">
-            <li>• LLM-powered resume tailoring and JSON-structured form answers</li>
+            <li>• LLM-powered application tailoring and JSON-structured form answers</li>
             <li>• Safe UI actions only: click (pixel coords), type, wait; logs every step</li>
             <li>• PPT presentation & demo video included — perfect for recruiters</li>
           </ul>
@@ -528,7 +527,6 @@
   <footer class="text-[var(--muted)] py-6 text-center border-t border-[var(--line)]">
     <p>&copy; 2025 Shivam Sharma. All rights reserved.</p>
     <div class="mt-2 flex gap-4 justify-center">
-      <a class="u" href="assets/ASU_Resume_Template_Shivam.pdf" target="_blank">Resume</a>
       <a class="u" href="mailto:sshar443@asu.edu">Email</a>
       <a class="u" href="https://www.linkedin.com/in/ss1511/" target="_blank">LinkedIn</a>
     </div>
@@ -543,7 +541,7 @@
         <button class="text-[var(--muted)] hover:text-white" id="cmdClose" title="Close"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="list" id="cmdList" role="listbox"></div>
-      <div class="px-3 py-2 text-xs text-[var(--muted)]">Tips: try “LLM”, “Robotics”, “Contact”, “Resume”, “scroll top”.</div>
+      <div class="px-3 py-2 text-xs text-[var(--muted)]">Tips: try “LLM”, “Robotics”, “Contact”, “scroll top”.</div>
     </div>
   </div>
 
@@ -653,8 +651,7 @@
         {label:'Filter: LLM', action:()=>applyFilter('LLM', true)},
         {label:'Filter: CV',  action:()=>applyFilter('CV', true)},
         {label:'Filter: NLP', action:()=>applyFilter('NLP', true)},
-        {label:'Back to top', action:()=>scrollTo({top:0,behavior:'smooth'})},
-        {label:'Open Resume', action:()=>window.open('assets/ASU_Resume_Template_Shivam.pdf','_blank') }
+        {label:'Back to top', action:()=>scrollTo({top:0,behavior:'smooth'})}
       ];
       return arr;
     }
